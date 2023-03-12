@@ -1,0 +1,21 @@
+@use "./variables";
+@use "./mixins" as *;
+
+.primary-button {
+    background-color: variables.$primary-color;
+    color: variables.$white;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0px 7px 20px #fd50564c;
+    @include padding-two(1,4);
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    width: fit-content;
+    font-size: 16px;
+
+    &:hover {
+        background-color: variables.$white;
+        border: 2px solid variables.$primary-color;
+        color: variables.$primary-color;
+    }
+}

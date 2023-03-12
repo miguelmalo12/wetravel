@@ -8,15 +8,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Laila:wght@300;400;500;600;700&family=Nunito+Sans:wght@200;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
     <header>
         <nav>
             <div>
-                <img src="./assets/wetravel-logo-red.png" alt="wetravel logo">
+                <img class="navbar-logo" src="./assets/wetravel-logo-red.png" alt="wetravel logo">
             </div>
-            <div>
+            <div class="navbar-menu-mobile">
+                <img src="./assets/bars-solid.svg" alt="bars menu">            
+                  </svg>
+            </div>
+            <div class="navbar-menu">
                 <ul>
                     <li>Home</li>
                     <li>Recommend</li>
@@ -134,10 +139,10 @@
                 <div class="footer-container__links--menu">
                     <h5>Menu</h5>
                     <ul>
-                        <li>Home</li>
-                        <li>Recommend</li>
-                        <li>Plan</li>
-                        <li>Login</li>
+                        <li><a>Home</a></li>
+                        <li><a>Recommend</a></li>
+                        <li><a>Plan</a></li>
+                        <li><a>Login</a></li>
                     </ul>
                 </div>
                 <div class="footer-container__links--signup">
