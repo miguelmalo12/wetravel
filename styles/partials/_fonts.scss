@@ -1,0 +1,97 @@
+@use "./variables";
+@use "./media";
+
+h1 {
+    color: variables.$dark-text;
+    font-family: 'Laila', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 82px;
+    font-size: calc(64px / 1.5);
+
+    @include media.tablet {
+        font-size: 64px;
+    }
+}
+
+h2 {
+    color: variables.$dark-text;
+    font-family: 'Laila';
+    font-style: normal;
+    font-weight: 700;
+    line-height: 70px;
+    text-transform: capitalize;
+    font-size: calc(48px / 1.33);
+
+    @include media.tablet {
+        font-size: 48px;
+    }
+}
+
+h3 {
+    color: variables.$dark-text;
+    font-family: 'Laila';
+    font-style: normal;
+    font-weight: 600;
+    line-height: 56px;
+    text-transform: capitalize;
+    font-size: calc(36px / 1.25);
+
+    @include media.tablet {
+        font-size: 36px;
+    }
+}
+
+h4 {
+    color: variables.$dark-text;
+    font-family: 'Laila';
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    text-transform: capitalize;
+    font-size: calc(24px / 1.25);
+    
+    @include media.tablet {
+        font-size: 24px;
+    } 
+}
+
+h5 {
+    color: variables.$dark-text;
+    font-family: 'Laila';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+    text-transform: capitalize;
+    font-size: calc(20px / 1.25);
+
+    @include media.tablet {
+        font-size: 20px;
+    }  
+}
+
+h6 {
+    color: variables.$dark-text;
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 600;
+    line-height: 30px;
+    font-size: calc(18px / 1.25);
+
+    @include media.tablet {
+        font-size: 18px;
+    }  
+}
+
+p, li, a {
+    color: variables.$medium-text;
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    font-size: calc(16px / 1.25);
+
+    @include media.tablet {
+        font-size: 16px;
+    } 
+}

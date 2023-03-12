@@ -1,0 +1,15 @@
+@use "./media";
+
+// These mixins stablish the increments by 8 pixels (1rem = 10px in body tag)
+
+@mixin padding($increment) {
+    padding: 0.8rem * $increment;
+}
+
+@mixin padding-two($tb-increment, $lr-increment) {
+    padding: 0.8rem * $tb-increment 0.8rem * $lr-increment;
+}
+
+@mixin padding-all($t-increment, $r-increment, $b-increment, $l-increment) {
+    padding: 0.8rem * $t-increment 0.8rem * $r-increment 0.8rem * $b-increment 0.8rem * $l-increment;
+}
