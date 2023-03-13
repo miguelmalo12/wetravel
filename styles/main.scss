@@ -29,6 +29,11 @@ a {
     }
 }
 
+#body {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
 nav {
     @include padding-two(2,2);
     display: flex;
@@ -37,6 +42,10 @@ nav {
 
     @include media.tablet {
         @include padding-two(4,4); 
+    }
+
+    @include media.tablet {
+        @include padding-two(4,8); 
     }
 
     .navbar-logo {
@@ -99,11 +108,24 @@ main {
 
 .hero {
 
+    @include media.desktop {
+        @include padding-two(0,8);
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+
     &__text {
         @include padding-all(4,2,0,2);
         
         @include media.tablet {
             @include padding-all(4,4,0,4); 
+        }
+
+        @include media.desktop {
+            @include padding-all(4,8,0,8);
+            flex-basis: 50%;
+            flex-grow: 0; 
         }
         
         p {
@@ -112,12 +134,21 @@ main {
             @include media.tablet {
                 @include padding-all(2,4,3,4); 
             }
+
+            @include media.desktop {
+                @include padding-all(2,0,4,0);
+            }
         }
     }
 
     &__image {
         display: flex;
         justify-content: center;
+
+        @include media.desktop {
+            flex-basis: 50%;
+            flex-grow: 0;
+        }
 
         img {
             max-width: 100%;
@@ -135,9 +166,19 @@ main {
 .process {
     @include padding-two(0,2);
 
+    @include media.desktop {
+        @include padding-all(12,0,8,0);
+    }
+    
     &__icons {
-       
         text-align: center;
+
+        @include media.desktop {
+            @include padding-two(0,8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         &__step {
             @include padding(2);
@@ -149,12 +190,24 @@ main {
                 @include padding-two(2,8); 
             }
 
+            @include media.desktop {
+                width: 40rem;
+
+                h5 {
+                    padding-bottom: 1.6rem;
+                }
+            }
+
             img {
                 @include padding-two(2,0);
                 width: 40%;
                 
                 @include media.tablet {
                     max-width: 18%;
+                }
+
+                @include media.desktop {
+                    max-width: 18rem;
                 }
             }
         }
@@ -164,8 +217,24 @@ main {
 .about {
     display: flex;
     flex-direction: column;
+
+    @include media.desktop {
+        @include padding-all(0,16,8,16);
+        display: flex;
+        align-items: center;
+        text-align: left;
+        flex-direction: row;
+    }
+
     &__image {
        order: 2;
+
+       @include media.desktop {
+        order:1;
+        flex-basis: 50%;
+        flex-grow: 0;
+       }
+
         img {
             max-width: 100%;
             height: auto;
@@ -186,14 +255,29 @@ main {
             @include padding-all(8,4,0,4); 
         }
 
+        @include media.desktop {
+            order:2;
+            flex-basis: 50%;
+            flex-grow: 0;
+           }
+
         p {
             @include media.tablet {
                 @include padding-two(0,4); 
+            }
+            @include media.desktop {
+                @include padding-all(2,0,0,0);
             }
         }
 
         &__numbers {
             @include padding-all(2,0,0,0);
+            
+            @include media.desktop {
+                display: flex;
+                justify-content: space-between;
+            }
+
             div {
                 @include padding-two (1,0);
             }
@@ -208,8 +292,18 @@ main {
         @include padding-all(0,4,4,4); 
     }
 
+    @include media.desktop {
+        @include padding-all(2,16,8,16); 
+    }
+
     &__intro {
         @include padding-all(0,0,3,0);
+
+        @include media.desktop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         
         p {
             @include padding-all(1,0,3,0);
@@ -217,12 +311,21 @@ main {
             @include media.tablet {
                 @include padding-all(1,4,3,4); 
             }
+
+            @include media.desktop {
+                max-width: 600px;
+            }
         }
     }
 
+// Gallery in phone view
     &__images {
         display: flex;
         flex-wrap: wrap;
+
+        @include media.desktop {
+            display: none;
+        }
 
         img {
             @include padding(2);
@@ -247,6 +350,42 @@ main {
             }
         }
     }
+
+// Gallery in desktop view
+    &__images-desktop {
+        display: none;
+
+        @include media.desktop {
+            display: flex;
+            justify-content: center;
+
+            img {
+                @include padding(2);
+                border-radius: 25px;
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                aspect-ratio: 1 / 1;
+            }
+
+            &--left {
+                flex-basis: 50%;
+                height: 100%;
+            }
+
+            &--right {
+                flex-basis: 50%;
+                display: flex;
+                flex-wrap: wrap;
+                height: 100%;
+
+                div {
+                    flex-basis: 50%;
+                    height: 50%;
+                }
+            }
+        }
+    }
 }
 
 .cta {
@@ -258,23 +397,44 @@ main {
         @include padding-all(6,4,1,4); 
     }
 
+    @include media.desktop {
+        @include padding-two(2,8);
+        margin: 12.8rem;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        border-radius: 15px;
+    }
+
     &__text {
+        
+        @include media.desktop {
+            flex-basis: 60%;
+        }
+        
         p {
             @include padding-all(1,0,3,0);
         }
     }
 
     &__image {
+        text-align: center;
+        @include media.desktop {
+            flex-basis: 40%;
+        }
+
         img {
             max-width: 100%;
             height: auto;
             object-fit: contain;
 
             @include media.tablet {
-                max-width: 70%;
                 max-width: 500px;
             }
 
+            @include media.desktop {
+                max-width: 400px;
+            }
         }
     }
 }
@@ -285,6 +445,10 @@ footer {
 
     @include media.tablet {
         @include padding-two(2,4);
+    }
+
+    @include media.desktop {
+        @include padding-all(2,16,8,16);
     }
     
     ul, ol {
@@ -297,44 +461,88 @@ footer {
         align-items: center;
         justify-content: center;
 
+        @include media.desktop {
+            // @include padding-two(2,4);
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
         &__intro {
             @include padding-two(2,0);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
+            @include media.desktop {
+                flex-basis: 50%;
+                align-items: flex-start;
+                text-align: left;
+                width: 200px;
+            }
+
             img {
                 width: 50%;
                 @include padding-two(2,0);
+
+                @include media.desktop {
+                    @include padding-all(0,0,2,0);
+                }
+            }
+
+            p {
+                @include media.desktop {
+                    width: 350px;
+                }
             }
         }
 
         &__links {
 
+            @include media.desktop {
+                display: flex;
+                flex-basis: 50%;
+                text-align: left;
+            }
+
             &--menu {
                 @include padding-two(2,0);
+                flex-basis: 50%;
             }
 
             &--signup {
                 @include padding-two(2,0);
+                flex-basis: 50%;
+
                 p {
                 margin-bottom: 2.4rem;
                 }
             }
         }
     }
+}
 
-    .footer-copyright {
-        background-color: variables.$dark-color;
+.footer-copyright {
+    background-color: variables.$dark-color;
+    color: variables.$white;
+    margin-top: 5rem;
+
+    @include padding-two(2,2);
+
+    @include media.tablet {
+        @include padding-two(2,4);
+    }
+
+    @include media.desktop {
+        @include padding-two(2,8);
+    }
+
+    span {
         color: variables.$white;
-        @include padding-two(2,2);
-        margin-top: 5rem;
-        span {
-            color: variables.$white;
-            font-weight: 700;
-        }
-        p {
-            color: variables.$white;
-        }
+        font-weight: 700;
+    }
+    p {
+        color: variables.$white;
     }
 }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
+<div id="body"> <!-- Div wrapping all body to add max-width to the whole layout in desktop--> 
     <header>
         <nav>
             <div>
@@ -99,7 +100,7 @@
             </div>
         </section>
 
-        <!-- Gallery Section -->
+        <!-- Gallery Section / Travel Planner-->
         <section class="gallery">
             <div class="gallery__intro">
                 <h6>travel planner</h6>
@@ -107,6 +108,8 @@
                 <p>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
                 <a class="primary-button" href="">Travel Planner</a>
             </div>
+            
+            <!-- This shows in phone view only-->
             <div class="gallery__images">
                 <img src="./assets/real-images/gallery-italy.jpg" alt="rome city">
                 <img src="./assets/real-images/gallery-japan.jpg" alt="japan landscape">
@@ -114,6 +117,22 @@
                 <img src="./assets/real-images/gallery-usa.jpg" alt="new york city">
                 <img src="./assets/real-images/gallery-peru.jpg" alt="machu pichu">
             </div>
+            <!-- End-->
+
+            <!-- This shows in desktop view only-->
+            <div class="gallery__images-desktop">
+                <div class="gallery__images-desktop--left">
+                    <img src="./assets/real-images/gallery-italy.jpg" alt="rome city">
+                </div>
+                <div class="gallery__images-desktop--right">
+                    <div><img src="./assets/real-images/gallery-japan.jpg" alt="japan landscape"></div>
+                    <div><img src="./assets/real-images/gallery-india.jpg" alt="taj mahal"></div>
+                    <div><img src="./assets/real-images/gallery-usa.jpg" alt="new york city"></div>
+                    <div><img src="./assets/real-images/gallery-peru.jpg" alt="machu pichu"></div>
+                </div>
+            </div>
+            <!-- End-->
+
         </section>
 
         <!-- CTA -->
@@ -152,9 +171,11 @@
                 </div>
             </div>
         </div>
-        <div class="footer-copyright">
-            <p><span>WeTravel</span> © 2023 All Rights Reserved</p>
-        </div>
     </footer>
+    
+</div>
+<div class="footer-copyright">
+    <p><span>WeTravel</span> © 2023 All Rights Reserved</p>
+</div>
 </body>
 </html>
