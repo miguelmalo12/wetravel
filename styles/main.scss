@@ -35,6 +35,10 @@ nav {
     align-items: center;
     justify-content: space-between;
 
+    @include media.tablet {
+        @include padding-two(4,4); 
+    }
+
     .navbar-logo {
         width: 50%;
         min-width: 150px;
@@ -56,6 +60,36 @@ nav {
         @include media.tablet {
             display: flex;
         }
+
+        ul {
+            display: flex;
+            list-style-type: none;
+            align-items: center;
+
+            li {
+                font-family: 'Nunito Sans', sans-serif;         
+                font-weight: 900;
+                font-size: 18px;
+                line-height: 30px;
+                text-align: center;
+                margin-right: 35px;
+                color: variables.$dark-color;
+            }
+
+            .active {
+                color: variables.$primary-color;
+            }
+
+            .signup-link {
+                font-family: 'Nunito Sans', sans-serif;         
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 30px;
+                text-align: center;
+                color: variables.$dark-color; 
+                margin-left: 35px; 
+            }
+        }
     }
 }
 
@@ -67,18 +101,33 @@ main {
 
     &__text {
         @include padding-all(4,2,0,2);
+        
+        @include media.tablet {
+            @include padding-all(4,4,0,4); 
+        }
+        
         p {
             @include padding-all(1,0,3,0);
+
+            @include media.tablet {
+                @include padding-all(2,4,3,4); 
+            }
         }
     }
 
     &__image {
         display: flex;
         justify-content: center;
+
         img {
             max-width: 100%;
             height: auto;
             object-fit: contain;
+
+            @include media.tablet {
+                max-width: 70%;
+                max-width: 600px;
+            }
         }
     }
 }
@@ -96,10 +145,17 @@ main {
             flex-direction: column;
             align-items: center;
 
+            @include media.tablet {
+                @include padding-two(2,8); 
+            }
+
             img {
                 @include padding-two(2,0);
                 width: 40%;
-
+                
+                @include media.tablet {
+                    max-width: 18%;
+                }
             }
         }
     }
@@ -114,12 +170,28 @@ main {
             max-width: 100%;
             height: auto;
             object-fit: contain;
+
+            @include media.tablet {
+                max-width: 70%;
+                max-width: 600px;
+            }
         }
     }
 
     &__text {
         order: 1;
         @include padding-all(4,2,0,2);
+
+        @include media.tablet {
+            @include padding-all(8,4,0,4); 
+        }
+
+        p {
+            @include media.tablet {
+                @include padding-two(0,4); 
+            }
+        }
+
         &__numbers {
             @include padding-all(2,0,0,0);
             div {
@@ -130,13 +202,21 @@ main {
 }
 
 .gallery {
-    @include padding-two(1,2);
+    @include padding-all(0,2,2,2);
+
+    @include media.tablet {
+        @include padding-all(0,4,4,4); 
+    }
 
     &__intro {
         @include padding-all(0,0,3,0);
         
         p {
             @include padding-all(1,0,3,0);
+            
+            @include media.tablet {
+                @include padding-all(1,4,3,4); 
+            }
         }
     }
 
@@ -151,6 +231,20 @@ main {
             height: auto;
             object-fit: cover;
             aspect-ratio: 1 / 1;
+
+            @include media.tablet {
+                width: 50%;
+
+                &:last-child {
+                    display: none;
+                }
+            }
+
+            @include media.desktop {
+                &:last-child {
+                    display: flex;
+                }
+            }
         }
     }
 }
@@ -159,6 +253,10 @@ main {
     @include padding-all(4,2,1,2);
 
     background-color: variables.$bg-color;
+
+    @include media.tablet {
+        @include padding-all(6,4,1,4); 
+    }
 
     &__text {
         p {
@@ -171,6 +269,12 @@ main {
             max-width: 100%;
             height: auto;
             object-fit: contain;
+
+            @include media.tablet {
+                max-width: 70%;
+                max-width: 500px;
+            }
+
         }
     }
 }
@@ -178,6 +282,10 @@ main {
 footer {
     @include padding-two(1,2);
     text-align: center;
+
+    @include media.tablet {
+        @include padding-two(2,4);
+    }
     
     ul, ol {
         list-style: none;
