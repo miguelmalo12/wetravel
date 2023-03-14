@@ -30,8 +30,10 @@ a {
 }
 
 #body {
-    max-width: 1600px;
-    margin: 0 auto;
+    @include media.desktop {
+        max-width: 1600px;
+        margin: 0 auto;
+    }
 }
 
 nav {
@@ -107,7 +109,8 @@ main {
 }
 
 .hero {
-
+    position: relative;
+    
     @include media.desktop {
         @include padding-two(0,8);
         display: flex;
@@ -160,6 +163,49 @@ main {
                 max-width: 600px;
             }
         }
+    }
+
+    // Background dotted map
+    &__map {
+        background-image: url("../assets/map-BG.png");
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 1216px;
+        height: 482px;
+        left: 0px;
+        top: 0px;
+        opacity: 0.1;
+    }
+
+    // Background small icons, only visible on desktop
+    &__bgicon {
+        position: absolute;
+        display: none;
+
+        @include media.desktop {
+            display: block;
+        }
+    }
+    .bg-arrow {
+        width: 103.92px;
+        height: 33.63px;
+        left: 52%;
+        top: 12%;
+    }
+    .bg-dot {
+        width: 17.39px;
+        height: 17.39px;
+        left: 92%;
+        top: 15%; 
+    }
+    .bg-location {
+        left: 94%;
+        top: 29%;
+    }
+    .bg-location-small {
+        left: 90%;
+        top: 45%;
+        width: 18px;
     }
 }
 
@@ -228,6 +274,7 @@ main {
 
     &__image {
        order: 2;
+       position: relative;
 
        @include media.desktop {
         order:1;
@@ -235,7 +282,7 @@ main {
         flex-grow: 0;
        }
 
-        img {
+        &--illustration {
             max-width: 100%;
             height: auto;
             object-fit: contain;
@@ -245,6 +292,50 @@ main {
                 max-width: 600px;
             }
         }
+    }
+
+    &__bgicon {
+        display: none;
+        position: absolute;
+
+        @include media.desktop {
+            display: block;
+        }
+    }
+
+    .bg-arrow {
+        left: 65%;
+        top: 12%;
+        transform: rotate(-26.94deg);
+    }
+
+    .bg-dot-yellow {
+        width: 11.59px;
+        height: 11.59px;
+        top: 12%;
+        left: 18%;
+        background: #FFCA00;
+        border-radius: 6.5px;
+    }
+
+    .bg-dot-blue {
+        width: 11.59px;
+        height: 11.59px;
+        left: 16%;
+        top: 86%;
+        background: #1EBBD7;
+        border-radius: 4px;
+        transform: rotate(14.24deg);
+    }
+
+    .bg-dot-red {
+        width: 11.59px;
+        height: 11.59px;
+        left: 90%;
+        top: 70%;
+        background: #FD5056;
+        border-radius: 4px;
+        transform: rotate(-41.14deg);
     }
 
     &__text {
@@ -499,11 +590,15 @@ footer {
         }
 
         &__links {
-
+            
             @include media.desktop {
                 display: flex;
                 flex-basis: 50%;
                 text-align: left;
+            }
+
+            h5 {
+                @include padding-all(0,0,1,0);
             }
 
             &--menu {

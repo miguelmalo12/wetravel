@@ -3,6 +3,7 @@
 
 .primary-button {
     background-color: variables.$primary-color;
+    border: 2px solid variables.$primary-color;
     color: variables.$white;
     cursor: pointer;
     border-radius: 25px;
@@ -15,7 +16,6 @@
 
     &:hover {
         background-color: variables.$white;
-        border: 2px solid variables.$primary-color;
         color: variables.$primary-color;
     }
 }
