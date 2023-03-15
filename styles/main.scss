@@ -3,6 +3,7 @@
 @use "./partials/mixins" as *;
 @use "./partials/variables";
 @use "./partials/buttons";
+@use "./partials/animations";
 
 *  {
     box-sizing: border-box;
