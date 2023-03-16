@@ -778,4 +778,16 @@ footer .footer-container__links--signup p {
 }
 .footer-copyright p {
   color: #FFFFFF;
+}
+
+.travel-planner-section {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 31.24%, rgba(253, 80, 86, 0.1) 100%);
+}
+
+.form-container {
+  width: 290px;
+  height: 77px;
+  background-color: #fff;
+  box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
+  border-radius: 75px;
 }/*# sourceMappingURL=main.css.map */
