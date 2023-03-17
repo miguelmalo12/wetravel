@@ -1,0 +1,220 @@
+h1 {
+  color: #333333;
+  font-family: "Laila", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 54.6666666667px;
+  font-size: 42.6666666667px;
+}
+@media (min-width: 768px) {
+  h1 {
+    line-height: 82px;
+    font-size: 64px;
+  }
+}
+
+h2 {
+  color: #333333;
+  font-family: "Laila";
+  font-style: normal;
+  font-weight: 700;
+  text-transform: capitalize;
+  line-height: 52.6315789474px;
+  font-size: 36.0902255639px;
+}
+@media (min-width: 768px) {
+  h2 {
+    line-height: 70px;
+    font-size: 48px;
+  }
+}
+
+h3 {
+  color: #333333;
+  font-family: "Laila";
+  font-style: normal;
+  font-weight: 600;
+  text-transform: capitalize;
+  line-height: 44.8px;
+  font-size: 28.8px;
+}
+@media (min-width: 768px) {
+  h3 {
+    line-height: 56px;
+    font-size: 36px;
+  }
+}
+
+h4 {
+  color: #333333;
+  font-family: "Laila";
+  font-style: normal;
+  font-weight: 600;
+  text-transform: capitalize;
+  line-height: 28.8px;
+  font-size: 19.2px;
+}
+@media (min-width: 768px) {
+  h4 {
+    line-height: 36px;
+    font-size: 24px;
+  }
+}
+
+h5 {
+  color: #333333;
+  font-family: "Laila";
+  font-style: normal;
+  font-weight: 500;
+  text-transform: capitalize;
+  line-height: 24px;
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  h5 {
+    line-height: 30px;
+    font-size: 20px;
+  }
+}
+
+h6 {
+  color: #FD5056;
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 22.4px;
+  font-size: 12.8px;
+}
+@media (min-width: 768px) {
+  h6 {
+    line-height: 28px;
+    font-size: 16px;
+  }
+}
+
+p, li {
+  color: #555555;
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22.4px;
+  font-size: 12.8px;
+}
+@media (min-width: 768px) {
+  p, li {
+    line-height: 28px;
+    font-size: 16px;
+  }
+}
+
+.primary-button {
+  background-color: #FD5056;
+  border: 2px solid #FD5056;
+  color: #FFFFFF;
+  cursor: pointer;
+  border-radius: 25px;
+  box-shadow: 0px 7px 20px rgba(253, 80, 86, 0.2980392157);
+  padding: 0.8rem 3.2rem;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 16px;
+}
+.primary-button:hover {
+  background-color: #FFFFFF;
+  color: #FD5056;
+}
+
+.slidein-right {
+  opacity: 0;
+  transform: translateX(25%);
+  animation: slide-in 0.8s ease-in-out 1s forwards;
+}
+
+.slidein-left {
+  opacity: 0;
+  transform: translateX(-25%);
+  animation: slide-in 0.8s ease-in-out 0.3s forwards;
+}
+
+@keyframes slide-in {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.fadein-up {
+  opacity: 0;
+  transform: translateY(25%);
+  animation: fade-up 0.8s ease-in-out 1.8s forwards;
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "Laila", "Nunito Sans", sans-serif;
+  box-sizing: border-box;
+}
+
+.header {
+  padding: 24px 16px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+.navbar__logo {
+  max-width: 150px;
+  margin-bottom: 8px;
+}
+.navbar__list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.navbar__item {
+  margin-bottom: 8px;
+}
+.navbar__link {
+  text-decoration: none;
+  font-family: "Nunito Sans";
+  color: #333745;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}
+.navbar__link--active {
+  color: #FD5056;
+}
+.navbar__link--btn {
+  padding: 6px 24px;
+  background-color: #FD5056;
+  font-weight: 700;
+  color: #FFFFFF;
+  border-radius: 25px;
+}
+.navbar__link--light {
+  font-weight: 400;
+  font-size: 15px;
+}/*# sourceMappingURL=travel-planner.css.map */

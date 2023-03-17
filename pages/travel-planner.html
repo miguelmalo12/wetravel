@@ -8,54 +8,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Laila:wght@300;400;500;600;700&family=Nunito+Sans:wght@200;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/travel-planner.css">
 </head>
 <body>
-    <div id="body"> <!-- Div wrapping all body to add max-width to the whole layout in desktop--> 
-        <header>
-            <nav>
-                <div>
-                    <img class="navbar-logo" src="../assets/wetravel-logo-red.png" alt="wetravel logo">
-                </div>
-                <div class="navbar-menu-mobile">
-                    <img src="../assets/bars-solid.svg" alt="bars menu">            
-                      </svg>
-                </div>
-                <div class="navbar-menu">
-                    <ul>
-                        <li>Home</li>
-                        <li>Recommend</li>
-                        <li class="active">Plan</li>
-                        <a class="primary-button" href="">Login</a>
-                        <a class="signup-link" href="">Signup</a>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-
-        <main>
-            <section class="hero travel-planner-section">
-                <div class="hero__text slidein-left">
-                    <h6>Easily Plan Your Next Trip</h6>
-                    <h1>Travel planner</h1>
-                    <div class="form-container">
-                        <div class="form__title-container">
-                            <img src="" alt="" class="form__logo">
-                            <p class="form__title">Going to</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero__image slidein-right">
-                    <img src="../assets/vector-illustrations/illustration_travel-planner.png" alt="travel illustration">
-                </div>
-         <!-- Background image -->
-                <img class="hero__bgicon bg-arrow" src="../assets/bg-arrow.png" alt="arrow icon">
-                <img class="hero__bgicon bg-dot" src="../assets/bg-dot.png" alt="dot icon">
-                <img class="hero__bgicon bg-location" src="../assets/bg-location.png" alt="location icon">
-                <img class="hero__bgicon bg-location-small" src="../assets/bg-location.png" alt="smaller location icon">
-            </section>
-        </main>
-    
+    <header class="header">
+        <nav class="navbar">
+            <img src="../assets/wetravel-logo-red.png" alt="" class="navbar__logo">
+            <ul class="navbar__list">
+                <li class="navbar__item"><a href="#" class="navbar__link">Home</a></li>
+                <li class="navbar__item"><a href="#" class="navbar__link">Recommend</a></li>
+                <li class="navbar__item"><a href="#" class="navbar__link navbar__link--active">Plan</a></li>
+                <li class="navbar__item"><a href="#" class="navbar__link navbar__link--btn">Login</a></li>
+                <li class="navbar__item"><a href="#" class="navbar__link  navbar__link--light">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
 </body>
 </html>

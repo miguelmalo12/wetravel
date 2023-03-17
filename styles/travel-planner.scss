@@ -1,0 +1,71 @@
+@use "./partials/fonts";
+@use "./partials/media" as *;
+@use "./partials/mixins" as *;
+@use "./partials/variables";
+@use "./partials/buttons";
+@use "./partials/animations";
+
+*,
+*::before,
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body{
+    font-family: 'Laila', 'Nunito Sans',sans-serif;
+    box-sizing: border-box;
+}
+
+// Navigation bar
+
+.header{
+    padding: 24px 16px;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    &__logo{
+        max-width: 150px;
+        margin-bottom: 8px;
+    }
+    &__list{
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+    &__item{
+        margin-bottom: 8px;
+    }
+    &__link{
+        text-decoration: none;
+        font-family: 'Nunito Sans';
+        color: variables.$dark-color;
+        font-weight: 900;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+
+        &--active{
+            color: variables.$primary-color;
+        }
+        &--btn{
+            padding: 6px 24px;
+            background-color: variables.$primary-color;
+            font-weight: 700;
+            color: variables.$white;
+            border-radius: 25px;
+        }
+        &--light{
+            font-weight: 400;
+            font-size: 15px;
+        }
+    }
+}
+
