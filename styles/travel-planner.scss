@@ -22,6 +22,12 @@ body{
 
 .header{
     padding: 24px 16px;
+    @include tablet{
+        padding: 36px 36px;
+    }
+    @include desktop{
+        padding: 36px 5vw;
+    }
 }
 
 .navbar{
@@ -29,9 +35,20 @@ body{
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    
+    @include tablet{
+        flex-direction: row;
+    }
     &__logo{
-        max-width: 150px;
+        width: 150px;
         margin-bottom: 8px;
+        @include tablet{
+            margin: 0;
+            width: 200px;
+        }
+        @include desktop{
+            width: 280px;
+        }
     }
     &__list{
         list-style: none;
@@ -39,9 +56,15 @@ body{
         align-items: center;
         justify-content: space-between;
         flex-direction: column;
+        @include tablet{
+            flex-direction: row;
+        }
     }
     &__item{
         margin-bottom: 8px;
+        @include tablet{
+            margin: 0;
+        }
     }
     &__link{
         text-decoration: none;
@@ -51,6 +74,16 @@ body{
         font-size: 16px;
         line-height: 24px;
         text-align: center;
+
+        @include tablet{
+            flex-direction: row;
+            margin-right: 24px;
+        }
+        @include desktop{
+            font-size: 18px;
+            line-height: 30px;
+            margin-right: 36px;
+        }
 
         &--active{
             color: variables.$primary-color;
@@ -65,6 +98,9 @@ body{
         &--light{
             font-weight: 400;
             font-size: 15px;
+            @include desktop{
+                font-size: 16px;
+            }
         }
     }
 }
