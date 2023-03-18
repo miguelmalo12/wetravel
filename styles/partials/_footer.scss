@@ -1,0 +1,118 @@
+@use "./fonts";
+@use "./media";
+@use "./mixins" as *;
+@use "./variables";
+@use "./buttons";
+@use "./animations";
+
+footer {
+    @include padding-two(1,2);
+    text-align: center;
+
+    @include media.tablet {
+        @include padding-two(2,4);
+    }
+
+    @include media.desktop {
+        @include padding-all(2,16,8,16);
+    }
+    
+    ul, ol {
+        list-style: none;
+      }
+
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        @include media.desktop {
+            // @include padding-two(2,4);
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        &__intro {
+            @include padding-two(2,0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            @include media.desktop {
+                flex-basis: 50%;
+                align-items: flex-start;
+                text-align: left;
+                width: 200px;
+            }
+
+            img {
+                width: 50%;
+                @include padding-two(2,0);
+
+                @include media.desktop {
+                    @include padding-all(0,0,2,0);
+                }
+            }
+
+            p {
+                @include media.desktop {
+                    width: 350px;
+                }
+            }
+        }
+
+        &__links {
+            
+            @include media.desktop {
+                display: flex;
+                flex-basis: 50%;
+                text-align: left;
+            }
+
+            h5 {
+                @include padding-all(0,0,1,0);
+            }
+
+            &--menu {
+                @include padding-two(2,0);
+                flex-basis: 50%;
+            }
+
+            &--signup {
+                @include padding-two(2,0);
+                flex-basis: 50%;
+
+                p {
+                margin-bottom: 2.4rem;
+                }
+            }
+        }
+    }
+}
+
+.footer-copyright {
+    background-color: variables.$dark-color;
+    color: variables.$white;
+    margin-top: 5rem;
+
+    @include padding-two(2,2);
+
+    @include media.tablet {
+        @include padding-two(2,4);
+    }
+
+    @include media.desktop {
+        @include padding-two(2,8);
+    }
+
+    span {
+        color: variables.$white;
+        font-weight: 700;
+    }
+    p {
+        color: variables.$white;
+    }
+}
