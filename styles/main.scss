@@ -4,7 +4,8 @@
 @use "./partials/variables";
 @use "./partials/buttons";
 @use "./partials/animations";
-
+@use './partials/header';
+@use './partials/footer';
 *  {
     box-sizing: border-box;
     margin: 0;
@@ -34,74 +35,6 @@ a {
     @include media.desktop {
         max-width: 1600px;
         margin: 0 auto;
-    }
-}
-
-nav {
-    @include padding-two(2,2);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    @include media.tablet {
-        @include padding-two(4,4); 
-    }
-
-    @include media.tablet {
-        @include padding-two(4,8); 
-    }
-
-    .navbar-logo {
-        width: 50%;
-        min-width: 150px;
-        max-width: 350px;
-    }
-
-    .navbar-menu-mobile {
-        width: 15%;
-        max-width: 20px;        
-
-        @include media.tablet {
-            display: none;
-        }
-    }
-
-    .navbar-menu {
-        display: none;
-
-        @include media.tablet {
-            display: flex;
-        }
-
-        ul {
-            display: flex;
-            list-style-type: none;
-            align-items: center;
-
-            li {
-                font-family: 'Nunito Sans', sans-serif;         
-                font-weight: 900;
-                font-size: 18px;
-                line-height: 30px;
-                text-align: center;
-                margin-right: 35px;
-                color: variables.$dark-color;
-            }
-
-            .active {
-                color: variables.$primary-color;
-            }
-
-            .signup-link {
-                font-family: 'Nunito Sans', sans-serif;         
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 30px;
-                text-align: center;
-                color: variables.$dark-color; 
-                margin-left: 35px; 
-            }
-        }
     }
 }
 
@@ -531,114 +464,3 @@ main {
     }
 }
 
-footer {
-    @include padding-two(1,2);
-    text-align: center;
-
-    @include media.tablet {
-        @include padding-two(2,4);
-    }
-
-    @include media.desktop {
-        @include padding-all(2,16,8,16);
-    }
-    
-    ul, ol {
-        list-style: none;
-      }
-
-    .footer-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        @include media.desktop {
-            // @include padding-two(2,4);
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-        }
-
-        &__intro {
-            @include padding-two(2,0);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            @include media.desktop {
-                flex-basis: 50%;
-                align-items: flex-start;
-                text-align: left;
-                width: 200px;
-            }
-
-            img {
-                width: 50%;
-                @include padding-two(2,0);
-
-                @include media.desktop {
-                    @include padding-all(0,0,2,0);
-                }
-            }
-
-            p {
-                @include media.desktop {
-                    width: 350px;
-                }
-            }
-        }
-
-        &__links {
-            
-            @include media.desktop {
-                display: flex;
-                flex-basis: 50%;
-                text-align: left;
-            }
-
-            h5 {
-                @include padding-all(0,0,1,0);
-            }
-
-            &--menu {
-                @include padding-two(2,0);
-                flex-basis: 50%;
-            }
-
-            &--signup {
-                @include padding-two(2,0);
-                flex-basis: 50%;
-
-                p {
-                margin-bottom: 2.4rem;
-                }
-            }
-        }
-    }
-}
-
-.footer-copyright {
-    background-color: variables.$dark-color;
-    color: variables.$white;
-    margin-top: 5rem;
-
-    @include padding-two(2,2);
-
-    @include media.tablet {
-        @include padding-two(2,4);
-    }
-
-    @include media.desktop {
-        @include padding-two(2,8);
-    }
-
-    span {
-        color: variables.$white;
-        font-weight: 700;
-    }
-    p {
-        color: variables.$white;
-    }
-}
