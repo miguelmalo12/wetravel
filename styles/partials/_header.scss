@@ -5,7 +5,7 @@
 @use "./buttons";
 @use "./animations";
 
-nav {
+.navbar {
     @include padding-two(2,2);
     display: flex;
     align-items: center;
@@ -19,13 +19,13 @@ nav {
         @include padding-two(4,8); 
     }
 
-    .navbar-logo {
+    &__logo {
         width: 50%;
         min-width: 150px;
         max-width: 350px;
     }
 
-    .navbar-menu-mobile {
+    &__menu-mobile {
         width: 15%;
         max-width: 20px;        
 
@@ -34,41 +34,44 @@ nav {
         }
     }
 
-    .navbar-menu {
+    &__menu {
         display: none;
 
         @include media.tablet {
             display: flex;
         }
-
-        ul {
-            display: flex;
-            list-style-type: none;
-            align-items: center;
-
-            li {
-                font-family: 'Nunito Sans', sans-serif;         
-                font-weight: 900;
-                font-size: 18px;
-                line-height: 30px;
-                text-align: center;
-                margin-right: 35px;
-                color: variables.$dark-color;
-            }
-
-            .active {
-                color: variables.$primary-color;
-            }
-
-            .signup-link {
-                font-family: 'Nunito Sans', sans-serif;         
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 30px;
-                text-align: center;
-                color: variables.$dark-color; 
-                margin-left: 35px; 
-            }
+    }
+    &__list {
+        display: flex;
+        list-style-type: none;
+        align-items: center;
+    }
+    &__item {
+        font-family: 'Nunito Sans', sans-serif;         
+        font-weight: 900;
+        font-size: 18px;
+        line-height: 30px;
+        text-align: center;
+        margin-right: 35px;
+        color: variables.$dark-color;
+        &--active {
+            color: variables.$primary-color;
         }
     }
+
+    &__link{
+        &:visited,
+        &:link{
+        text-decoration: none;
+    }
+        &--light {
+            font-family: 'Nunito Sans', sans-serif;         
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 30px;
+            text-align: center;
+            color: variables.$dark-color; 
+        }
+    }
+    
 }
