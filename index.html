@@ -13,22 +13,19 @@
 </head>
 <body>
 <div id="body"> <!-- Div wrapping all body to add max-width to the whole layout in desktop--> 
-    <header>
-        <nav>
-            <div>
-                <img class="navbar-logo" src="./assets/wetravel-logo-red.png" alt="wetravel logo">
-            </div>
-            <div class="navbar-menu-mobile">
+    <header class="header">
+        <nav class="navbar">
+            <img class="navbar__logo" src="./assets/wetravel-logo-red.png" alt="wetravel logo">
+            <div class="navbar__menu-mobile">
                 <img src="./assets/bars-solid.svg" alt="bars menu">            
-                  </svg>
             </div>
-            <div class="navbar-menu">
-                <ul>
-                    <li class="active">Home</li>
-                    <li>Recommend</li>
-                    <li>Plan</li>
-                    <a class="primary-button" href="">Login</a>
-                    <a class="signup-link" href="">Signup</a>
+            <div class="navbar__menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item navbar__item--active"><a class="navbar__link">Home</a></li>
+                    <li class="navbar__item"><a class="navbar__link">Recommend</a></li>
+                    <li class="navbar__item"><a class="navbar__link">Plan</a></li>
+                    <li class="navbar__item"><a class="navbar__link primary-button" href="">Login</a></li>
+                    <li class="navbar__item"><a class="navbar__link--light" href="">Signup</a></li>
                 </ul>
             </div>
         </nav>
