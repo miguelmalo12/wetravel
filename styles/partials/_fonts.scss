@@ -1,6 +1,15 @@
 @use "./variables";
 @use "./media";
 
+
+// Font size stablished so that 1rem = 10px
+html {
+    font-size: 62.5%;
+}
+body{
+    font-family: 'Laila', 'Nunito Sans',sans-serif;
+}
+
 h1 {
     color: variables.$dark-text;
     font-family: 'Laila', sans-serif;

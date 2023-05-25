@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeTravel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Laila:wght@300;400;500;600;700&family=Nunito+Sans:wght@200;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/travel-planner.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <img class="navbar__logo" src="../assets/wetravel-logo-red.png" alt="wetravel logo">
+            <div class="navbar__menu-mobile">
+                <img src="../assets/bars-solid.svg" alt="bars menu">            
+            </div>
+            <div class="navbar__menu">
+                <ul class="navbar__list">
+                    <li class="navbar__item"><a class="navbar__link">Home</a></li>
+                    <li class="navbar__item"><a class="navbar__link">Recommend</a></li>
+                    <li class="navbar__item navbar__item--active"><a class="navbar__link">Plan</a></li>
+                    <li class="navbar__item"><a class="navbar__link primary-button" href="">Login</a></li>
+                    <li class="navbar__item"><a class="navbar__link navbar__link--light" href="">Signup</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero__gradient"></div> 
+            <div class="hero__text slidein-left">
+                <h6>Easily Plan Your Next Trip</h6>
+                <h1>Travel Planner</h1>
+                <div class="hero__location-container">
+                <div class="hero__location">
+                    <img src="../assets/icons/location.svg" alt="" class="hero__icon">
+                    <div class="hero__input-group">
+                        <label for="location" class="hero__label">Going to</label>
+                        <input type="text" placeholder="Enter City/Country" class="hero__input">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="hero__date-container">
+                <div class="hero__date">
+                    <img src="../assets/icons/date.svg" alt="" class="hero__icon">
+                    <div class="hero__input-group">
+                        <label for="date" class="hero__label">From</label>
+                        <input type="text" placeholder="Select Date" class="hero__input">
+                    </div>
+                </div>
+                <div class="hero__date">
+                    <img src="../assets/icons/date.svg" alt="" class="hero__icon">
+                    <div class="hero__input-group">
+                        <label for="date" class="hero__label">To</label>
+                        <input type="text" placeholder="Select Date" class="hero__input">
+                    </div>
+                </div>
+                <div class="hero__cta">
+                    <img class="hero__cta-icon" src="../assets/icons/Icon.svg" alt="">
+                </div>
+
+                
+            </div>
+            </div>
+            <div class="hero__image slidein-right">
+                <img src="../assets/vector-illustrations/illustration_travel-planner.png" alt="travel illustration">
+            </div>
+             <!-- Background image -->
+            <img class="hero__bgicon bg-arrow" src="../assets/bg-arrow.png" alt="arrow icon">
+            <img class="hero__bgicon bg-dot" src="../assets/bg-dot.png" alt="dot icon">
+            <img class="hero__bgicon bg-location" src="../assets/bg-location.png" alt="location icon">
+            <img class="hero__bgicon bg-location-small" src="../assets/bg-location.png" alt="smaller location icon">
+        </section>
+    </main>
+</body>
+</html>

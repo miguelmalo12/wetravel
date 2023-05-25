@@ -1,3 +1,11 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Laila", "Nunito Sans", sans-serif;
+}
+
 h1 {
   color: #333333;
   font-family: "Laila", sans-serif;
@@ -334,10 +342,6 @@ footer .footer-container__links--signup p {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html {
-  font-size: 62.5%;
 }
 
 body {
