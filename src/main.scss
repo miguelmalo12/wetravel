@@ -1,9 +1,7 @@
-@use "./styles/partials/fonts";
 @use "./styles/partials/media";
-@use "./styles/partials/mixins" as *;
-@use "./styles/partials/variables";
 @use "./styles/partials/buttons";
 @use "./styles/partials/animations";
+@use "./styles/partials/fonts";
 
 *  {
     box-sizing: border-box;
@@ -36,9 +34,3 @@ a {
 main {
     text-align: center;
 }
-
-
-
-
-
-

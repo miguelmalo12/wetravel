@@ -1,9 +1,6 @@
-@use "../../styles/partials/fonts";
 @use "../../styles/partials/media";
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/variables";
-@use "../../styles/partials/buttons";
-@use "../../styles/partials/animations";
 
 .navbar {
     @include padding-two(2,2);
