@@ -1,0 +1,58 @@
+@use "../../styles/partials/fonts";
+@use "../../styles/partials/media";
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables";
+@use "../../styles/partials/buttons";
+@use "../../styles/partials/animations";
+
+.cta {
+    @include padding-all(4,2,1,2);
+
+    background-color: variables.$bg-color;
+
+    @include media.tablet {
+        @include padding-all(6,4,1,4); 
+    }
+
+    @include media.desktop {
+        @include padding-two(2,8);
+        margin: 12.8rem;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        border-radius: 15px;
+    }
+
+    &__text {
+        
+        @include media.desktop {
+            flex-basis: 60%;
+        }
+        
+        p {
+            @include padding-all(1,0,3,0);
+        }
+    }
+
+    &__image {
+        text-align: center;
+        @include media.desktop {
+            flex-basis: 40%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+
+            @include media.tablet {
+                max-width: 500px;
+            }
+
+            @include media.desktop {
+                max-width: 400px;
+            }
+        }
+    }
+}
+

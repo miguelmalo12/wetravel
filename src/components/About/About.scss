@@ -1,143 +1,9 @@
-@use "./partials/fonts";
-@use "./partials/media";
-@use "./partials/mixins" as *;
-@use "./partials/variables";
-@use "./partials/buttons";
-@use "./partials/animations";
-@use './partials/header';
-@use './partials/footer';
-*  {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    }
-
-
-body {
-    font-family: 'Laila', sans-serif;
-    font-family: 'Nunito Sans', sans-serif;
-}
-
-a {
-    text-decoration: none;
-    // color: inherit;
-    cursor: pointer; 
-    &:visited {
-        @extend a;
-    }
-}
-
-#body {
-    @include media.desktop {
-        max-width: 1600px;
-        margin: 0 auto;
-    }
-}
-
-main {
-    text-align: center;
-}
-
-.hero {
-    position: relative;
-    
-    @include media.desktop {
-        @include padding-two(0,8);
-        display: flex;
-        align-items: center;
-        text-align: left;
-    }
-
-    &__text {
-        @include padding-all(4,2,0,2);
-        
-        @include media.tablet {
-            @include padding-all(4,4,0,4); 
-        }
-
-        @include media.desktop {
-            @include padding-all(4,8,0,8);
-            flex-basis: 50%;
-            flex-grow: 0; 
-        }
-        
-        p {
-            @include padding-all(1,0,3,0);
-
-            @include media.tablet {
-                @include padding-all(2,4,3,4); 
-            }
-
-            @include media.desktop {
-                @include padding-all(2,0,4,0);
-            }
-        }
-    }
-
-    &__image {
-        display: flex;
-        justify-content: center;
-
-        @include media.desktop {
-            flex-basis: 50%;
-            flex-grow: 0;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-
-            @include media.tablet {
-                max-width: 70%;
-                max-width: 600px;
-            }
-        }
-    }
-
-    // Background dotted map
-    &__map {
-        background-image: url("../assets/map-BG.png");
-        background-repeat: no-repeat;
-        position: absolute;
-        width: 1216px;
-        height: 482px;
-        left: 0px;
-        top: 0px;
-        opacity: 0.1;
-    }
-
-    // Background small icons, only visible on desktop
-    &__bgicon {
-        position: absolute;
-        display: none;
-
-        @include media.desktop {
-            display: block;
-        }
-    }
-    .bg-arrow {
-        width: 103.92px;
-        height: 33.63px;
-        left: 52%;
-        top: 12%;
-    }
-    .bg-dot {
-        width: 17.39px;
-        height: 17.39px;
-        left: 92%;
-        top: 15%; 
-    }
-    .bg-location {
-        left: 94%;
-        top: 29%;
-    }
-    .bg-location-small {
-        left: 90%;
-        top: 45%;
-        width: 18px;
-    }
-}
+@use "../../styles/partials/fonts";
+@use "../../styles/partials/media";
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables";
+@use "../../styles/partials/buttons";
+@use "../../styles/partials/animations";
 
 .process {
     @include padding-two(0,2);
@@ -189,6 +55,7 @@ main {
         }
     }
 }
+
 
 .about {
     display: flex;
@@ -408,55 +275,3 @@ main {
         }
     }
 }
-
-.cta {
-    @include padding-all(4,2,1,2);
-
-    background-color: variables.$bg-color;
-
-    @include media.tablet {
-        @include padding-all(6,4,1,4); 
-    }
-
-    @include media.desktop {
-        @include padding-two(2,8);
-        margin: 12.8rem;
-        display: flex;
-        align-items: center;
-        text-align: left;
-        border-radius: 15px;
-    }
-
-    &__text {
-        
-        @include media.desktop {
-            flex-basis: 60%;
-        }
-        
-        p {
-            @include padding-all(1,0,3,0);
-        }
-    }
-
-    &__image {
-        text-align: center;
-        @include media.desktop {
-            flex-basis: 40%;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-
-            @include media.tablet {
-                max-width: 500px;
-            }
-
-            @include media.desktop {
-                max-width: 400px;
-            }
-        }
-    }
-}
-

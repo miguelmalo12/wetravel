@@ -1,0 +1,44 @@
+@use "./styles/partials/fonts";
+@use "./styles/partials/media";
+@use "./styles/partials/mixins" as *;
+@use "./styles/partials/variables";
+@use "./styles/partials/buttons";
+@use "./styles/partials/animations";
+
+*  {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    }
+
+
+body {
+    font-family: 'Laila', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    // color: inherit;
+    cursor: pointer; 
+    &:visited {
+        @extend a;
+    }
+}
+
+#body {
+    @include media.desktop {
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+}
+
+main {
+    text-align: center;
+}
+
+
+
+
+
+
