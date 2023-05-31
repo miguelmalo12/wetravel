@@ -1,10 +1,9 @@
-@use "./partials/fonts";
-@use "./partials/media" as *;
-@use "./partials/mixins" as *;
-@use "./partials/variables";
-@use "./partials/buttons";
-@use "./partials/animations";
-@use './partials/header' as *;
+@use "../../styles/partials/fonts";
+@use "../../styles/partials/media" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables";
+@use "../../styles/partials/buttons";
+@use "../../styles/partials/animations";
 
 *,
 *::before,

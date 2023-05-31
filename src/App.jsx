@@ -1,21 +1,24 @@
 import './main.scss';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
-import Hero from './components/Hero/Hero';
-import About from './components/About/About';
-import CTA from './components/CTA/CTA';
+import Home from './pages/Home';
+import TravelPlanner from './pages/TravelPlanner/TravelPlanner';
 import Footer from './components/Footer/Footer';
 
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <CTA />
-      </main>
+      
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='plan' element={<TravelPlanner />} />
+          <Route path='*' element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+
       <Footer />
     </div>
   );

@@ -56,11 +56,17 @@
         }
     }
 
-    &__link{
+    &__link {
         &:visited,
         &:link{
-        text-decoration: none;
-    }
+            text-decoration: none;
+            color: inherit;
+        }
+
+        &.primary-button {
+            color: variables.$white;
+        }
+
         &--light {
             font-family: 'Nunito Sans', sans-serif;         
             font-weight: 400;
