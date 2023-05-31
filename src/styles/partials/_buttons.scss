@@ -1,7 +1,7 @@
 @use "./variables";
 @use "./mixins" as *;
 
-.primary-button {
+.primary-button.primary-button {
     background-color: variables.$primary-color;
     border: 2px solid variables.$primary-color;
     color: variables.$white;

@@ -21,6 +21,7 @@ a {
     cursor: pointer; 
     &:visited {
         @extend a;
+        color: inherit;
     }
 }
 

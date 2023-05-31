@@ -1,5 +1,6 @@
 import './Footer.scss';
 import logo from '../../assets/wetravel-logo-red.png';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -14,10 +15,10 @@ function Footer() {
                 <div className="footer-container__links--menu">
                     <h5>Menu</h5>
                     <ul>
-                        <li><a>Home</a></li>
-                        <li><a>Recommend</a></li>
-                        <li><a>Plan</a></li>
-                        <li><a>Login</a></li>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="recommend">Recommend</Link></li>
+                        <li><Link to="plan">Plan</Link></li>
+                        <li><Link>Login</Link></li>
                     </ul>
                 </div>
                 <div className="footer-container__links--signup">

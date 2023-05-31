@@ -8,7 +8,7 @@ function Home() {
     <main>
         <Hero />
         <About />
-        <CTA />
+        <CTA title={"Let's Explore The Beauty Of the World"} text={"Your perfect destination, one click away."} buttonText={"Get Started"} />
     </main>
   )
 }
