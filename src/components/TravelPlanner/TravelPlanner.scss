@@ -1,0 +1,47 @@
+
+
+.planner {
+    padding: 0rem 12.8rem;
+
+    &--title {
+        text-align: left;
+        padding-bottom: 3rem;
+    }
+
+    &--plan {
+        display: flex;
+        justify-content: space-between;
+
+
+        &__days {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+        }
+        &__events {
+            background: #FFFFFF;
+            box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            width: 50%;
+            width: 444px;
+            height: 486px;
+            padding: 2.8rem 2.8rem 4rem;
+            
+            &--title {
+                text-align: left;
+                padding-bottom: 3.1rem;
+            }
+
+            &--item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 2.8rem;
+                cursor: pointer;
+
+                img {
+                    margin-right: 2.7rem;
+                }
+            }
+        }
+    }
+}

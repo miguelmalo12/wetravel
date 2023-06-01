@@ -9,7 +9,7 @@ function Header() {
   return (
     <header className="header">
       <nav className="navbar">
-        <img className="navbar__logo" src={logo} alt="wetravel logo" />
+        <Link to="/" className="navbar__logo"> <img src={logo} alt="wetravel logo" /> </Link>
         <div className="navbar__menu-mobile">
           <img src={burgerMenu} alt="bars menu" />
         </div>

@@ -1,4 +1,5 @@
 import './HeroForm.scss';
+import { useState } from 'react';
 
 import heroBgArrow from '../../assets/bg-arrow.png';
 import heroBgDot from '../../assets/bg-dot.png';
@@ -7,7 +8,15 @@ import heroLocationIcon from '../../assets/icons/location.svg';
 import heroDateIcon from '../../assets/icons/date.svg';
 import heroSubmitIcon from '../../assets/icons/Icon.svg';
 
-function HeroForm( { subtitle, title, image}) {
+function HeroForm( { subtitle, title, image, onSubmitClick}) {
+  const [location, setLocation] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  const handleSubmit = () => {
+    onSubmitClick(location, fromDate, toDate);
+  };
+  
   return (
     <section className="hero">
       <div className="hero__gradient"></div>
@@ -16,22 +25,24 @@ function HeroForm( { subtitle, title, image}) {
         <h1>{title}</h1>
         <div className="hero__location-container">
           <div className="hero__location">
-            <img src={heroLocationIcon} alt="" class="hero__icon" />
+            <img src={heroLocationIcon} alt="" className="hero__icon" />
             <div className="hero__input-group">
-              <label for="location" class="hero__label">
+              <label htmlFor="location" className="hero__label">
                 Going to
               </label>
               <input
                 type="text"
                 placeholder="Enter City/Country"
-                class="hero__input"
+                className="hero__input"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
               />
             </div>
           </div>
         </div>
         <div className="hero__date-container">
           <div className="hero__date">
-            <img src={heroDateIcon} alt="" class="hero__icon" />
+            <img src={heroDateIcon} alt="" className="hero__icon" />
             <div className="hero__input-group">
               <label htmlFor="dateFrom" className="hero__label">
                 From
@@ -46,11 +57,13 @@ function HeroForm( { subtitle, title, image}) {
                   e.currentTarget.value === "" &&
                   (e.currentTarget.type = "text")
                 }
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
               />
             </div>
           </div>
-          <div class="hero__date">
-            <img src={heroDateIcon} alt="" class="hero__icon" />
+          <div className="hero__date">
+            <img src={heroDateIcon} alt="" className="hero__icon" />
             <div className="hero__input-group">
               <label htmlFor="dateFrom" className="hero__label">
                 To
@@ -65,15 +78,17 @@ function HeroForm( { subtitle, title, image}) {
                   e.currentTarget.value === "" &&
                   (e.currentTarget.type = "text")
                 }
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
               />
             </div>
           </div>
-          <div class="hero__cta">
-            <img className="hero__cta-icon" src={heroSubmitIcon} alt="" />
+          <div className="hero__cta" onClick={handleSubmit}>
+            <img className="hero__cta-icon" src={heroSubmitIcon} alt="submit icon" />
           </div>
         </div>
       </div>
-      <div class="hero__image slidein-right">
+      <div className="hero__image slidein-right">
         <img src={image} alt="travel illustration" />
       </div>
       {/* <!-- Background image --> */}
