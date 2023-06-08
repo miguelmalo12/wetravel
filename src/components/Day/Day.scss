@@ -31,6 +31,16 @@
         }
     }
 
+    &--entry {
+        display: flex;
+        margin-left: 10rem;
+        padding-bottom: 24px;
+
+        p {
+            padding-right: 16px;
+        }
+    }
+
     &--area {
         display: flex;
         align-items: center;

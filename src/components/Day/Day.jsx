@@ -17,8 +17,8 @@ function Day({ dayNumber, date }) {
         </div>
       </div>
       {events.map((event, index) => (
-          <div key={index}>
-            {event.title} <input type="text" />
+          <div className="day--entry" key={index}>
+            <p>{event.title} </p><input type="text" />
           </div>
         ))}
       <div
