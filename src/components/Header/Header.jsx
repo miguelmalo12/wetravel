@@ -1,6 +1,7 @@
 import "./Header.scss";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/wetravel-logo-red.png";
+import burgerMenu from '../../assets/bars-solid.svg';
 
 function Header() {
   const location = useLocation();
@@ -8,9 +9,9 @@ function Header() {
   return (
     <header className="header">
       <nav className="navbar">
-        <img className="navbar__logo" src={logo} alt="wetravel logo" />
+        <Link to="/" className="navbar__logo"> <img src={logo} alt="wetravel logo" /> </Link>
         <div className="navbar__menu-mobile">
-          <img src="./assets/bars-solid.svg" alt="bars menu" />
+          <img src={burgerMenu} alt="bars menu" />
         </div>
         <div className="navbar__menu">
           <ul className="navbar__list">
