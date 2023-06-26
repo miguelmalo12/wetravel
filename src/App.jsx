@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Recommend from './pages/Recommend/Recommend';
 import Plan from './pages/Plan/Plan';
 import Footer from './components/Footer/Footer';
+import SignIn from './pages/SignIn/SignIn';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -24,14 +25,15 @@ function App() {
       
       <BrowserRouter>
         <ScrollToTop /> 
-        <Header />
+       
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='recommend' element={<Recommend />} />
           <Route path='plan' element={<Plan />} />
           <Route path='*' element={<Home />} />
+          <Route path='login' element={<SignIn/>}/>
         </Routes>
-        <Footer />
+
       </BrowserRouter>
 
       

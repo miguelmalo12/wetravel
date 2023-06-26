@@ -6,6 +6,8 @@ import { parseISO } from 'date-fns';
 import HeroForm from "../../components/HeroForm/HeroForm";
 import TravelPlanner from '../../components/TravelPlanner/TravelPlanner';
 import CTA from "../../components/CTA/CTA";
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 import heroImage from "../../assets/vector-illustrations/illustration_travel-planner.png";
 
@@ -36,6 +38,8 @@ function Plan() {
   }, [fromDate, toDate]);
 
   return (
+    <div>
+      <Header/>
     <main>
       <HeroForm
         subtitle={"Easily Plan Your Next Trip"}
@@ -53,6 +57,8 @@ function Plan() {
         buttonText={"Recommend Me"}
       />
     </main>
+    <Footer/>
+    </div>
   );
 }
 
