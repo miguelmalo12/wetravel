@@ -2,11 +2,9 @@ import './main.scss';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
 import Home from './pages/Home';
 import Recommend from './pages/Recommend/Recommend';
 import Plan from './pages/Plan/Plan';
-import Footer from './components/Footer/Footer';
 import SignIn from './pages/SignIn/SignIn';
 
 function ScrollToTop() {
