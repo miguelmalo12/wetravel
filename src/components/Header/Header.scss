@@ -22,7 +22,12 @@
         max-width: 350px;
         img {
             min-width: 150px;
-            max-width: 350px;
+            max-width: 220px;
+            
+            @include media.desktop {
+                max-width: 350px;
+            }
+            
         }
     }
 

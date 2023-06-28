@@ -45,11 +45,23 @@ function TravelPlanner({ location, dayCount, startDate }) {
             <img src={accommodationIcon} alt="" />
             <h5>Add Accommodation</h5>
           </div>
-          <div className="planner--plan__events--item">
+          <div
+            className="planner--plan__events--item"
+            draggable="true"
+            onDragStart={(e) => {
+              e.dataTransfer.setData("text/plain", "Add Activity");
+            }}
+          >
             <img src={activityIcon} alt="" />
             <h5>Add Activity</h5>
           </div>
-          <div className="planner--plan__events--item">
+          <div
+            className="planner--plan__events--item"
+            draggable="true"
+            onDragStart={(e) => {
+              e.dataTransfer.setData("text/plain", "Add Restaurant");
+            }}
+          >
             <img src={restaurantIcon} alt="" />
             <h5>Add Restaurant</h5>
           </div>
