@@ -1,0 +1,38 @@
+@use '../../styles/partials/media' as *;
+@use '../../styles/partials/variables' as *;
+
+.btn {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 9px 36px;
+
+    @include tablet {
+        max-width: 451px;
+    }
+
+    &--google {
+        border: 1px $light-text solid;
+        background-color: #fff;
+        border-radius: 25px;
+    }
+
+    &__logo {
+        width: 21px;
+        height: 21px;
+    }
+
+    &__text {
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 30px;
+        font-family: 'Nunito Sans';
+
+        @include tablet {
+            font-size: 18px;
+        }
+    }
+}

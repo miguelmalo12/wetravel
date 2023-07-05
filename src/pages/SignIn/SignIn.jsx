@@ -1,21 +1,20 @@
 import './SignIn.scss';
-import logo from '../../assets/wetravel-logo-red.png';
+
+import HeaderLogo from '../../components/HeaderLogo/HeaderLogo';
 import google_logo from '../../assets/icons/google-icon.svg'
 
 const SignIn = () =>{
 
     return (
         <div>
-            <header className="header-simple">
-                <img src={logo} alt="" className='header-simple__logo'/>
-            </header>
-
+            <HeaderLogo/>
             <main className='login'>
                 <h1 className="login__heading">To continue, sign in to WeTravel</h1>
                 <button className="btn btn--google">
                     <img className='btn__logo' src={google_logo} alt="" />
                     <p className="btn__text">Sign In with Google</p>
                 </button>
+           
 
                 <p className="login__or">or</p>
                 <form action="" className="form">
