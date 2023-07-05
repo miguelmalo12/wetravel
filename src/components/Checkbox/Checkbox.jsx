@@ -4,9 +4,9 @@ const Checkbox = (props) =>{
 
     const {text} = props
     return(
-        <div className="form__group form__group--checkbox">
+        <div className="form__checkbox">
             <input type="checkbox" name={text} id={text} className='form__input form__input--checkbox' />
-            <label htmlFor={text} className='form__label form__label--checkbox'>{text}</label>
+            <label htmlFor={text} className='form__checkbox-label'>{text}</label>
         </div>
     )
 }

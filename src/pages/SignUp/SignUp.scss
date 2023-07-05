@@ -39,7 +39,7 @@
         line-height: 24px;
         margin-bottom: 16px;
 
-        &--sign-up {
+        &--sign-in {
             margin-top: 24px;
             margin-bottom: 16px;
         }
@@ -125,6 +125,16 @@
 
     }
 
+    &--sign-in {
+        color: $primary-color;
+        border: none;
+        background-color: transparent;
+        font-family: 'Nunito Sans';
+        font-size: 14px;
+        text-decoration: underline;
+        font-weight: 900;
+    }
+
     &__logo {
         width: 21px;
         height: 21px;
@@ -165,13 +175,6 @@
         gap: 4px;
         margin-top: 8px;
 
-        &--checkbox {
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 12px;
-            width: auto;
-        }
 
 
     }
@@ -224,7 +227,10 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         justify-content: space-between;
+        margin-bottom: 24px;
     }
+
+
 
     &__forget-password {
         font-size: 11px;
@@ -305,4 +311,30 @@
     }
 
     &__info {}
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.term {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0;
+    text-align: center;
+
+
+
+    &__label {
+        font-family: 'Nunito Sans';
+        font-weight: 900;
+        font-size: 14px;
+        line-height: 30px;
+        color: $dark-text;
+    }
+
+    &__highlight {
+        color: $primary-color;
+        text-decoration: underline;
+    }
 }
