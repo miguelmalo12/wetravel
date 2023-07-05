@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Recommend from './pages/Recommend/Recommend';
 import Plan from './pages/Plan/Plan';
 import SignIn from './pages/SignIn/SignIn';
+import SignUp from './pages/SignUp/SignUp';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -30,6 +31,7 @@ function App() {
           <Route path='plan' element={<Plan />} />
           <Route path='*' element={<Home />} />
           <Route path='login' element={<SignIn/>}/>
+          <Route path='signup' element={<SignUp/>}/>
         </Routes>
 
       </BrowserRouter>
