@@ -1,15 +1,14 @@
 import './SignIn.scss';
-import logo from '../../assets/wetravel-logo-red.png';
 import google_logo from '../../assets/icons/google-icon.svg'
+import { Link } from 'react-router-dom';
+import HeaderSecondary from '../../components/HeaderSecondary/HeaderSecondary';
+
 
 const SignIn = () =>{
 
     return (
         <div>
-            <header className="header-simple">
-                <img src={logo} alt="" className='header-simple__logo'/>
-            </header>
-
+            <HeaderSecondary />
             <main className='login'>
                 <h1 className="login__heading">To continue, sign in to WeTravel</h1>
                 <button className="btn btn--google">
@@ -39,7 +38,7 @@ const SignIn = () =>{
                     </div>
                 </form>
                 <h1 className="login__heading login__heading--sign-up">Don't have an account?</h1>
-                <button className="btn btn--sign-up">Sign Up</button>
+                <Link className="btn btn--sign-up" to='/signup'>Sign Up</Link>
             </main>
             
         </div>

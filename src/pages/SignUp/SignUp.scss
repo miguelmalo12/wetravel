@@ -1,26 +1,6 @@
 @use '../../styles/partials/media' as *;
 @use '../../styles/partials/variables' as *;
 
-.header-simple {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-    border-bottom: 1px $light-text solid;
-
-    @include tablet {
-        padding: 44px;
-    }
-
-    &__logo {
-        width: 150px;
-
-        @include tablet {
-            width: 240px;
-        }
-    }
-}
-
 .signup {
     padding: 24px 16px;
     display: flex;

@@ -1,8 +1,9 @@
 import './SignUp.scss';
-import logo from '../../assets/wetravel-logo-red.png';
+import HeaderSecondary from '../../components/HeaderSecondary/HeaderSecondary';
 import google_logo from '../../assets/icons/google-icon.svg'
 import questionnaire_image from '../../assets/Questionnaire.png';
 import Checkbox from '../../components/Checkbox/Checkbox';
+import { Link } from 'react-router-dom';
 
 const SignUp = () =>{
 
@@ -26,9 +27,7 @@ const SignUp = () =>{
 
     return (
         <div>
-            <header className="header-simple">
-                <img src={logo} alt="" className='header-simple__logo'/>
-            </header>
+           <HeaderSecondary/>
 
             <main className='signup'>
                 <h1 className="signup__heading">Register for free and start planning</h1>
@@ -188,7 +187,7 @@ const SignUp = () =>{
 
                     <button className="btn form__submit">Sign Up</button>
                     <h1 className="signup__heading signup__heading--sign-in">Already have an account</h1>
-                <button className="btn btn--sign-in">Sign In</button>
+                <Link className="btn btn--sign-in" to='/login'>Sign In</Link>
                 </form>
             </main>
             
