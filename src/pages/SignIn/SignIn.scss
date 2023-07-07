@@ -137,65 +137,6 @@
         font-size: 16px;
     }
 
-    &__group {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        width: 100%;
-        gap: 4px;
-        margin-top: 8px;
-
-        &--checkbox {
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 12px;
-            width: auto;
-        }
-    }
-
-    &__label {
-        font-size: 13px;
-        font-weight: 900;
-        line-height: 30px;
-        font-family: 'Nunito Sans';
-
-        &--checkbox {
-            font-size: 11px;
-            font-weight: 900;
-            line-height: 30px;
-            font-family: 'Nunito Sans';
-
-            @include tablet {
-                font-size: 14px;
-            }
-        }
-
-        @include tablet {
-            font-size: 16px;
-        }
-    }
-
-    &__input {
-        border: 1px $light-text solid;
-        border-radius: 5px;
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 30px;
-        font-family: 'Nunito Sans';
-        padding: 8px 20px;
-        width: 100%;
-
-        &--checkbox {
-            width: auto;
-        }
-
-        @include tablet {
-            font-size: 16px;
-        }
-    }
-
     &__forget-password {
         font-size: 11px;
         font-weight: 900;

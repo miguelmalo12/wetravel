@@ -2,6 +2,7 @@ import './SignIn.scss';
 import google_logo from '../../assets/icons/google-icon.svg'
 import { Link } from 'react-router-dom';
 import HeaderSecondary from '../../components/HeaderSecondary/HeaderSecondary';
+import FormInput from '../../components/FormInputText/FormInput';
 
 
 const SignIn = () =>{
@@ -18,14 +19,9 @@ const SignIn = () =>{
 
                 <p className="login__or">or</p>
                 <form action="" className="form">
-                    <div className="form__group">
-                        <label htmlFor="username" className="form__label">Email</label>
-                        <input type="text" className="form__input" placeholder='Enter email or username' name='username'/>
-                    </div>
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">Password</label>
-                        <input type="password" className="form__input" placeholder='Enter password' name='password'/>
-                    </div>
+                    <FormInput name='username' text='Email' placeholder='Enter email or username' type='text'/>
+                    <FormInput name='password' text='Password' placeholder='Enter password' type='password'/>
+                    
                     <div className="form__group">
                         <a href='#' className="form__forget-password">Forget your password?</a>
                     </div>

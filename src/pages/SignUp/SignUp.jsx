@@ -2,8 +2,8 @@ import './SignUp.scss';
 import HeaderSecondary from '../../components/HeaderSecondary/HeaderSecondary';
 import google_logo from '../../assets/icons/google-icon.svg'
 import questionnaire_image from '../../assets/Questionnaire.png';
-import Checkbox from '../../components/Checkbox/Checkbox';
 import { Link } from 'react-router-dom';
+import FormInput from '../../components/FormInputText/FormInput';
 
 const SignUp = () =>{
 
@@ -38,24 +38,11 @@ const SignUp = () =>{
 
                 <p className="signup__or">or</p>
                 <form action="" className="form">
-                    <div className="form__group">
-                        <label htmlFor="username" className="form__label">Email</label>
-                        <input type="text" className="form__input" placeholder='Enter email' name='username'/>
-                    </div>
-                    <div className="form__group">
-                        <label htmlFor="c-username" className="form__label">Confirm your email</label>
-                        <input type="text" className="form__input" placeholder='Enter email again' name='c-username'/>
-                    </div>
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">Create a password</label>
-                        <input type="password" className="form__input" placeholder='Enter password' name='password'/>
-                    </div>
-                    <div className="form__group margin-bottom">
-                        <label htmlFor="profile-name" className="form__label">How do you want us to call you?</label>
-                        <input type="text" className="form__input" placeholder='Enter profile name' name='profile-name'/>
-                    </div>
+                    <FormInput name='username' text='Email' placeholder='Enter email' type='text'/>   
+                    <FormInput name='c-username' text='Confirm your email' placeholder='Enter email again' type='text'/>
+                    <FormInput name='password' text='Create a password' placeholder='Enter password' type='password'/>   
+                    <FormInput name='profile-name' text='How do you want us to call you?' placeholder='Enter profile name' type='text'className='margin-bottom'/>
                     
-                
 
                 <div className="questionnaire">
                     <article className="questionnaire__info-container">
@@ -76,109 +63,14 @@ const SignUp = () =>{
                         </select>
                     </div>
 
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">What type of traveler best describes you? Select all that apply</label>
-                        <div className="form__input-container">
-                            {
-                            travelerType.map(traveler=>{
-                                return(
-                                    <Checkbox text={traveler}/>
-                                )
-                            })
-                            }
-                            
-                        </div>
-                    </div>
-
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">Which type of food do you prefer? Select all that apply</label>
-                            
-                        <div className="form__input-container grid-2">
-                            {
-                            foodType.map(food=>{
-                                return(
-                                    <Checkbox text={food}/>
-                                )
-                            })
-                            }
-                            
-                        </div>
-                    </div>
-
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">How important is food and gastronomy to you when you travel?</label>
-                            
-                        <div className="form__input-container grid-2">
-                            {
-                            importanceLevels.map(level=>{
-                                return(
-                                    <Checkbox text={level}/>
-                                )
-                            })
-                            }
-                            
-                        </div>
-                    </div>
-
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">What activities do you enjoy when traveling? Select all that apply</label>
-                            
-                        <div className="form__input-container">
-                            {
-                            activities.map(activity=>{
-                                return(
-                                    <Checkbox text={activity}/>
-                                )
-                            })
-                            }
-                            
-                        </div>
-                    </div>
-
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">What is your preferred climate when traveling?</label>
-                            
-                        <div className="form__input-container">
-                            {
-                            climateType.map(climate=>{
-                                return(
-                                    <Checkbox text={climate}/>
-                                )
-                            })
-                            }
-                            
-                        </div>
-                    </div>
-
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">What are your specific travel interests or hobbies? Select all that apply</label>
-                            
-                        <div className="form__input-container">
-                            {
-                            hobbies.map(hobby=>{
-                                return(
-                                    <Checkbox text={hobby}/>
-                                )
-                            })
-                            }
-                            
-                        </div>
-                    </div>   
-
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">How important is it for you to immerse yourself in local culture when traveling?</label>
-                            
-                        <div className="form__input-container grid-2">
-                            {
-                            cultureImmerse.map(level=>{
-                                return(
-                                    <Checkbox text={level}/>
-                                )
-                            })
-                            }
-                            
-                        </div>
-                    </div>
+                <FormInput dataArray={travelerType} text='What type of traveler best describes you? Select all that apply'/>
+                <FormInput dataArray={foodType} text='Which type of food do you prefer? Select all that apply'  className='grid-2'/>
+                <FormInput dataArray={importanceLevels} text='How important is food and gastronomy to you when you travel?' className='grid-2'/>   
+                <FormInput dataArray={activities} text='What activities do you enjoy when traveling? Select all that apply'/>  
+                <FormInput dataArray={climateType} text='What is your preferred climate when traveling?'/>    
+                <FormInput dataArray={hobbies} text='What are your specific travel interests or hobbies? Select all that apply'/>
+                <FormInput dataArray={cultureImmerse} text='How important is it for you to immerse yourself in local culture when traveling?' className='grid-2'/>
+                
 
                     <div className="term">
                         <input type='checkbox' name='terms' className='term__input'/>
