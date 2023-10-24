@@ -3,11 +3,11 @@
 @use "./styles/partials/animations";
 @use "./styles/partials/fonts";
 
-*  {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    }
+}
 
 
 body {
@@ -18,10 +18,11 @@ body {
 a {
     text-decoration: none;
     // color: inherit;
-    cursor: pointer; 
+    cursor: pointer;
+
     &:visited {
         @extend a;
-        color: inherit;
+        // color: inherit;
     }
 }
 

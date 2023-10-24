@@ -1,90 +1,74 @@
-@use "../../styles/partials/media";
-@use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables";
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
 
-.navbar {
-    @include padding-two(2,2);
+
+.header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    padding: 32px 6vw;
 
-    @include media.tablet {
-        @include padding-two(4,4); 
-    }
 
-    @include media.tablet {
-        @include padding-two(4,8); 
+
+    &__wrapper {}
+
+    &__logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &__logo {
-        width: 50%;
-        min-width: 150px;
-        max-width: 350px;
-        img {
-            min-width: 150px;
-            max-width: 220px;
-            
-            @include media.desktop {
-                max-width: 350px;
-            }
-            
-        }
-    }
-
-    &__menu-mobile {
-        width: 15%;
-        max-width: 20px;        
-
-        @include media.tablet {
-            display: none;
-        }
+        height: 28px;
     }
 
     &__menu {
-        display: none;
 
-        @include media.tablet {
-            display: flex;
-        }
-    }
-    &__list {
-        display: flex;
-        list-style-type: none;
-        align-items: center;
-    }
-    &__item {
-        font-family: 'Nunito Sans', sans-serif;         
-        font-weight: 900;
-        font-size: 18px;
-        line-height: 30px;
-        text-align: center;
-        margin-right: 35px;
-        color: variables.$dark-color;
-        &--active {
-            color: variables.$primary-color;
-        }
+        &--close {}
     }
 
-    &__link {
-        &:visited,
-        &:link{
-            text-decoration: none;
-            color: inherit;
-        }
 
-        &.primary-button {
-            color: variables.$white;
-        }
-
-        &--light {
-            font-family: 'Nunito Sans', sans-serif;         
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 30px;
-            text-align: center;
-            color: variables.$dark-color; 
-        }
-    }
-    
 }
 
+.navbar {
+
+    &__list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: 32px;
+    }
+
+    &__item {}
+
+    &__link {
+        font-family: 'Nunito Sans', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 30px;
+        color: $dark-color;
+
+        &--active {
+            color: $primary-color;
+        }
+
+        &--button-primary {
+            border-radius: 25px;
+            background: $primary-color;
+            box-shadow: 0px 7px 20px 0px rgba(253, 80, 86, 0.30);
+            padding: 8px 32px;
+            color: $white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+
+        }
+
+        &--button-secondary {
+            font-size: 14px;
+            color: $dark-color;
+            font-weight: 400;
+            cursor: pointer;
+        }
+    }
+}
