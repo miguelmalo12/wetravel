@@ -19,6 +19,9 @@
             width: 50%;
         }
         &__events {
+            display: flex;
+            flex-direction: column;
+            gap: 70px;
             position: sticky;
             top: 50px;
             background: #FFFFFF;
@@ -28,20 +31,22 @@
             width: 444px;
             height: 486px;
             padding: 2.8rem 2.8rem 4rem;
-            
-            &--title {
-                text-align: left;
-                padding-bottom: 3.1rem;
-            }
 
-            &--item {
-                display: flex;
-                align-items: center;
-                margin-bottom: 2.8rem;
-                cursor: pointer;
-
-                img {
-                    margin-right: 2.7rem;
+            &--items {
+                &--title {
+                    text-align: left;
+                    padding-bottom: 3.1rem;
+                }
+    
+                &--item {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 2.8rem;
+                    cursor: pointer;
+    
+                    img {
+                        margin-right: 2.7rem;
+                    }
                 }
             }
         }

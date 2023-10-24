@@ -31,25 +31,26 @@ function Day({ dayNumber, date }) {
   const handleEnterTime = (e, index) => {
     if (e.key === "Enter") {
       const updatedEvents = [...events];
-      updatedEvents[index].time = inputTime;
+      updatedEvents[index].time = formatTime(inputTime);
       setEvents(updatedEvents);
       setInputIndex(null);
     }
   };
 
-  // const handleBlur = () => {
-  //   setInputIndex(null);
-  //   setInputValue("");
-  // };
-
   const handleUpdateEventAndTime = (index) => {
     const updatedEvents = [...events];
     updatedEvents[index].title = inputValue;
-    updatedEvents[index].time = inputTime;
+    
+    if (inputTime.includes('AM') || inputTime.includes('PM')) {
+        updatedEvents[index].time = inputTime;
+    } else {
+        updatedEvents[index].time = formatTime(inputTime);
+    }
+    
     setEvents(updatedEvents);
     setInputIndex(null);
     setInputValue("");
-  };
+};
 
   const formatTime = (time) => {
     const [hours, minutes] = time.split(":");
@@ -71,6 +72,23 @@ function Day({ dayNumber, date }) {
     return `${formattedTime} ${period}`;
   };
 
+  // Function to convert time input to 24 hour time
+  const convertTo24Hour = (time) => {
+      const [hours, minutes] = time.split(':');
+      const period = time.includes('PM') ? 'PM' : 'AM';
+
+      let hour = parseInt(hours, 10);
+
+      if (period === 'PM' && hour !== 12) {
+          hour += 12;
+      } else if (period === 'AM' && hour === 12) {
+          hour = 0;
+      }
+
+      return `${hour.toString().padStart(2, '0')}:${minutes}`;
+  };
+
+
   return (
     <div className="day">
       <div className="day--card">
@@ -88,7 +106,7 @@ function Day({ dayNumber, date }) {
             <div className="day--entry--container">
               <div>
                 <p className="day--entry--container__event">{event.title}</p>
-                <p className="day--entry--container__time">{inputTime ? formatTime(inputTime) : "00:00 AM"}</p>
+                <p className="day--entry--container__time">{event.time && convertTo24Hour(event.time)}</p>
               </div>
               <div>
                 <input
@@ -96,7 +114,6 @@ function Day({ dayNumber, date }) {
                   value={inputValue}
                   onChange={handleInputChange}
                   onKeyDown={(e) => handleEnterEvent(e, index)}
-                  // onBlur={handleBlur}
                   autoFocus
                 />
                 <input
@@ -104,7 +121,6 @@ function Day({ dayNumber, date }) {
                   value={inputTime}
                   onChange={handleTimeChange}
                   onKeyDown={(e) => handleEnterTime(e, index)}
-                  // onBlur={handleBlur}
                 />
                 <img
                   className="day--entry--container__accept"
@@ -118,11 +134,15 @@ function Day({ dayNumber, date }) {
           ) : (
             <div className="day--entry--container">
               <p className="day--entry--container__event">{event.title}</p>
-              <p className="day--entry--container__time">{event.time}</p>
+              <p className="day--entry--container__time">{event.time && convertTo24Hour(event.time)}</p>
               <img
                 className="day--entry--container__edit"
                 src={editIcon}
-                onClick={() => setInputIndex(index)}
+                onClick={() => {
+                  setInputIndex(index);
+                  setInputValue(events[index].title);
+                  setInputTime(convertTo24Hour(events[index].time));
+                }}
                 alt=""
               />
             </div>
