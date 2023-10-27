@@ -4,36 +4,36 @@
 
 .hero {
     position: relative;
-    
+
     @include media.desktop {
-        @include padding-two(0,8);
+        @include padding-two(0, 8);
         display: flex;
         align-items: center;
         text-align: left;
     }
 
     &__text {
-        @include padding-all(4,2,0,2);
-        
+        @include padding-all(4, 2, 0, 2);
+
         @include media.tablet {
-            @include padding-all(4,4,0,4); 
+            @include padding-all(4, 4, 0, 4);
         }
 
         @include media.desktop {
-            @include padding-all(4,8,0,8);
+            @include padding-all(4, 8, 0, 8);
             flex-basis: 50%;
-            flex-grow: 0; 
+            flex-grow: 0;
         }
-        
+
         p {
-            @include padding-all(1,0,3,0);
+            @include padding-all(1, 0, 3, 0);
 
             @include media.tablet {
-                @include padding-all(2,4,3,4); 
+                @include padding-all(2, 4, 3, 4);
             }
 
             @include media.desktop {
-                @include padding-all(2,0,4,0);
+                @include padding-all(2, 0, 4, 0);
             }
         }
     }
@@ -69,6 +69,7 @@
         left: 0px;
         top: 0px;
         opacity: 0.1;
+        display: none;
     }
 
     // Background small icons, only visible on desktop
@@ -80,22 +81,26 @@
             display: block;
         }
     }
+
     .bg-arrow {
         width: 103.92px;
         height: 33.63px;
         left: 52%;
         top: 12%;
     }
+
     .bg-dot {
         width: 17.39px;
         height: 17.39px;
         left: 92%;
-        top: 15%; 
+        top: 15%;
     }
+
     .bg-location {
         left: 94%;
         top: 29%;
     }
+
     .bg-location-small {
         left: 90%;
         top: 45%;

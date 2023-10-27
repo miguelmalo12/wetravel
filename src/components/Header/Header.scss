@@ -1,90 +1,269 @@
-@use "../../styles/partials/media";
-@use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables";
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/media' as *;
 
-.navbar {
-    @include padding-two(2,2);
+
+.header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    padding: 16px;
 
-    @include media.tablet {
-        @include padding-two(4,4); 
+
+    @include tablet {
+        padding: 32px 40px;
     }
 
-    @include media.tablet {
-        @include padding-two(4,8); 
+    @include desktop {
+        padding: 32px 6vw;
+    }
+
+
+    &__logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &__logo {
-        width: 50%;
-        min-width: 150px;
-        max-width: 350px;
-        img {
-            min-width: 150px;
-            max-width: 220px;
-            
-            @include media.desktop {
-                max-width: 350px;
-            }
-            
-        }
+        height: 28px;
     }
 
-    &__menu-mobile {
-        width: 15%;
-        max-width: 20px;        
 
-        @include media.tablet {
-            display: none;
-        }
-    }
-
-    &__menu {
-        display: none;
-
-        @include media.tablet {
-            display: flex;
-        }
-    }
-    &__list {
-        display: flex;
-        list-style-type: none;
-        align-items: center;
-    }
-    &__item {
-        font-family: 'Nunito Sans', sans-serif;         
-        font-weight: 900;
-        font-size: 18px;
-        line-height: 30px;
-        text-align: center;
-        margin-right: 35px;
-        color: variables.$dark-color;
-        &--active {
-            color: variables.$primary-color;
-        }
-    }
-
-    &__link {
-        &:visited,
-        &:link{
-            text-decoration: none;
-            color: inherit;
-        }
-
-        &.primary-button {
-            color: variables.$white;
-        }
-
-        &--light {
-            font-family: 'Nunito Sans', sans-serif;         
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 30px;
-            text-align: center;
-            color: variables.$dark-color; 
-        }
-    }
-    
 }
 
+// Navbar Mobile 
+
+.navbar-hamburger {
+
+
+    position: relative;
+
+    @include tablet {
+        display: none;
+    }
+
+    &__checkbox {
+        display: none;
+    }
+
+    &__button {
+        background-color: $primary-color;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        position: fixed;
+        top: 10px;
+        right: 16px;
+        z-index: 2000;
+        box-shadow: 0 1rem 3rem rgba($dark-color, 0.1);
+        text-align: center;
+        cursor: pointer;
+    }
+
+    &__background {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        background-color: white;
+        z-index: 1000;
+        overflow: hidden;
+        transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+
+    }
+
+    &__nav {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1500;
+        opacity: 0;
+        width: 0;
+        transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+
+    &__checkbox:checked~&__background {
+        transform: scale(90);
+        overflow: hidden;
+    }
+
+    &__checkbox:checked~&__nav {
+        opacity: 1;
+        width: 100%;
+    }
+
+    &__icon {
+        position: relative;
+        margin-top: 20px;
+
+        &,
+        &::before,
+        &::after {
+            width: 20px;
+            height: 2px;
+            background-color: $white;
+            display: inline-block;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            transition: all 0.2s;
+        }
+
+        &::before {
+            top: -6px;
+        }
+
+        &::after {
+            top: 6px;
+        }
+    }
+
+
+    &__checkbox:checked+&__button &__icon {
+        background-color: transparent;
+    }
+
+    &__checkbox:checked+&__button &__icon::before {
+        top: 0;
+        transform: rotate(135deg);
+    }
+
+    &__checkbox:checked+&__button &__icon::after {
+        top: 0;
+        transform: rotate(-135deg);
+    }
+}
+
+
+
+
+
+
+// Navbar Desktop
+.navbar {
+    display: none;
+
+    @include tablet {
+        display: flex;
+    }
+
+    &__list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: 32px;
+    }
+
+    &__item {}
+
+    &__link {
+        font-family: 'Nunito Sans', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 30px;
+        color: $dark-color;
+
+        &--active {
+            color: $primary-color;
+        }
+
+        &--button-primary {
+            border-radius: 25px;
+            background: $primary-color;
+            border: 2px solid $primary-color;
+            box-shadow: 0px 7px 20px 0px rgba(253, 80, 86, 0.30);
+            padding: 8px 32px;
+            color: $white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                background-color: $white;
+                color: $primary-color;
+            }
+
+        }
+
+        &--button-secondary {
+            font-size: 14px;
+            color: $dark-color;
+            font-weight: 400;
+            cursor: pointer;
+        }
+    }
+}
+
+
+.navbar-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    gap: 32px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+    text-align: center;
+    width: 100%;
+
+    @include tablet {
+        flex-direction: row;
+        position: static;
+        transform: translate(0, 0);
+    }
+
+    &__item {}
+
+    &__link {
+        font-family: 'Nunito Sans', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 30px;
+        color: $dark-color;
+
+        &--active {
+            color: $primary-color;
+        }
+
+        &--button-primary {
+            border-radius: 25px;
+            background: $primary-color;
+            border: 2px solid $primary-color;
+            box-shadow: 0px 7px 20px 0px rgba(253, 80, 86, 0.30);
+            padding: 8px 32px;
+            color: $white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                background-color: $white;
+                color: $primary-color;
+            }
+
+        }
+
+        &--button-secondary {
+            font-size: 14px;
+            color: $dark-color;
+            font-weight: 400;
+            cursor: pointer;
+        }
+    }
+
+}
