@@ -21,22 +21,22 @@ function ScrollToTop() {
 function App() {
   return (
     <div className="App">
-      
+
       <BrowserRouter>
-        <ScrollToTop /> 
-       
+        <ScrollToTop />
+
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='recommend' element={<Recommend />} />
           <Route path='plan' element={<Plan />} />
           <Route path='*' element={<Home />} />
-          <Route path='login' element={<SignIn/>}/>
-          <Route path='signup' element={<SignUp/>}/>
+          <Route path='login' element={<SignIn />} />
+          <Route path='sign-up' element={<SignUp />} />
         </Routes>
 
       </BrowserRouter>
 
-      
+
     </div>
   );
 }
