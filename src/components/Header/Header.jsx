@@ -60,15 +60,15 @@ const Header = () => {
 
 
 
-      <div class="navbar-hamburger">
-        <input type="checkbox" class="navbar-hamburger__checkbox" id="navi-toggle" />
-        <label for="navi-toggle" class="navbar-hamburger__button">
-          <span class="navbar-hamburger__icon">&nbsp;</span>
+      <div className="navbar-hamburger">
+        <input type="checkbox" className="navbar-hamburger__checkbox" id="navi-toggle" />
+        <label for="navi-toggle" className="navbar-hamburger__button">
+          <span className="navbar-hamburger__icon">&nbsp;</span>
         </label>
 
-        <div class="navbar-hamburger__background">&nbsp;</div>
+        <div className="navbar-hamburger__background">&nbsp;</div>
 
-        <nav class="navbar-hamburger__nav">
+        <nav className="navbar-hamburger__nav">
           <NavbarList isLoggedIn={isLoggedIn} />
         </nav>
       </div>
