@@ -1,40 +1,69 @@
-@use "../../styles/partials/media";
+@use "../../styles/partials/media" as *;
 @use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables";
+@use "../../styles/partials/variables" as *;
+
 
 .hero {
     position: relative;
+    padding: 24px 16px;
 
-    @include media.desktop {
-        @include padding-two(0, 8);
+
+
+    &__text-container {
         display: flex;
+        flex-direction: column;
+        width: 100%;
         align-items: center;
+        gap: 16px;
+    }
+
+    &__heading {
+        &--primary {
+            color: $dark-color;
+            font-family: "Laila", sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 54px;
+        }
+
+        &--secondary {
+            color: $primary-color;
+            font-family: 'Nunito Sans';
+            font-size: 14px;
+            font-weight: 900;
+            line-height: 18px;
+        }
+    }
+
+    &__paragraph {
+        padding: 0;
+        font-family: 'Nunito Sans';
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        color: $medium-text;
         text-align: left;
     }
 
-    &__text {
-        @include padding-all(4, 2, 0, 2);
+    &__button {
+        width: 100%;
+        font-family: 'Nunito Sans', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        border-radius: 25px;
+        background: $primary-color;
+        border: 2px solid $primary-color;
+        box-shadow: 0px 7px 20px 0px rgba(253, 80, 86, 0.30);
+        padding: 8px 32px;
+        color: $white;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .2s ease-in-out;
 
-        @include media.tablet {
-            @include padding-all(4, 4, 0, 4);
-        }
-
-        @include media.desktop {
-            @include padding-all(4, 8, 0, 8);
-            flex-basis: 50%;
-            flex-grow: 0;
-        }
-
-        p {
-            @include padding-all(1, 0, 3, 0);
-
-            @include media.tablet {
-                @include padding-all(2, 4, 3, 4);
-            }
-
-            @include media.desktop {
-                @include padding-all(2, 0, 4, 0);
-            }
+        &:hover {
+            background-color: $white;
+            color: $primary-color;
         }
     }
 
@@ -42,7 +71,7 @@
         display: flex;
         justify-content: center;
 
-        @include media.desktop {
+        @include desktop {
             flex-basis: 50%;
             flex-grow: 0;
         }
@@ -52,7 +81,7 @@
             height: auto;
             object-fit: contain;
 
-            @include media.tablet {
+            @include tablet {
                 max-width: 70%;
                 max-width: 600px;
             }
@@ -77,7 +106,7 @@
         position: absolute;
         display: none;
 
-        @include media.desktop {
+        @include desktop {
             display: block;
         }
     }
