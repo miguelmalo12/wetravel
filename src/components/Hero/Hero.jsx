@@ -16,8 +16,8 @@ function Hero() {
                 <p className='hero__paragraph'>WeTravel is the ultimate travel destination finder that helps you discover amazing places based on your preferences. Whether you're a solo traveler or traveling with family and friends, we've got you covered. Our easy-to-use platform lets you find the perfect destination for your next trip with just a few clicks.</p>
                 <Link className="hero__button" href="">Start</Link>
             </div>
-            <div className="hero__image slidein-right">
-                <img src={heroImage} alt="travel illustration" />
+            <div className="hero__image-container slidein-right">
+                <img className='hero__image' src={heroImage} alt="travel illustration" />
             </div>
             <div className="hero__map"></div>
             <img className="hero__bgicon bg-arrow" src={heroBgArrow} alt="arrow icon" />
