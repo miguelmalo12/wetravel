@@ -17,7 +17,7 @@
     }
 
     @include desktop {
-        padding: 32px 6vw;
+        padding: 32px 8vw;
     }
 
 
@@ -76,7 +76,11 @@
 
         @include tablet {
             font-size: 16px;
-            line-height: 20px;
+            line-height: 30px;
+        }
+
+        @include desktop {
+            width: 80%;
         }
     }
 
@@ -116,23 +120,36 @@
         @include tablet {
             max-width: 50%;
         }
+
+        @include desktop {
+            margin-right: 3rem;
+        }
     }
 
     &__image {
         width: 100%;
+
+        @include tablet {
+            max-width: 600px;
+        }
     }
 
     // Background dotted map
     &__map {
         background-image: url("../../assets/map-BG.png");
         background-repeat: no-repeat;
+        background-size: contain;
         position: absolute;
-        width: 1216px;
-        height: 482px;
+        width: 50%;
+        height: 70%;
         left: 0px;
         top: 0px;
         opacity: 0.1;
         display: none;
+
+        @include desktop {
+            display: block;
+        }
     }
 
     // Background small icons, only visible on desktop
