@@ -43,29 +43,29 @@ function About() {
 
             {/* <!-- About WeTravel --> */}
             <section className="about">
-                <div className="about__image">
-                    <img className="about__image--illustration" src={aboutImage} alt="travel illustration" />
-                    <img className="about__bgicon bg-arrow" src={arrowIcon} alt="arrow icon" />
-                    <div className="about__bgicon bg-dot-yellow"></div>
-                    <div className="about__bgicon bg-dot-blue"></div>
-                    <div className="about__bgicon bg-dot-red"></div>
+                <div className="about__image-container">
+                    <img className="about__image" src={aboutImage} alt="travel illustration" />
+                    <img className="about__bg-icon about__bg-icon--bg-arrow" src={arrowIcon} alt="arrow icon" />
+                    <div className="about__bg-icon about__bg-icon--bg-dot-yellow"></div>
+                    <div className="about__bg-icon about__bg-icon--bg-dot-blue"></div>
+                    <div className="about__bg-icon about__bg-icon--bg-dot-red"></div>
                 </div>
-                <div className="about__text">
-                    <h6>The world in numbers</h6>
-                    <h2>Why Choose WeTravel?</h2>
-                    <p>WeTravel makes travel easy. Our intuitive platform helps you find the perfect destination from our expert-curated list. Choose from top-rated destinations that cater to your preferences, from food to adventure. Whether it's a city break or an exotic getaway, we've got you covered.</p>
-                    <div className="about__text__numbers">
-                        <div>
-                            <h3>195</h3>
-                            <h6>Countries</h6>
+                <div className="about__text-container">
+                    <h6 className='heading--secondary'>The world in numbers</h6>
+                    <h2 className='heading--primary'>Why Choose WeTravel?</h2>
+                    <p className='paragraph'>WeTravel makes travel easy. Our intuitive platform helps you find the perfect destination from our expert-curated list. Choose from top-rated destinations that cater to your preferences, from food to adventure. Whether it's a city break or an exotic getaway, we've got you covered.</p>
+                    <div className="statistic">
+                        <div className='statistic__item'>
+                            <h3 className='statistic__count'>195</h3>
+                            <h6 className='statistic__title'>Countries</h6>
                         </div>
-                        <div>
-                            <h3>17K+</h3>
-                            <h6>Cities</h6>
+                        <div className='statistic__item'>
+                            <h3 className='statistic__count'>17K+</h3>
+                            <h6 className='statistic__title'>Cities</h6>
                         </div>
-                        <div>
-                            <h3>1.4B+</h3>
-                            <h6>Travelers</h6>
+                        <div className='statistic__item'>
+                            <h3 className='statistic__count'>1.4B+</h3>
+                            <h6 className='statistic__title'>Travelers</h6>
                         </div>
                     </div>
                 </div>
@@ -74,9 +74,9 @@ function About() {
             {/* <!-- Gallery Section / Travel Planner--> */}
             <section className="gallery">
                 <div className="gallery__intro">
-                    <h6>travel planner</h6>
-                    <h2>Your Dream Places</h2>
-                    <p>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
+                    <h6 className='heading--secondary'>travel planner</h6>
+                    <h2 className='heading--primary'>Your Dream Places</h2>
+                    <p className='paragraph'>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
                     <a className="primary-button" href="">Travel Planner</a>
                 </div>
 

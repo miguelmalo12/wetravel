@@ -103,116 +103,121 @@
 .about {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+
+    @include tablet {
+        flex-direction: row;
+        padding: 32px 40px;
+        justify-content: space-between;
+    }
 
     @include desktop {
-        @include padding-all(0, 16, 8, 16);
-        display: flex;
-        align-items: center;
-        text-align: left;
-        flex-direction: row;
+        padding: 32px 8vw;
+    }
+
+    &__image-container {
+        position: relative;
+        width: 100%;
+
+        @include tablet {
+            width: 50%;
+            max-width: 600px;
+        }
     }
 
     &__image {
-        order: 2;
-        position: relative;
-
-        @include desktop {
-            order: 1;
-            flex-basis: 50%;
-            flex-grow: 0;
-        }
-
-        &--illustration {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-
-            @include tablet {
-                max-width: 70%;
-                max-width: 600px;
-            }
-        }
+        width: 100%;
     }
 
-    &__bgicon {
-        display: none;
+    &__bg-icon {
         position: absolute;
 
-        @include desktop {
-            display: block;
+        &--bg-arrow {
+            left: 65%;
+            top: 12%;
+            transform: rotate(-26.94deg);
+        }
+
+        &--bg-dot-yellow {
+            width: 11.59px;
+            height: 11.59px;
+            top: 12%;
+            left: 18%;
+            background: #FFCA00;
+            border-radius: 6.5px;
+        }
+
+        &--bg-dot-blue {
+            width: 11.59px;
+            height: 11.59px;
+            left: 16%;
+            top: 86%;
+            background: #1EBBD7;
+            border-radius: 4px;
+            transform: rotate(14.24deg);
+        }
+
+        &--bg-dot-red {
+            width: 11.59px;
+            height: 11.59px;
+            left: 90%;
+            top: 70%;
+            background: #FD5056;
+            border-radius: 4px;
+            transform: rotate(-41.14deg);
         }
     }
 
-    .bg-arrow {
-        left: 65%;
-        top: 12%;
-        transform: rotate(-26.94deg);
-    }
-
-    .bg-dot-yellow {
-        width: 11.59px;
-        height: 11.59px;
-        top: 12%;
-        left: 18%;
-        background: #FFCA00;
-        border-radius: 6.5px;
-    }
-
-    .bg-dot-blue {
-        width: 11.59px;
-        height: 11.59px;
-        left: 16%;
-        top: 86%;
-        background: #1EBBD7;
-        border-radius: 4px;
-        transform: rotate(14.24deg);
-    }
-
-    .bg-dot-red {
-        width: 11.59px;
-        height: 11.59px;
-        left: 90%;
-        top: 70%;
-        background: #FD5056;
-        border-radius: 4px;
-        transform: rotate(-41.14deg);
-    }
-
-    &__text {
-        order: 1;
-        @include padding-all(4, 2, 0, 2);
+    &__text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
 
         @include tablet {
-            @include padding-all(8, 4, 0, 4);
+            width: 50%;
         }
+    }
+}
 
-        @include desktop {
-            order: 2;
-            flex-basis: 50%;
-            flex-grow: 0;
+.statistic {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+
+    @include desktop {
+        width: 80%;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__count {
+        color: $primary-color;
+        font-family: 'Laila', serif;
+        font-size: 28px;
+        font-weight: 700;
+
+        @include tablet {
+            font-size: 32px;
         }
+    }
 
-        p {
-            @include tablet {
-                @include padding-two(0, 4);
-            }
+    &__title {
+        font-size: 14px;
+        font-weight: 900;
+        color: $medium-text;
 
-            @include desktop {
-                @include padding-all(2, 0, 0, 0);
-            }
-        }
-
-        &__numbers {
-            @include padding-all(2, 0, 0, 0);
-
-            @include desktop {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            div {
-                @include padding-two (1, 0);
-            }
+        @include tablet {
+            font-size: 16px;
         }
     }
 }
