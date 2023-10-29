@@ -73,10 +73,10 @@ function About() {
 
             {/* <!-- Gallery Section / Travel Planner--> */}
             <section className="gallery">
-                <div className="gallery__intro">
+                <div className="gallery__text-container">
                     <h6 className='heading--secondary'>travel planner</h6>
                     <h2 className='heading--primary'>Your Dream Places</h2>
-                    <p className='paragraph'>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
+                    <p className='gallery__text'>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
                     <a className="primary-button" href="">Travel Planner</a>
                 </div>
 
