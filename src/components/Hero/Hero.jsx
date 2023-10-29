@@ -11,9 +11,9 @@ function Hero() {
     return (
         <section className="hero">
             <div className="hero__text-container slidein-left">
-                <h6 className='hero__heading--secondary'>Explore The World</h6>
-                <h1 className='hero__heading--primary'>Travel planning made simple</h1>
-                <p className='hero__paragraph'>WeTravel is the ultimate travel destination finder that helps you discover amazing places based on your preferences. Whether you're a solo traveler or traveling with family and friends, we've got you covered. Our easy-to-use platform lets you find the perfect destination for your next trip with just a few clicks.</p>
+                <h6 className='heading--secondary'>Explore The World</h6>
+                <h1 className='heading--primary'>Travel planning made simple</h1>
+                <p className='paragraph'>WeTravel is the ultimate travel destination finder that helps you discover amazing places based on your preferences. Whether you're a solo traveler or traveling with family and friends, we've got you covered. Our easy-to-use platform lets you find the perfect destination for your next trip with just a few clicks.</p>
                 <Link className="hero__button" href="">Start</Link>
             </div>
             <div className="hero__image-container slidein-right">

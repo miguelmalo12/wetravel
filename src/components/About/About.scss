@@ -1,65 +1,111 @@
-@use "../../styles/partials/media";
 @use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables";
+@use "../../styles/partials/variables" as *;
 
 .process {
-    @include padding-two(0,2);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    align-items: center;
+    gap: 32px;
 
-    @include media.desktop {
-        @include padding-all(12,0,8,0);
+    @include tablet {
+        padding: 32px 40px;
+        gap: 40px;
     }
-    
-    &__icons {
+
+    @include desktop {
+        padding: 32px 8vw;
+    }
+
+    &__text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
+        gap: 16px;
+    }
 
-        @include media.desktop {
-            @include padding-two(0,8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    &__text {
+        font-family: 'Nunito Sans';
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        color: $medium-text;
+        text-align: center;
+        width: 80%;
+
+        @include tablet {
+            font-size: 16px;
+            line-height: 30px;
         }
 
-        &__step {
-            @include padding(2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            @include media.tablet {
-                @include padding-two(2,8); 
-            }
-
-            @include media.desktop {
-                width: 40rem;
-
-                h5 {
-                    padding-bottom: 1.6rem;
-                }
-            }
-
-            img {
-                @include padding-two(2,0);
-                width: 40%;
-                
-                @include media.tablet {
-                    max-width: 18%;
-                }
-
-                @include media.desktop {
-                    max-width: 18rem;
-                }
-            }
+        @include desktop {
+            width: 80%;
         }
+    }
+
+
+    &__step-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+
+        @include tablet {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        @include desktop {
+            justify-content: space-between;
+            gap: 0;
+        }
+
     }
 }
 
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    &__icon {
+        width: 95px;
+    }
+
+    &__heading {
+        font-size: 18px;
+        line-height: 28px;
+        color: $dark-color;
+    }
+
+    &__text {
+        font-family: 'Nunito Sans';
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        color: $medium-text;
+        text-align: center;
+        width: 80%;
+
+        @include tablet {
+            font-size: 16px;
+            line-height: 30px;
+        }
+
+        @include desktop {
+            width: 60%;
+        }
+    }
+}
 
 .about {
     display: flex;
     flex-direction: column;
 
-    @include media.desktop {
-        @include padding-all(0,16,8,16);
+    @include desktop {
+        @include padding-all(0, 16, 8, 16);
         display: flex;
         align-items: center;
         text-align: left;
@@ -67,21 +113,21 @@
     }
 
     &__image {
-       order: 2;
-       position: relative;
+        order: 2;
+        position: relative;
 
-       @include media.desktop {
-        order:1;
-        flex-basis: 50%;
-        flex-grow: 0;
-       }
+        @include desktop {
+            order: 1;
+            flex-basis: 50%;
+            flex-grow: 0;
+        }
 
         &--illustration {
             max-width: 100%;
             height: auto;
             object-fit: contain;
 
-            @include media.tablet {
+            @include tablet {
                 max-width: 70%;
                 max-width: 600px;
             }
@@ -92,7 +138,7 @@
         display: none;
         position: absolute;
 
-        @include media.desktop {
+        @include desktop {
             display: block;
         }
     }
@@ -134,81 +180,82 @@
 
     &__text {
         order: 1;
-        @include padding-all(4,2,0,2);
+        @include padding-all(4, 2, 0, 2);
 
-        @include media.tablet {
-            @include padding-all(8,4,0,4); 
+        @include tablet {
+            @include padding-all(8, 4, 0, 4);
         }
 
-        @include media.desktop {
-            order:2;
+        @include desktop {
+            order: 2;
             flex-basis: 50%;
             flex-grow: 0;
-           }
+        }
 
         p {
-            @include media.tablet {
-                @include padding-two(0,4); 
+            @include tablet {
+                @include padding-two(0, 4);
             }
-            @include media.desktop {
-                @include padding-all(2,0,0,0);
+
+            @include desktop {
+                @include padding-all(2, 0, 0, 0);
             }
         }
 
         &__numbers {
-            @include padding-all(2,0,0,0);
-            
-            @include media.desktop {
+            @include padding-all(2, 0, 0, 0);
+
+            @include desktop {
                 display: flex;
                 justify-content: space-between;
             }
 
             div {
-                @include padding-two (1,0);
+                @include padding-two (1, 0);
             }
         }
     }
 }
 
 .gallery {
-    @include padding-all(0,2,2,2);
+    @include padding-all(0, 2, 2, 2);
 
-    @include media.tablet {
-        @include padding-all(0,4,4,4); 
+    @include tablet {
+        @include padding-all(0, 4, 4, 4);
     }
 
-    @include media.desktop {
-        @include padding-all(2,16,8,16); 
+    @include desktop {
+        @include padding-all(2, 16, 8, 16);
     }
 
     &__intro {
-        @include padding-all(0,0,3,0);
+        @include padding-all(0, 0, 3, 0);
 
-        @include media.desktop {
+        @include desktop {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        
+
         p {
-            @include padding-all(1,0,3,0);
-            
-            @include media.tablet {
-                @include padding-all(1,4,3,4); 
+            @include padding-all(1, 0, 3, 0);
+
+            @include tablet {
+                @include padding-all(1, 4, 3, 4);
             }
 
-            @include media.desktop {
+            @include desktop {
                 max-width: 600px;
             }
         }
     }
 
-// Gallery in phone view
+    // Gallery in phone view
     &__images {
         display: flex;
         flex-wrap: wrap;
 
-        @include media.desktop {
+        @include desktop {
             display: none;
         }
 
@@ -220,7 +267,7 @@
             object-fit: cover;
             aspect-ratio: 1 / 1;
 
-            @include media.tablet {
+            @include tablet {
                 width: 50%;
 
                 &:last-child {
@@ -228,7 +275,7 @@
                 }
             }
 
-            @include media.desktop {
+            @include desktop {
                 &:last-child {
                     display: flex;
                 }
@@ -236,11 +283,11 @@
         }
     }
 
-// Gallery in desktop view
+    // Gallery in desktop view
     &__images-desktop {
         display: none;
 
-        @include media.desktop {
+        @include desktop {
             display: flex;
             justify-content: center;
 
