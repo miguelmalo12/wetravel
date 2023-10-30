@@ -1,4 +1,5 @@
 import './About.scss';
+import { ButtonPrimary } from '../Button/Button';
 
 import vectorIcon1 from '../../assets/Step1.png';
 import vectorIcon2 from '../../assets/Step2.png';
@@ -77,33 +78,24 @@ function About() {
                     <h6 className='heading--secondary'>travel planner</h6>
                     <h2 className='heading--primary'>Your Dream Places</h2>
                     <p className='gallery__text'>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
-                    <a className="primary-button" href="">Travel Planner</a>
+                    <ButtonPrimary to='#' text='Travel Planner' />
                 </div>
 
-                {/* <!-- This shows in phone view only--> */}
-                <div className="gallery__images">
-                    <img src={imageRome} alt="rome city" />
-                    <img src={imageJapan} alt="japan landscape" />
-                    <img src={imageIndia} alt="taj mahal" />
-                    <img src={imageNewYork} alt="new york city" />
-                    <img src={imagePeru} alt="machu pichu" />
-                </div>
-                {/* <!-- End--> */}
+                <div className="gallery__image-container">
 
-                {/* <!-- This shows in desktop view only--> */}
-                <div className="gallery__images-desktop">
-                    <div className="gallery__images-desktop--left">
-                        <img src={imageRome} alt="rome city" />
-                    </div>
-                    <div className="gallery__images-desktop--right">
-                        <div><img src={imageJapan} alt="japan landscape" /></div>
-                        <div><img src={imageIndia} alt="taj mahal" /></div>
-                        <div><img src={imageNewYork} alt="new york city" /></div>
-                        <div><img src={imagePeru} alt="machu pichu" /></div>
-                    </div>
-                </div>
-                {/* <!-- End--> */}
+                    <img className='gallery__image gallery__image--1' src={imageRome} alt="rome city" />
 
+
+
+                    <img className='gallery__image gallery__image--2' src={imageJapan} alt="japan landscape" />
+                    <img className='gallery__image gallery__image--3' src={imageNewYork} alt="new york city" />
+
+
+                    <img className='gallery__image gallery__image--4' src={imageIndia} alt="taj mahal" />
+                    <img className='gallery__image gallery__image--5' src={imagePeru} alt="machu pichu" />
+
+
+                </div>
             </section>
         </div>
     )
