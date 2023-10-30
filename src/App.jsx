@@ -1,4 +1,4 @@
-import './main.scss';
+import './App.scss';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';

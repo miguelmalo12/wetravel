@@ -1,11 +1,7 @@
 @use "./variables";
-@use "./media";
+@use "./mixins" as *;
 
 
-// Font size stablished so that 1rem = 10px
-html {
-    font-size: 62.5%;
-}
 
 body {
     font-family: 'Laila', 'Nunito Sans', sans-serif;
@@ -19,7 +15,7 @@ h1 {
     line-height: calc(82px / 1.5);
     font-size: calc(64px / 1.5);
 
-    @include media.tablet {
+    @include tablet {
         line-height: 82px;
         font-size: 64px;
     }
@@ -34,7 +30,7 @@ h2 {
     line-height: calc(70px / 1.33);
     font-size: calc(48px / 1.33);
 
-    @include media.tablet {
+    @include tablet {
         line-height: 70px;
         font-size: 48px;
     }
@@ -49,7 +45,7 @@ h3 {
     line-height: calc(56px / 1.25);
     font-size: calc(36px / 1.25);
 
-    @include media.tablet {
+    @include tablet {
         line-height: 56px;
         font-size: 36px;
     }
@@ -64,7 +60,7 @@ h4 {
     line-height: calc(36px / 1.25);
     font-size: calc(24px / 1.25);
 
-    @include media.tablet {
+    @include tablet {
         line-height: 36px;
         font-size: 24px;
     }
@@ -79,7 +75,7 @@ h5 {
     line-height: calc(30px / 1.25);
     font-size: calc(20px / 1.25);
 
-    @include media.tablet {
+    @include tablet {
         line-height: 30px;
         font-size: 20px;
     }
@@ -95,7 +91,7 @@ h6 {
     line-height: calc(28px / 1.25);
     font-size: calc(16px / 1.25);
 
-    @include media.tablet {
+    @include tablet {
         line-height: 28px;
         font-size: 16px;
     }
@@ -110,7 +106,7 @@ li {
     line-height: calc(28px / 1.25);
     font-size: calc(16px / 1.25);
 
-    @include media.tablet {
+    @include tablet {
         line-height: 28px;
         font-size: 16px;
     }
