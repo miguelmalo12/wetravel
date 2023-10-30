@@ -23,8 +23,7 @@
     @include desktop {
         margin: 40px 10vw;
         gap: 2rem;
-        padding-right: 16px;
-        padding-left: 48px;
+        padding: 40px 5vw;
     }
 
     &__text-container {
@@ -44,7 +43,11 @@
         }
     }
 
-    &__heading {}
+    &__heading {
+        @include desktop {
+            width: 80%;
+        }
+    }
 
     &__text {
         font-size: 14px;
@@ -66,9 +69,11 @@
         width: 100%;
         display: flex;
         justify-content: center;
+        align-items: center;
 
         @include tablet {
             width: 40%;
+            justify-content: flex-end;
         }
     }
 
