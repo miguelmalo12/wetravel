@@ -19,7 +19,7 @@ function About() {
             {/* <!-- 3 Steps Section --> */}
             <section className="process fadein-up">
                 <div className="process__text-container">
-                    <h6 className='heading--secondary'>3 steps for the perfect match</h6>
+                    <h6 className='heading--tertiary'>3 steps for the perfect match</h6>
                     <h2 className='heading--primary'>Find Travel Perfection</h2>
                     <p className='process__text'>Discover your ideal vacation with just a few clicks.</p>
                 </div>
@@ -52,7 +52,7 @@ function About() {
                     <div className="about__bg-icon about__bg-icon--bg-dot-red"></div>
                 </div>
                 <div className="about__text-container">
-                    <h6 className='heading--secondary'>The world in numbers</h6>
+                    <h6 className='heading--tertiary'>The world in numbers</h6>
                     <h2 className='heading--primary'>Why Choose WeTravel?</h2>
                     <p className='paragraph'>WeTravel makes travel easy. Our intuitive platform helps you find the perfect destination from our expert-curated list. Choose from top-rated destinations that cater to your preferences, from food to adventure. Whether it's a city break or an exotic getaway, we've got you covered.</p>
                     <div className="statistic">
@@ -75,7 +75,7 @@ function About() {
             {/* <!-- Gallery Section / Travel Planner--> */}
             <section className="gallery">
                 <div className="gallery__text-container">
-                    <h6 className='heading--secondary'>travel planner</h6>
+                    <h6 className='heading--tertiary'>travel planner</h6>
                     <h2 className='heading--primary'>Your Dream Places</h2>
                     <p className='gallery__text'>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
                     <ButtonPrimary to='#' text='Travel Planner' />
@@ -93,8 +93,6 @@ function About() {
 
                     <img className='gallery__image gallery__image--4' src={imageIndia} alt="taj mahal" />
                     <img className='gallery__image gallery__image--5' src={imagePeru} alt="machu pichu" />
-
-
                 </div>
             </section>
         </div>
