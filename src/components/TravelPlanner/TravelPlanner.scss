@@ -1,11 +1,11 @@
 
 
 .planner {
-    padding: 0rem 12.8rem;
+    padding: 0rem 12.8rem 15rem;
 
     &--title {
         text-align: left;
-        padding-bottom: 3rem;
+        padding-bottom: 2rem;
     }
 
     &--plan {
@@ -19,6 +19,9 @@
             width: 50%;
         }
         &__events {
+            display: flex;
+            flex-direction: column;
+            gap: 70px;
             position: sticky;
             top: 50px;
             background: #FFFFFF;
@@ -27,21 +30,27 @@
             width: 50%;
             width: 444px;
             height: 486px;
-            padding: 2.8rem 2.8rem 4rem;
-            
-            &--title {
-                text-align: left;
-                padding-bottom: 3.1rem;
+            padding: 1.8rem 1.8rem 2.5rem;
+
+            &--button {
+                text-align: center;
             }
 
-            &--item {
-                display: flex;
-                align-items: center;
-                margin-bottom: 2.8rem;
-                cursor: pointer;
-
-                img {
-                    margin-right: 2.7rem;
+            &--items {
+                &--title {
+                    text-align: left;
+                    padding-bottom: 2rem;
+                }
+    
+                &--item {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 1.6rem;
+                    cursor: pointer;
+    
+                    img {
+                        margin-right: 2.7rem;
+                    }
                 }
             }
         }

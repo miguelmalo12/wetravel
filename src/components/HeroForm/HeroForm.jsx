@@ -18,40 +18,40 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
   };
   
   return (
-    <section className="hero">
-      <div className="hero__gradient"></div>
-      <div className="hero__text slidein-left">
+    <section className="heroform">
+      <div className="heroform__gradient"></div>
+      <div className="heroform__text slidein-left">
         <h6>{subtitle}</h6>
         <h1>{title}</h1>
-        <div className="hero__location-container">
-          <div className="hero__location">
-            <img src={heroLocationIcon} alt="" className="hero__icon" />
-            <div className="hero__input-group">
-              <label htmlFor="location" className="hero__label">
+        <div className="heroform__location-container">
+          <div className="heroform__location">
+            <img src={heroLocationIcon} alt="" className="heroform__icon" />
+            <div className="heroform__input-group">
+              <label htmlFor="location" className="heroform__label">
                 Going to
               </label>
               <input
                 type="text"
                 placeholder="Enter City/Country"
-                className="hero__input"
+                className="heroform__input"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
           </div>
         </div>
-        <div className="hero__date-container">
-          <div className="hero__date">
-            <img src={heroDateIcon} alt="" className="hero__icon" />
-            <div className="hero__input-group">
-              <label htmlFor="dateFrom" className="hero__label">
+        <div className="heroform__date-container">
+          <div className="heroform__date">
+            <img src={heroDateIcon} alt="" className="heroform__icon" />
+            <div className="heroform__input-group">
+              <label htmlFor="dateFrom" className="heroform__label">
                 From
               </label>
               <input
                 type="text"
                 id="dateFrom"
                 placeholder="Select Date"
-                className="hero__input"
+                className="heroform__input"
                 onFocus={(e) => (e.currentTarget.type = "date")}
                 onBlur={(e) =>
                   e.currentTarget.value === "" &&
@@ -62,17 +62,17 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
               />
             </div>
           </div>
-          <div className="hero__date">
-            <img src={heroDateIcon} alt="" className="hero__icon" />
-            <div className="hero__input-group">
-              <label htmlFor="dateFrom" className="hero__label">
+          <div className="heroform__date">
+            <img src={heroDateIcon} alt="" className="heroform__icon" />
+            <div className="heroform__input-group">
+              <label htmlFor="dateFrom" className="heroform__label">
                 To
               </label>
               <input
                 type="text"
                 id="dateFrom"
                 placeholder="Select Date"
-                className="hero__input"
+                className="heroform__input"
                 onFocus={(e) => (e.currentTarget.type = "date")}
                 onBlur={(e) =>
                   e.currentTarget.value === "" &&
@@ -83,28 +83,28 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
               />
             </div>
           </div>
-          <div className="hero__cta" onClick={handleSubmit}>
-            <img className="hero__cta-icon" src={heroSubmitIcon} alt="submit icon" />
+          <div className="heroform__cta" onClick={handleSubmit}>
+            <img className="heroform__cta-icon" src={heroSubmitIcon} alt="submit icon" />
           </div>
         </div>
       </div>
-      <div className="hero__image slidein-right">
+      <div className="heroform__image slidein-right">
         <img src={image} alt="travel illustration" />
       </div>
       {/* <!-- Background image --> */}
       <img
-        className="hero__bgicon bg-arrow"
+        className="heroform__bgicon bg-arrow"
         src={heroBgArrow}
         alt="arrow icon"
       />
-      <img className="hero__bgicon bg-dot" src={heroBgDot} alt="dot icon" />
+      <img className="heroform__bgicon bg-dot" src={heroBgDot} alt="dot icon" />
       <img
-        className="hero__bgicon bg-location"
+        className="heroform__bgicon bg-location"
         src={heroBgLocation}
         alt="location icon"
       />
       <img
-        className="hero__bgicon bg-location-small"
+        className="heroform__bgicon bg-location-small"
         src={heroBgLocation}
         alt="smaller location icon"
       />
