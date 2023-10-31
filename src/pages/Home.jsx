@@ -8,13 +8,13 @@ import Footer from '../components/Footer/Footer';
 function Home() {
   return (
     <div>
-      <Header/>
+      <Header />
       <main>
         <Hero />
         <About />
         <CTA title={"Let's Explore The Beauty Of the World"} text={"Your perfect destination, one click away."} buttonText={"Get Started"} />
       </main>
-      <Footer/>
+      <Footer />
     </div>
   )
 }

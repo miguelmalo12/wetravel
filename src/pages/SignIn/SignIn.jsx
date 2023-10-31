@@ -1,15 +1,15 @@
 import './SignIn.scss';
-import logo from '../../assets/wetravel-logo-red.png';
 import google_logo from '../../assets/icons/google-icon.svg'
+import { Link } from 'react-router-dom';
+import HeaderSecondary from '../../components/HeaderSecondary/HeaderSecondary';
+import FormInput from '../../components/FormInputText/FormInput';
+
 
 const SignIn = () =>{
 
     return (
         <div>
-            <header className="header-simple">
-                <img src={logo} alt="" className='header-simple__logo'/>
-            </header>
-
+            <HeaderSecondary />
             <main className='login'>
                 <h1 className="login__heading">To continue, sign in to WeTravel</h1>
                 <button className="btn btn--google">
@@ -19,14 +19,9 @@ const SignIn = () =>{
 
                 <p className="login__or">or</p>
                 <form action="" className="form">
-                    <div className="form__group">
-                        <label htmlFor="username" className="form__label">Email</label>
-                        <input type="text" className="form__input" placeholder='Enter email or username' name='username'/>
-                    </div>
-                    <div className="form__group">
-                        <label htmlFor="password" className="form__label">Password</label>
-                        <input type="password" className="form__input" placeholder='Enter password' name='password'/>
-                    </div>
+                    <FormInput name='username' text='Email' placeholder='Enter email or username' type='text'/>
+                    <FormInput name='password' text='Password' placeholder='Enter password' type='password'/>
+                    
                     <div className="form__group">
                         <a href='#' className="form__forget-password">Forget your password?</a>
                     </div>
@@ -39,7 +34,7 @@ const SignIn = () =>{
                     </div>
                 </form>
                 <h1 className="login__heading login__heading--sign-up">Don't have an account?</h1>
-                <button className="btn btn--sign-up">Sign Up</button>
+                <Link className="btn btn--sign-up" to='/signup'>Sign Up</Link>
             </main>
             
         </div>

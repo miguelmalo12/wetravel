@@ -1,9 +1,7 @@
 @use '../../styles/partials/mixins' as *;
 @use '../../styles/partials/variables' as *;
 
-
-
-.login {
+.signup {
     padding: 24px 16px;
     display: flex;
     flex-direction: column;
@@ -21,7 +19,7 @@
         line-height: 24px;
         margin-bottom: 16px;
 
-        &--sign-up {
+        &--sign-in {
             margin-top: 24px;
             margin-bottom: 16px;
         }
@@ -107,6 +105,16 @@
 
     }
 
+    &--sign-in {
+        color: $primary-color;
+        border: none;
+        background-color: transparent;
+        font-family: 'Nunito Sans';
+        font-size: 14px;
+        text-decoration: underline;
+        font-weight: 900;
+    }
+
     &__logo {
         width: 21px;
         height: 21px;
@@ -132,10 +140,77 @@
     justify-content: center;
     align-items: center;
 
+
     @include tablet {
         max-width: 451px;
         font-size: 16px;
     }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        gap: 4px;
+        margin-top: 8px;
+
+
+
+    }
+
+    &__label {
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 30px;
+        font-family: 'Nunito Sans';
+        text-align: left;
+
+        &--checkbox {
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 30px;
+            font-family: 'Nunito Sans';
+            width: 33%;
+
+            @include tablet {
+                font-size: 14px;
+            }
+        }
+
+        @include tablet {
+            font-size: 16px;
+        }
+    }
+
+    &__input {
+        border: 1px $light-text solid;
+        border-radius: 5px;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 30px;
+        font-family: 'Nunito Sans';
+        padding: 8px 20px;
+        width: 100%;
+
+        &--checkbox {
+            width: auto;
+        }
+
+        @include tablet {
+            font-size: 16px;
+        }
+    }
+
+    &__input-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: space-between;
+        margin-bottom: 24px;
+    }
+
+
 
     &__forget-password {
         font-size: 11px;
@@ -191,5 +266,55 @@
             width: 196px;
             font-size: 18px;
         }
+    }
+}
+
+.margin-bottom {
+    padding-bottom: 34px;
+    border-bottom: 1px $light-text solid;
+}
+
+.questionnaire {
+    margin-top: 30px;
+    margin-bottom: 44px;
+    width: 100%;
+
+    @include tablet {
+        max-width: 451px;
+    }
+
+    &__info-container {}
+
+    &__img {
+        width: 100px;
+        margin-bottom: 24px;
+    }
+
+    &__info {}
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.term {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0;
+    text-align: center;
+
+
+
+    &__label {
+        font-family: 'Nunito Sans';
+        font-weight: 900;
+        font-size: 14px;
+        line-height: 30px;
+        color: $dark-text;
+    }
+
+    &__highlight {
+        color: $primary-color;
+        text-decoration: underline;
     }
 }

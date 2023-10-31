@@ -1,211 +1,210 @@
-@use "../../styles/partials/fonts";
-@use "../../styles/partials/media" as *;
-@use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables";
-@use "../../styles/partials/buttons";
-@use "../../styles/partials/animations";
+// @use "../../styles/partials/fonts";
+// @use "../../styles/partials/mixins" as *;
+// @use "../../styles/partials/variables";
+// @use "../../styles/partials/buttons";
+// @use "../../styles/partials/animations";
 
-.hero {
-    position: relative;
+// .hero {
+//     position: relative;
 
-    @include desktop {
-        @include padding-two(0, 8);
-        display: flex;
-        align-items: center;
-        text-align: left;
-    }
+//     @include desktop {
+//         @include padding-two(0, 8);
+//         display: flex;
+//         align-items: center;
+//         text-align: left;
+//     }
 
-    &__text {
-        @include padding-all(4, 2, 0, 2);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+//     &__text {
+//         @include padding-all(4, 2, 0, 2);
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
 
-        @include tablet {
-            @include padding-all(4, 4, 0, 4);
-        }
+//         @include tablet {
+//             @include padding-all(4, 4, 0, 4);
+//         }
 
-        @include desktop {
-            @include padding-all(4, 8, 0, 8);
-            flex-basis: 50%;
-            flex-grow: 0;
-        }
+//         @include desktop {
+//             @include padding-all(4, 8, 0, 8);
+//             flex-basis: 50%;
+//             flex-grow: 0;
+//         }
 
-        p {
-            @include padding-all(1, 0, 3, 0);
+//         p {
+//             @include padding-all(1, 0, 3, 0);
 
-            @include tablet {
-                @include padding-all(2, 4, 3, 4);
-            }
+//             @include tablet {
+//                 @include padding-all(2, 4, 3, 4);
+//             }
 
-            @include desktop {
-                @include padding-all(2, 0, 4, 0);
-            }
-        }
-    }
+//             @include desktop {
+//                 @include padding-all(2, 0, 4, 0);
+//             }
+//         }
+//     }
 
-    &__image {
-        display: flex;
-        justify-content: center;
+//     &__image {
+//         display: flex;
+//         justify-content: center;
 
-        @include desktop {
-            flex-basis: 50%;
-            flex-grow: 0;
-        }
+//         @include desktop {
+//             flex-basis: 50%;
+//             flex-grow: 0;
+//         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
+//         img {
+//             max-width: 100%;
+//             height: auto;
+//             object-fit: contain;
 
-            @include tablet {
-                max-width: 70%;
-                max-width: 600px;
-            }
-        }
-    }
+//             @include tablet {
+//                 max-width: 70%;
+//                 max-width: 600px;
+//             }
+//         }
+//     }
 
-    // Background gradient
+//     // Background gradient
 
-    &__gradient {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 31.24%, rgba(253, 80, 86, 0.1) 100%);
-        opacity: 0.6;
-        background-repeat: no-repeat;
-        position: absolute;
-        width: 100vw;
-        height: 482px;
-        left: 0px;
-        top: 0px;
-    }
+//     &__gradient {
+//         background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 31.24%, rgba(253, 80, 86, 0.1) 100%);
+//         opacity: 0.6;
+//         background-repeat: no-repeat;
+//         position: absolute;
+//         width: 100vw;
+//         height: 482px;
+//         left: 0px;
+//         top: 0px;
+//     }
 
-    // Background small icons, only visible on desktop
-    &__bgicon {
-        position: absolute;
-        display: none;
+//     // Background small icons, only visible on desktop
+//     &__bgicon {
+//         position: absolute;
+//         display: none;
 
-        @include desktop {
-            display: block;
-        }
-    }
+//         @include desktop {
+//             display: block;
+//         }
+//     }
 
-    .bg-arrow {
-        width: 103.92px;
-        height: 33.63px;
-        left: 52%;
-        top: 12%;
-    }
+//     .bg-arrow {
+//         width: 103.92px;
+//         height: 33.63px;
+//         left: 52%;
+//         top: 12%;
+//     }
 
-    .bg-dot {
-        width: 17.39px;
-        height: 17.39px;
-        left: 92%;
-        top: 15%;
-    }
+//     .bg-dot {
+//         width: 17.39px;
+//         height: 17.39px;
+//         left: 92%;
+//         top: 15%;
+//     }
 
-    .bg-location {
-        left: 94%;
-        top: 29%;
-    }
+//     .bg-location {
+//         left: 94%;
+//         top: 29%;
+//     }
 
-    .bg-location-small {
-        left: 90%;
-        top: 45%;
-        width: 18px;
-    }
+//     .bg-location-small {
+//         left: 90%;
+//         top: 45%;
+//         width: 18px;
+//     }
 
-    &__location-container {
-        display: flex;
-        align-items: center;
-        width: 90vw;
-        height: 77px;
-        background: #FFFFFF;
-        box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
-        border-radius: 75px;
-        margin-bottom: 15px;
-        padding-left: 35px;
+//     &__location-container {
+//         display: flex;
+//         align-items: center;
+//         width: 90vw;
+//         height: 77px;
+//         background: #FFFFFF;
+//         box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
+//         border-radius: 75px;
+//         margin-bottom: 15px;
+//         padding-left: 35px;
 
-        @include tablet {
-            width: 290px;
-        }
-    }
+//         @include tablet {
+//             width: 290px;
+//         }
+//     }
 
-    &__location {
-        background-color: white;
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-    }
+//     &__location {
+//         background-color: white;
+//         display: flex;
+//         align-items: baseline;
+//         gap: 10px;
+//     }
 
-    &__icon {
-        width: 12px;
-        height: 14px;
-    }
+//     &__icon {
+//         width: 12px;
+//         height: 14px;
+//     }
 
-    &__input-group {
-        display: flex;
-        flex-direction: column;
+//     &__input-group {
+//         display: flex;
+//         flex-direction: column;
 
-    }
+//     }
 
-    &__label {
-        font-size: 18px;
-        font-weight: 900;
-        font-family: 'Nunito Sans';
-        color: #8C849F;
-        text-align: left;
-    }
+//     &__label {
+//         font-size: 18px;
+//         font-weight: 900;
+//         font-family: 'Nunito Sans';
+//         color: #8C849F;
+//         text-align: left;
+//     }
 
-    &__input {
-        border: none;
-        font-size: 16px;
-        font-weight: 700;
-        color: variables.$dark-text;
-        width: 100%;
+//     &__input {
+//         border: none;
+//         font-size: 16px;
+//         font-weight: 700;
+//         color: variables.$dark-text;
+//         width: 100%;
 
-        &::placeholder {
-            color: variables.$dark-text;
-        }
+//         &::placeholder {
+//             color: variables.$dark-text;
+//         }
 
-    }
+//     }
 
-    &__date-container {
-        display: flex;
-        align-items: center;
-        height: 77px;
-        background: #FFFFFF;
-        box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
-        border-radius: 75px;
-        position: relative;
-        padding-left: 35px;
-        width: 290px;
+//     &__date-container {
+//         display: flex;
+//         align-items: center;
+//         height: 77px;
+//         background: #FFFFFF;
+//         box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
+//         border-radius: 75px;
+//         position: relative;
+//         padding-left: 35px;
+//         width: 290px;
 
-        @include tablet {
-            width: 534px;
-        }
-    }
+//         @include tablet {
+//             width: 534px;
+//         }
+//     }
 
-    &__date {
-        background-color: white;
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-    }
+//     &__date {
+//         background-color: white;
+//         display: flex;
+//         align-items: baseline;
+//         gap: 10px;
+//     }
 
-    &__cta {
-        width: 59px;
-        height: 59px;
-        border: none;
-        border-radius: 1000px;
-        background-color: #1EBBD7;
-        position: absolute;
-        right: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-    }
+//     &__cta {
+//         width: 59px;
+//         height: 59px;
+//         border: none;
+//         border-radius: 1000px;
+//         background-color: #1EBBD7;
+//         position: absolute;
+//         right: 8px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         cursor: pointer;
+//     }
 
-    &__cta-icon {
-        width: 22px;
-    }
-}
+//     &__cta-icon {
+//         width: 22px;
+//     }
+// }
