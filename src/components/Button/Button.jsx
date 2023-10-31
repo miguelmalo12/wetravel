@@ -7,3 +7,9 @@ export const ButtonPrimary = ({ text, to }) => {
         <Link className="button button--primary" to={to}>{text}</Link>
     )
 }
+
+export const ButtonSecondary = ({ text, to }) => {
+    return (
+        <Link className="button button--secondary" to={to}>{text}</Link>
+    )
+}
