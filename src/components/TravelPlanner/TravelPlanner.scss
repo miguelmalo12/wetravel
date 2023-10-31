@@ -1,11 +1,11 @@
 
 
 .planner {
-    padding: 0rem 12.8rem;
+    padding: 0rem 12.8rem 15rem;
 
     &--title {
         text-align: left;
-        padding-bottom: 3rem;
+        padding-bottom: 2rem;
     }
 
     &--plan {
@@ -30,18 +30,22 @@
             width: 50%;
             width: 444px;
             height: 486px;
-            padding: 2.8rem 2.8rem 4rem;
+            padding: 1.8rem 1.8rem 2.5rem;
+
+            &--button {
+                text-align: center;
+            }
 
             &--items {
                 &--title {
                     text-align: left;
-                    padding-bottom: 3.1rem;
+                    padding-bottom: 2rem;
                 }
     
                 &--item {
                     display: flex;
                     align-items: center;
-                    margin-bottom: 2.8rem;
+                    margin-bottom: 1.6rem;
                     cursor: pointer;
     
                     img {
