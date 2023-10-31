@@ -3,6 +3,7 @@ import { useState } from "react";
 import dayIcon from "../../assets/icons/day-icon.svg";
 import editIcon from "../../assets/icons/edit.svg";
 import acceptIcon from "../../assets/icons/check.svg";
+import finishIcon from "../../assets/icons/finish-icon.svg";
 
 function Day({ dayNumber, date }) {
   const [events, setEvents] = useState([]);
@@ -163,7 +164,10 @@ function Day({ dayNumber, date }) {
       >
         <p>Drag Here</p>
       </div>
-      <div className="day--line"></div>
+      <div className="day--line">
+        <img src={finishIcon} alt="Icon description" className="day--finish-icon" />
+      </div>
+      
     </div>
   );
 }

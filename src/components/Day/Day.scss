@@ -111,4 +111,12 @@
         ;
         background-color: variables.$medium-text;
     }
+
+    &--finish-icon {
+        position: absolute;
+        bottom: -4px;
+        left: -16px;
+        width: 32px;
+        height: 32px;
+    }
 }
