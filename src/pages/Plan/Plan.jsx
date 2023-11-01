@@ -58,6 +58,7 @@ function Plan() {
         />
       </main>
       <Footer />
+      <CopyrightFooter />
     </div>
   );
 }

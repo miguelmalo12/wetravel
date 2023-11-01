@@ -50,6 +50,12 @@
             line-height: 30px;
             max-width: 280px;
         }
+
+        &--long {
+            @include tablet {
+                max-width: 400px;
+            }
+        }
     }
 
     &__wrapper {
@@ -101,6 +107,10 @@
         font-size: 14px;
         color: $medium-text;
         font-weight: 600;
+
+        @include tablet {
+            font-size: 16px;
+        }
     }
 
     &__sign-up {
@@ -121,6 +131,10 @@
         font-size: 18px;
         font-weight: 700;
         color: $dark-text;
+
+        @include tablet {
+            font-size: 24px;
+        }
     }
 
 }
