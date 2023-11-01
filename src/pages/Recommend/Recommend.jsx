@@ -1,6 +1,6 @@
 import './Recommend.scss';
 import Header from '../../components/Header/Header';
-import { Footer, CopyrightFooter } from '../../components/Footer/Footer';
+import { CopyrightFooter, Footer } from '../../components/Footer/Footer';
 import HeroForm from '../../components/HeroForm/HeroForm';
 import CTA from '../../components/CTA/CTA';
 
