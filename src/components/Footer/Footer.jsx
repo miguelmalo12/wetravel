@@ -1,12 +1,13 @@
 import './Footer.scss';
 import logo from '../../assets/wetravel-logo-red.png';
 import { Link } from 'react-router-dom';
+import { ButtonSecondary } from '../Button/Button';
 
 export const CopyrightFooter = () => {
     const year = new Date().getFullYear();
     return (
         <div className="copyright">
-            <p className="copyright__text"><Link className="copyright__link">WeTravel</Link>© {year} All Rights Reserved</p>
+            <p className="copyright__text"><Link className="copyright__link">WeTravel</Link> © {year} All Rights Reserved</p>
         </div>
     )
 }
@@ -32,7 +33,7 @@ export const Footer = () => {
                 <div className="footer__sign-up">
                     <h5 className='footer__title'>Not A Member?</h5>
                     <p className='footer__text'>Don't waste the opportunity to make your future vacations a better experience</p>
-                    <Link className='footer__link button--secondary'>Sign Up</Link>
+                    <ButtonSecondary to='' text='Sign Up' />
                 </div>
             </div>
 
@@ -40,4 +41,3 @@ export const Footer = () => {
     )
 }
 
-export default Footer
