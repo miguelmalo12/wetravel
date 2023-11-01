@@ -7,7 +7,7 @@ import HeroForm from "../../components/HeroForm/HeroForm";
 import TravelPlanner from '../../components/TravelPlanner/TravelPlanner';
 import CTA from "../../components/CTA/CTA";
 import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import { Footer, CopyrightFooter } from '../../components/Footer/Footer';
 
 import heroImage from "../../assets/vector-illustrations/illustration_travel-planner.png";
 
@@ -16,12 +16,12 @@ function Plan() {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [dayCount, setDayCount] = useState(0);
-  
+
   const [showTravelPlanner, setShowTravelPlanner] = useState(false);
 
   const handleSubmitClick = (location, fromDate, toDate) => {
     setLocation(location);
-    setFromDate(parseISO(fromDate)); 
+    setFromDate(parseISO(fromDate));
     setToDate(parseISO(toDate));
     setShowTravelPlanner(true);
   };
@@ -39,25 +39,26 @@ function Plan() {
 
   return (
     <div>
-      <Header/>
-    <main>
-      <HeroForm
-        subtitle={"Easily Plan Your Next Trip"}
-        title={"Travel Planner"}
-        image={heroImage}
-        onSubmitClick={handleSubmitClick}
-      />
+      <Header />
+      <main>
+        <HeroForm
+          subtitle={"Easily Plan Your Next Trip"}
+          title={"Travel Planner"}
+          image={heroImage}
+          onSubmitClick={handleSubmitClick}
+        />
 
-      {/* Only shows when click on submit: */}
-      {showTravelPlanner && <TravelPlanner location={location} dayCount={dayCount} startDate={new Date(fromDate)}/>}
-      
-      <CTA
-        title={"Need A Recommendation?"}
-        text={"Your perfect destination, one click away"}
-        buttonText={"Recommend Me"}
-      />
-    </main>
-    <Footer/>
+        {/* Only shows when click on submit: */}
+        {showTravelPlanner && <TravelPlanner location={location} dayCount={dayCount} startDate={new Date(fromDate)} />}
+
+        <CTA
+          title={"Need A Recommendation?"}
+          text={"Your perfect destination, one click away"}
+          buttonText={"Recommend Me"}
+        />
+      </main>
+      <Footer />
+      <CopyrightFooter />
     </div>
   );
 }
