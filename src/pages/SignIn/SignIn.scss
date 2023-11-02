@@ -2,6 +2,139 @@
 @use '../../styles/partials/variables' as *;
 
 
+.login-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.authentication-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 24px 16px;
+    gap: 16px;
+
+    @include tablet {
+        max-width: 450px;
+        margin: auto auto;
+    }
+
+    &__heading {
+        font-size: 16px;
+        font-weight: 700;
+        color: $dark-text;
+
+        @include tablet {
+            font-size: 18px;
+        }
+
+    }
+}
+
+.authentication-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 16px;
+    border-bottom: 1px solid $light-text;
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 4px;
+
+        &--checkbox {
+            grid-row: 1;
+            grid-column: 1;
+        }
+    }
+
+    &__label {
+        font-size: 14px;
+        font-weight: 900;
+        color: $dark-text;
+
+        &--checkbox {}
+    }
+
+    &__input {
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 400;
+        border: 1px solid $light-text;
+        border-radius: 5px;
+        outline: none;
+
+        &:focus {
+            border: 1px solid $primary-color;
+        }
+
+        &--checkbox {}
+    }
+
+    &__wrapper {
+        display: grid;
+        grid-template-columns: repeat(1fr, 2);
+        grid-template-rows: repeat(1fr, 2);
+    }
+
+    &__link {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    &__button {
+        &--primary {
+            grid-column: 1/span 2;
+            grid-row: 2;
+        }
+    }
+
+
+}
+
+.divider-or {
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito Sans';
+    line-height: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    @include tablet {
+        max-width: 451px;
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        flex: 1 1;
+        border-bottom: 1px $light-text solid;
+        margin: auto;
+    }
+
+    &:before {
+        margin-right: 16px;
+    }
+
+    &:after {
+        margin-left: 16px
+    }
+}
 
 .login {
     padding: 24px 16px;
@@ -11,15 +144,17 @@
     align-items: center;
 
     @include tablet {
-        padding: 36px 25vw;
+        padding: 36px 40px;
+        max-width: 450px;
     }
 
     &__heading {
         font-weight: 700;
         font-family: 'Nunito Sans';
         font-size: 16px;
-        line-height: 24px;
-        margin-bottom: 16px;
+        line-height: 20px;
+        padding: 16px 0;
+        color: $dark-text;
 
         &--sign-up {
             margin-top: 24px;
@@ -27,8 +162,8 @@
         }
 
         @include tablet {
-            font-size: 20px;
-            line-height: 30px;
+            font-size: 18px;
+            line-height: 24px;
         }
     }
 

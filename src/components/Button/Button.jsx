@@ -2,9 +2,9 @@ import './Button.scss';
 import { Link } from 'react-router-dom';
 
 
-export const ButtonPrimary = ({ text, to }) => {
+export const ButtonPrimary = ({ text, to, className }) => {
     return (
-        <Link className="button button--primary" to={to}>{text}</Link>
+        <Link className={`button button--primary ${className}`} to={to}>{text}</Link>
     )
 }
 
