@@ -21,12 +21,16 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    padding: 24px 16px;
     gap: 16px;
+    padding: 24px 16px;
 
     @include tablet {
-        max-width: 450px;
+        width: 60%;
         margin: auto auto;
+    }
+
+    @include desktop {
+        width: 25%;
     }
 
     &__heading {
@@ -48,6 +52,7 @@
     width: 100%;
     gap: 16px;
     border-bottom: 1px solid $light-text;
+    padding-bottom: 24px;
 
     &__group {
         display: flex;
@@ -56,8 +61,11 @@
         gap: 4px;
 
         &--checkbox {
-            grid-row: 1;
-            grid-column: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row-reverse;
+            gap: 4px;
         }
     }
 
@@ -66,7 +74,10 @@
         font-weight: 900;
         color: $dark-text;
 
-        &--checkbox {}
+        &--checkbox {
+            font-size: 14px;
+            font-weight: 600;
+        }
     }
 
     &__input {
@@ -81,24 +92,30 @@
             border: 1px solid $primary-color;
         }
 
-        &--checkbox {}
+        &--checkbox {
+            accent-color: $primary-color;
+        }
     }
 
     &__wrapper {
-        display: grid;
-        grid-template-columns: repeat(1fr, 2);
-        grid-template-rows: repeat(1fr, 2);
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+        gap: 24px;
     }
 
     &__link {
-        grid-column: 2;
-        grid-row: 1;
+        font-size: 14px;
+        color: $dark-text;
+        font-weight: 700;
+        text-decoration: underline;
+        cursor: pointer;
+
     }
 
     &__button {
         &--primary {
-            grid-column: 1/span 2;
-            grid-row: 2;
+            width: 100%;
         }
     }
 
@@ -133,198 +150,5 @@
 
     &:after {
         margin-left: 16px
-    }
-}
-
-.login {
-    padding: 24px 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    @include tablet {
-        padding: 36px 40px;
-        max-width: 450px;
-    }
-
-    &__heading {
-        font-weight: 700;
-        font-family: 'Nunito Sans';
-        font-size: 16px;
-        line-height: 20px;
-        padding: 16px 0;
-        color: $dark-text;
-
-        &--sign-up {
-            margin-top: 24px;
-            margin-bottom: 16px;
-        }
-
-        @include tablet {
-            font-size: 18px;
-            line-height: 24px;
-        }
-    }
-
-    &__or {
-        font-size: 16px;
-        font-weight: 700;
-        font-family: 'Nunito Sans';
-        line-height: 30px;
-        text-align: center;
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-
-        @include tablet {
-            max-width: 451px;
-        }
-
-        &:before,
-        &:after {
-            content: "";
-            flex: 1 1;
-            border-bottom: 1px $light-text solid;
-            margin: auto;
-        }
-
-        &:before {
-            margin-right: 16px;
-        }
-
-        &:after {
-            margin-left: 16px
-        }
-    }
-
-}
-
-.btn {
-    cursor: pointer;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 9px 36px;
-
-    @include tablet {
-        max-width: 451px;
-    }
-
-    &--google {
-        border: 1px $light-text solid;
-        background-color: #fff;
-        border-radius: 25px;
-    }
-
-    &--sign-up {
-        border: 2px $primary-color solid;
-        border-radius: 25px;
-        color: $primary-color;
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 30px;
-        font-family: 'Nunito Sans';
-        background-color: $white;
-        transition: all .2s ease-in-out;
-
-        &:hover {
-            background-color: $primary-color;
-            color: $white;
-            box-shadow: 0px 7px 20px 0px rgba($primary-color, 0.3);
-        }
-
-        @include tablet {
-            font-size: 18px;
-        }
-
-    }
-
-    &__logo {
-        width: 21px;
-        height: 21px;
-    }
-
-    &__text {
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 30px;
-        font-family: 'Nunito Sans';
-
-        @include tablet {
-            font-size: 18px;
-        }
-    }
-}
-
-.form {
-
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    @include tablet {
-        max-width: 451px;
-        font-size: 16px;
-    }
-
-    &__forget-password {
-        font-size: 11px;
-        font-weight: 900;
-        line-height: 30px;
-        font-family: 'Nunito Sans';
-        color: $dark-text;
-        text-decoration: none;
-        cursor: pointer;
-
-        @include tablet {
-            font-size: 14px;
-        }
-    }
-
-    &__wrapper {
-        width: 100%;
-        gap: 16px;
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 24px;
-        border-bottom: 1px $light-text solid;
-
-
-        @include tablet {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-    }
-
-    &__submit {
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 30px;
-        font-family: 'Nunito Sans';
-        padding: 9px 36px;
-        border: 2px $primary-color solid;
-        border-radius: 25px;
-        background-color: $primary-color;
-        color: $white;
-        box-shadow: 0px 7px 20px 0px rgba($primary-color, 0.3);
-        transition: all .2s ease-in-out;
-
-        &:hover {
-            background-color: $white;
-            color: $primary-color;
-        }
-
-
-        @include tablet {
-            width: 196px;
-            font-size: 18px;
-        }
     }
 }

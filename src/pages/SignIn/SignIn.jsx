@@ -62,11 +62,12 @@ const SignIn = () => {
                     <div className="authentication-form__wrapper">
                         <Link className="authentication-form__link">Forget you password?</Link>
                         <div className="authentication-form__group--checkbox">
-                            <label htmlFor="" className="authentication__label--checkbox">Remember Me</label>
-                            <input type="checkbox" className="authentication__input--checkbox" />
+                            <label htmlFor="" className="authentication-form__label--checkbox">Remember Me</label>
+                            <input type="checkbox" className="authentication-form__input--checkbox" />
                         </div>
-                        <ButtonPrimary text='Sign In' className='authentication-form__button--primary' />
                     </div>
+                    <ButtonPrimary text='Sign In' className='authentication-form__button--primary' />
+
 
                 </form>
                 <p className="authentication-form-container__heading">Don’t have an account?</p>
