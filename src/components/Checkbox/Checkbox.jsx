@@ -1,12 +1,12 @@
 import './Checkbox.scss'
 
-const Checkbox = (props) =>{
+const Checkbox = (props) => {
 
-    const {text} = props
-    return(
-        <div className="form__checkbox">
-            <input type="checkbox" name={text} id={text} className='form__input form__input--checkbox' />
-            <label htmlFor={text} className='form__checkbox-label'>{text}</label>
+    const { text } = props
+    return (
+        <div className="authentication-form__group--checkbox">
+            <label htmlFor="" className="authentication-form__label--checkbox">{text}</label>
+            <input type="checkbox" className="authentication-form__input--checkbox" />
         </div>
     )
 }
