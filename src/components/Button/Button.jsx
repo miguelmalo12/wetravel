@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import google_logo from '../../assets/icons/google-icon.svg'
 
 
-export const ButtonPrimary = ({ text, to, className }) => {
+export const ButtonPrimary = ({ text, to, className, type, onClick }) => {
     return (
-        <Link className={`button button--primary ${className}`} to={to}>{text}</Link>
+        <Link type={type} onClick={onClick} className={`button button--primary ${className}`} to={to}>{text}</Link>
     )
 }
 
