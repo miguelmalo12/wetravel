@@ -1,10 +1,10 @@
 import './AuthFormComponents.scss';
 
-export const FormGroupInput = ({ label, type, name }) => {
+export const FormGroupInput = ({ label, type, name, onChange, customRef }) => {
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
-            <input type={type} id={name} name={name} className="authentication-form__input" />
+            <input type={type} onChange={onChange} id={name} name={name} ref={customRef} className="authentication-form__input" />
         </div>
     )
 }

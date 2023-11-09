@@ -6,26 +6,46 @@ import { ButtonGoogle, ButtonPrimary, ButtonSecondary } from '../../components/B
 import { FormGroupInput, FormGroupSelect, FormGroupCheckbox, FormGroupRadioButton } from '../../components/AuthFormComponents/AuthFormComponents';
 import QuestionnaireLogo from '../../assets/Questionnaire.png';
 import { country_list } from '../../utilities';
+import { useEffect, useRef, useState } from 'react';
 
 
 
 
 const SignUp = () => {
+    const [error, setError] = useState(false);
+    const emailRef = useRef();
+    const confirmEmailRef = useRef();
+    useEffect(() => {
+        if (emailRef.current.value !== confirmEmailRef.current.value && emailRef.current.value !== "" && confirmEmailRef.current.value !== "") {
+            setError(true);
+        } else {
+            setError(false)
+        }
+
+    }, [emailRef.current.value, confirmEmailRef.current.value])
+
+    const [signUpCredentials, setSignUpCredentials] = useState({
+        user_name: '',
+        email: '',
+        password: ''
+    })
+
+    const handleInputChange = (event) => {
+        setSignUpCredentials({
+            ...signUpCredentials, [event.target.name]: event.target.value
+        })
+        console.log(event.target.value)
+    }
 
     const travelerType = ['Adventurous', 'Relaxed', 'Cultural', 'Beach-lover', 'Nature-lover', 'Romantic',
         'Family-friendly', 'Luxury', 'Backpacker', 'Road tripper', 'Eco-tourist', 'Volunteer']
-
     const foodType = ['Street food', 'Local Cuisine', 'High-end cuisine', 'Fast Food']
-
     const importanceLevels = ['Very important', 'Somewhat important', 'Not very important', 'Not important at all']
-
     const activities = ['Hiking', 'Sightseeing', 'Shopping', 'Museums', 'Theme parks', 'Nightlife', 'Beach activities', 'Water sports', 'Adventure', 'Spa and relaxation', 'Nature', 'History']
-
     const climateType = ['Hot and sunny', 'Warm and humid', 'Mild and sunny', 'Cool and rainy', 'Snowy and cold', 'Not important']
-
     const hobbies = ['Wine tasting', 'History', 'Relaxation', 'Winter activities', 'Summer activities', 'Gastronomy', 'Music', 'Art', 'Photography', 'Wildlife', 'City Exploring', 'Partying', 'Architecture', 'Outdoor Activities', 'None']
-
     const cultureImmerse = ['Very important', 'Somewhat important', 'Not very important', 'Not important at all']
+
 
 
     return (
@@ -36,10 +56,11 @@ const SignUp = () => {
                 <ButtonGoogle />
                 <p className="divider-or">or</p>
                 <form action="" className="authentication-form">
-                    <FormGroupInput label='What is your email?' type='text' name='email' />
-                    <FormGroupInput label='Confirm your email' type='text' name='c-email' />
-                    <FormGroupInput label='Create a password' type='password' name='password' />
-                    <FormGroupInput label='How do you want us to call you?' type='' name='username' />
+                    <FormGroupInput label='What is your email?' type='email' onChange={handleInputChange} name='email' customRef={emailRef} />
+                    <FormGroupInput label='Confirm your email' type='email' onChange={handleInputChange} name='c-email' customRef={confirmEmailRef} />
+                    {(error) ? (<p className='error-message'>Email addresses do not match. Please try again.</p>) : (<></>)}
+                    <FormGroupInput label='Create a password' type='password' onChange={handleInputChange} name='password' />
+                    <FormGroupInput label='How do you want us to call you?' onChange={handleInputChange} type='text' name='user_name' />
 
                     <section className="questionnaire">
                         <div className="questionnaire__header-container">
