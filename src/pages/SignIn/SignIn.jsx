@@ -4,8 +4,28 @@ import { CopyrightFooter } from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { ButtonPrimary, ButtonSecondary, ButtonGoogle } from '../../components/Button/Button';
 import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComponents';
+import { useState } from 'react';
+import axios from 'axios';
 
-const SignIn = () => {
+const SignIn = ({ API_URL }) => {
+
+    const [signInCredentials, setSignInCredentials] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleInputChange = (event) => {
+        setSignInCredentials({
+            ...signInCredentials, [event.target.name]: event.target.value
+        })
+    }
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        axios.post(`${API_URL}/auth/login`, {
+            email: signInCredentials.email,
+            password: signInCredentials.password
+        })
+    }
 
     return (
 
@@ -16,9 +36,9 @@ const SignIn = () => {
                 <p className="authentication-form-container__heading">To continue, sign in to WeTravel</p>
                 <ButtonGoogle />
                 <p className="divider-or">or</p>
-                <form action="" className="authentication-form">
-                    <FormGroupInput label='Email' type='text' name='email' />
-                    <FormGroupInput label='Password' type='password' name='password' />
+                <form onSubmit={handleFormSubmit} className="authentication-form">
+                    <FormGroupInput onChange={handleInputChange} label='Email' type='email' name='email' />
+                    <FormGroupInput onChange={handleInputChange} label='Password' type='password' name='password' />
 
                     <div className="authentication-form__wrapper">
                         <Link className="authentication-form__link">Forget you password?</Link>
@@ -27,7 +47,7 @@ const SignIn = () => {
                             <input type="checkbox" className="authentication-form__input--checkbox" />
                         </div>
                     </div>
-                    <ButtonPrimary text='Sign In' className='authentication-form__button--primary' />
+                    <ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} />
 
 
                 </form>
@@ -38,12 +58,6 @@ const SignIn = () => {
             <CopyrightFooter />
 
         </div>
-
-        // <div>
-        //     <Header />
-
-        //     <CopyrightFooter />
-        // </div>
     )
 }
 

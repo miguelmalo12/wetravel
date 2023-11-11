@@ -34,7 +34,7 @@ function App() {
           <Route path='recommend' element={<Recommend />} />
           <Route path='plan' element={<Plan />} />
           <Route path='*' element={<Home />} />
-          <Route path='login' element={<SignIn />} />
+          <Route path='login' element={<SignIn API_URL={API_URL} />} />
           <Route path='sign-up' element={<SignUp API_URL={API_URL} />} />
         </Routes>
 

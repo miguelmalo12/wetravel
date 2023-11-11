@@ -14,10 +14,10 @@ export const FormGroupSelect = ({ label, optionArray, name, defaultOption }) => 
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
             <select id={name} name={name} className="authentication-form__input">
-                <option className='authentication-form__input--option' value="" disabled selected>{defaultOption}</option>
+                <option className='authentication-form__input--option' value="" disabled defaultValue>{defaultOption}</option>
                 {optionArray.map(option => {
                     return (
-                        <option className='authentication-form__input--option' value={option} >{option}</option>
+                        <option key={option} className='authentication-form__input--option' value={option} >{option}</option>
                     )
                 })}
             </select>
@@ -33,7 +33,7 @@ export const FormGroupCheckbox = ({ label, optionArray, name, type }) => {
                 {
                     optionArray.map(option => {
                         return (
-                            <div className="authentication-form__group--checkbox">
+                            <div className="authentication-form__group--checkbox" key={option}>
                                 <label htmlFor="" className="authentication-form__label--checkbox">{option}</label>
                                 <input type={type} className="authentication-form__input--checkbox" value={option} name={name} />
                             </div>

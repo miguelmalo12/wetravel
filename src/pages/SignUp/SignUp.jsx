@@ -45,11 +45,6 @@ const SignUp = ({ API_URL }) => {
             email: signUpCredentials.email,
             password: signUpCredentials.password
         })
-
-        console.log('submit')
-
-
-
     }
 
 
