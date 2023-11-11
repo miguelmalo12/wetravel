@@ -62,7 +62,7 @@ const Header = () => {
 
       <div className="navbar-hamburger">
         <input type="checkbox" className="navbar-hamburger__checkbox" id="navi-toggle" />
-        <label for="navi-toggle" className="navbar-hamburger__button">
+        <label htmlFor="navi-toggle" className="navbar-hamburger__button">
           <span className="navbar-hamburger__icon">&nbsp;</span>
         </label>
 

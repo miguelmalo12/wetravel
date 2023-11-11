@@ -19,6 +19,10 @@ function ScrollToTop() {
 }
 
 function App() {
+
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  console.log(API_URL)
+
   return (
     <div className="App">
 
@@ -30,8 +34,8 @@ function App() {
           <Route path='recommend' element={<Recommend />} />
           <Route path='plan' element={<Plan />} />
           <Route path='*' element={<Home />} />
-          <Route path='login' element={<SignIn />} />
-          <Route path='sign-up' element={<SignUp />} />
+          <Route path='login' element={<SignIn API_URL={API_URL} />} />
+          <Route path='sign-up' element={<SignUp API_URL={API_URL} />} />
         </Routes>
 
       </BrowserRouter>
