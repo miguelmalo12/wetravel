@@ -61,7 +61,6 @@ const SignUp = ({ API_URL }) => {
 
     return (
         <div className="sign-up-page">
-            <Header />
             <div className="authentication-form-container">
                 <p className="authentication-form-container__heading">Register for free and start planning</p>
                 <ButtonGoogle />
