@@ -39,7 +39,6 @@ function Plan() {
 
   return (
     <div>
-      <Header />
       <main>
         <HeroForm
           subtitle={"Easily Plan Your Next Trip"}

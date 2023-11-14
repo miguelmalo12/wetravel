@@ -8,7 +8,6 @@ import { CopyrightFooter, Footer } from '../components/Footer/Footer';
 function Home() {
   return (
     <div>
-      <Header />
       <main>
         <Hero />
         <About />

@@ -9,7 +9,6 @@ import heroImage from '../../assets/vector-illustrations/illustration_recommend.
 function Recommend() {
   return (
     <div>
-      <Header />
       <main>
         <HeroForm subtitle={"Get Your Perfect Destination Match"} title={"Recommend Me!"} image={heroImage} />
         <CTA title={"Need A Recommendation?"} text={"Your perfect destination, one click away"} buttonText={"Recommend Me"} />

@@ -5,7 +5,7 @@ import google_logo from '../../assets/icons/google-icon.svg'
 
 export const ButtonPrimary = ({ text, to, className, type, onClick }) => {
     return (
-        <Link type={type} onClick={onClick} className={`button button--primary ${className}`} to={to}>{text}</Link>
+        <button type={type} onClick={onClick} className={`button button--primary ${className}`} to={to}>{text}</button>
     )
 }
 

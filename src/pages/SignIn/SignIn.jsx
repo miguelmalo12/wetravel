@@ -7,7 +7,7 @@ import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComp
 import { useState } from 'react';
 import axios from 'axios';
 
-const SignIn = ({ API_URL }) => {
+const SignIn = ({ API_URL, isLoggedIn, setLoggedIn, setProfileData }) => {
 
     const [signInCredentials, setSignInCredentials] = useState({
         email: '',
@@ -24,13 +24,17 @@ const SignIn = ({ API_URL }) => {
         axios.post(`${API_URL}/auth/login`, {
             email: signInCredentials.email,
             password: signInCredentials.password
+        }).then((response) => {
+            setProfileData(response.data)
+            setLoggedIn(true)
         })
+        event.target.reset();
+
     }
 
     return (
 
         <div className="login-page">
-            <Header />
 
             <div className="authentication-form-container">
                 <p className="authentication-form-container__heading">To continue, sign in to WeTravel</p>
@@ -47,7 +51,7 @@ const SignIn = ({ API_URL }) => {
                             <input type="checkbox" className="authentication-form__input--checkbox" />
                         </div>
                     </div>
-                    <ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} />
+                    <ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' />
 
 
                 </form>

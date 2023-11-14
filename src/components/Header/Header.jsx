@@ -47,8 +47,7 @@ const NavbarList = ({ isLoggedIn }) => {
 }
 
 
-const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+const Header = ({ isLoggedIn }) => {
 
   return (
     <header className="header">
