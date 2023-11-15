@@ -6,12 +6,18 @@
 
 .heroform {
     position: relative;
+    margin-bottom: 18%;
 
-    @include desktop {
+    @include tablet {
         @include padding-two(0, 8);
         display: flex;
         align-items: center;
         text-align: left;
+        margin-bottom: 18%;
+    }
+
+    @include desktop {
+        margin-bottom: 0;
     }
 
     &__text {
@@ -19,15 +25,26 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        width: 100%;
 
         @include tablet {
             @include padding-all(4, 4, 0, 4);
+            width: 50%;
         }
 
         @include desktop {
             @include padding-all(4, 8, 0, 8);
             flex-basis: 50%;
             flex-grow: 0;
+            width: unset;
+        }
+
+        h1 {
+            padding-bottom: 1rem;
+
+            @include tablet {
+                padding-bottom: 0;
+            }
         }
 
         p {
@@ -46,6 +63,8 @@
     &__image {
         display: flex;
         justify-content: center;
+        min-width: 320px;
+        z-index: -1;
 
         @include desktop {
             flex-basis: 50%;
@@ -53,11 +72,16 @@
         }
 
         img {
+            display: none;
             max-width: 100%;
             height: auto;
             object-fit: contain;
 
             @include tablet {
+                display: block;
+            }
+
+            @include desktop {
                 max-width: 70%;
                 max-width: 600px;
             }
@@ -72,9 +96,13 @@
         background-repeat: no-repeat;
         position: absolute;
         width: 100vw;
-        height: 482px;
+        height: 294px;
         left: 0px;
         top: 0px;
+
+        @include tablet {
+            height: 482px;
+        }
     }
 
     // Background small icons, only visible on desktop
@@ -115,16 +143,18 @@
     &__location-container {
         display: flex;
         align-items: center;
-        width: 90vw;
-        height: 77px;
+        width: 70%;
+        height: 63px;
         background: #FFFFFF;
         box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
         border-radius: 75px;
         margin-bottom: 15px;
-        padding-left: 35px;
+        padding-left: 20px;
 
         @include tablet {
             width: 290px;
+            height: 77px;
+            padding-left: 35px;
         }
     }
 
@@ -147,19 +177,29 @@
     }
 
     &__label {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 900;
         font-family: 'Nunito Sans';
         color: #8C849F;
         text-align: left;
+
+        @include tablet {
+            font-size: 18px;
+        }
     }
 
     &__input {
-        border: none;
-        font-size: 16px;
+        border: 2px solid transparent;
+        font-size: 14px;
         font-weight: 700;
         color: variables.$dark-text;
-        width: 100%;
+        width: 83%;
+        padding: 1px 0 1px 4px;
+
+        @include tablet {
+            font-size: 16px;
+            width: 100%;
+        }
 
         &::placeholder {
             color: variables.$dark-text;
@@ -170,16 +210,18 @@
     &__date-container {
         display: flex;
         align-items: center;
-        height: 77px;
+        height: 63px;
         background: #FFFFFF;
         box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
         border-radius: 75px;
         position: relative;
-        padding-left: 35px;
-        width: 290px;
+        padding-left: 20px;
+        width: 100%;
 
         @include tablet {
             width: 534px;
+            height: 77px;
+            padding-left: 35px;
         }
     }
 
@@ -188,11 +230,12 @@
         display: flex;
         align-items: baseline;
         gap: 10px;
+        width: 40%;
     }
 
     &__cta {
-        width: 59px;
-        height: 59px;
+        width: 44px;
+        height: 44px;
         border: none;
         border-radius: 1000px;
         background-color: #1EBBD7;
@@ -202,6 +245,11 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+
+        @include tablet {
+            width: 59px;
+            height: 59px;
+        }
     }
 
     &__cta-icon {

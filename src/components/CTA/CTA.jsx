@@ -6,7 +6,7 @@ function CTA({ title, text, buttonText, to }) {
     return (
         <section className="cta">
             <div className="cta__text-container">
-                <h2 className='heading--primary cta__heading'>{title}</h2>
+                <h2 className='cta__heading'>{title}</h2>
                 <p className='cta__text'>{text}</p>
                 <ButtonPrimary text={buttonText} to={to} />
             </div>
