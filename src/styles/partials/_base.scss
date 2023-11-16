@@ -22,3 +22,9 @@ a:link,
 a:visited {
     text-decoration: none;
 }
+
+input:focus {
+    outline: none;
+    border: 2px solid #1EBBD7;
+    border-radius: 50px;
+}
