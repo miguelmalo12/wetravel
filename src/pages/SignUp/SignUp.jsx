@@ -1,9 +1,8 @@
 import './SignUp.scss';
-import Header from '../../components/Header/Header';
 import { CopyrightFooter } from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import { ButtonGoogle, ButtonPrimary, ButtonSecondary } from '../../components/Button/Button';
-import { FormGroupInput, FormGroupSelect, FormGroupCheckbox, FormGroupRadioButton } from '../../components/AuthFormComponents/AuthFormComponents';
+import { FormGroupInput, FormGroupSelect, FormGroupCheckbox } from '../../components/AuthFormComponents/AuthFormComponents';
 import QuestionnaireLogo from '../../assets/Questionnaire.png';
 import { country_list } from '../../utilities';
 import { useEffect, useRef, useState } from 'react';
@@ -14,16 +13,9 @@ import axios from 'axios';
 
 const SignUp = ({ API_URL }) => {
     const [error, setError] = useState(false);
-    const emailRef = useRef();
-    const confirmEmailRef = useRef();
-    useEffect(() => {
-
-        if (emailRef.current.value !== confirmEmailRef.current.value && emailRef.current.value !== "" && confirmEmailRef.current.value !== "") {
-            setError(true);
-        } else {
-            setError(false)
-        }
-    }, [emailRef.current, confirmEmailRef.current])
+    const [errorMessage, setErrorMessage] = useState('Invalid email address. Please enter a valid email.')
+    const emailRef = useRef(null);
+    const confirmEmailRef = useRef(null);
 
     const [signUpCredentials, setSignUpCredentials] = useState({
         user_name: '',
@@ -31,10 +23,31 @@ const SignUp = ({ API_URL }) => {
         password: ''
     })
 
+
+    const handleEmailValidation = (event) => {
+        const { name, value } = event.target;
+
+        if ((name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) ||
+            (name === 'c-email' && value !== signUpCredentials.email)) {
+            setError(true);
+
+            if (name === 'c-email' && value !== signUpCredentials.email) {
+                setErrorMessage('Email addresses do not match.');
+            } else {
+                setErrorMessage('Invalid email address. Please enter a valid email.');
+            }
+        } else {
+            setError(false);
+            setErrorMessage('');
+        }
+    };
+
+
+
     const handleInputChange = (event) => {
         setSignUpCredentials({
             ...signUpCredentials, [event.target.name]: event.target.value
-        })
+        });
     }
 
     const handleFormSubmit = (event) => {
@@ -66,9 +79,9 @@ const SignUp = ({ API_URL }) => {
                 <ButtonGoogle />
                 <p className="divider-or">or</p>
                 <form onSubmit={handleFormSubmit} className="authentication-form">
-                    <FormGroupInput label='What is your email?' type='email' onChange={handleInputChange} name='email' customRef={emailRef} />
-                    <FormGroupInput label='Confirm your email' type='email' onChange={handleInputChange} name='c-email' customRef={confirmEmailRef} />
-                    {(error) ? (<p className='error-message'>Email addresses do not match. Please try again.</p>) : (<></>)}
+                    <FormGroupInput label='What is your email?' type='email' onChange={handleInputChange} name='email' customRef={emailRef} handleEmailValidation={handleEmailValidation} />
+                    <FormGroupInput label='Confirm your email' type='email' onChange={handleInputChange} name='c-email' customRef={confirmEmailRef} handleEmailValidation={handleEmailValidation} />
+                    {(error) ? (<p className='error-message'>{errorMessage}</p>) : (<></>)}
                     <FormGroupInput label='Create a password' type='password' onChange={handleInputChange} name='password' />
                     <FormGroupInput label='How do you want us to call you?' onChange={handleInputChange} type='text' name='user_name' />
 

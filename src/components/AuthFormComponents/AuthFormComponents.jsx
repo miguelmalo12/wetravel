@@ -1,10 +1,13 @@
 import './AuthFormComponents.scss';
 
-export const FormGroupInput = ({ label, type, name, onChange, customRef }) => {
+export const FormGroupInput = ({ label, type, name, onChange, customRef, handleEmailValidation }) => {
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
-            <input type={type} onChange={onChange} id={name} name={name} ref={customRef} className="authentication-form__input" />
+            <input type={type} onChange={(handleEmailValidation) ? (event) => {
+                onChange(event)
+                handleEmailValidation(event)
+            } : (onChange)} id={name} name={name} ref={customRef} className="authentication-form__input" />
         </div>
     )
 }
