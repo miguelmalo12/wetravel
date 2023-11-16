@@ -7,22 +7,44 @@
     &--card {
         display: flex;
         align-items: center;
-        height: 100px;
-        width: 350px;
+        height: 66px;
+        width: 175px;
         left: 166px;
         background: #FFFFFF;
         box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
         border-radius: 15px;
-        padding: 2rem 3rem 2rem;
-        margin-bottom: 4.9rem;
+        padding: 1rem 1.5rem 1rem;
+        margin-bottom: 2rem;
 
+        @include tablet {
+            padding: 2rem 3rem 2rem;
+            margin-bottom: 4.9rem;
+            width: 350px;
+            height: 100px;
+        }
 
         &__icon {
-            width: 59px;
-            height: 59px;
+            width: 40px;
+            height: 40px;
             border-radius: 15px;
             background: variables.$secondary-color;
-            margin-right: 2.4rem;
+            margin-right: 1.2rem;
+
+            @include tablet {
+                width: 59px;
+                height: 59px;
+                margin-right: 2.4rem;
+            }
+
+            & img {
+                width: 40px;
+                height: 40px;
+
+                @include tablet {
+                    width: 59px;
+                    height: 59px;
+                }
+            }
         }
 
         &__text {
@@ -32,16 +54,26 @@
 
     &--entry {
         display: flex;
-        margin-left: 10rem;
-        padding-bottom: 24px;
+        margin-left: 5.5rem;
+        padding-bottom: 18px;
+
+        @include tablet {
+            margin-left: 10rem;
+            padding-bottom: 24px;
+        }
 
         &--container {
             display: flex;
 
             &__event {
-                padding-right: 16px;
-                font-size: 18px;
+                padding-right: 10px;
+                font-size: 16px;
                 text-align: left;
+
+                @include tablet {
+                    padding-right: 16px;
+                    font-size: 18px;
+                }
 
                 &::before {
                     content: "";
@@ -51,10 +83,14 @@
                     background-color: variables.$secondary-color;
                     border-radius: 50%;
                     position: absolute;
-                    left: 46px;
+                    left: 25px;
                     z-index: 10;
                     margin-top: 2px;
                     border: 4px solid variables.$white;
+
+                    @include tablet {
+                        left: 46px;
+                    }
                 }
             }
 
@@ -100,23 +136,29 @@
         background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
         border: 3px dashed #8D8D8D;
         border-radius: 5px;
-        margin-left: 10rem;
+        margin-left: 5rem;
         margin-bottom: 49px;
 
         @include tablet {
             width: 402px;
             height: 117px;
+            margin-left: 10rem;
         }
 
     }
 
     &--line {
         position: absolute;
-        top: 100px;
-        left: 56px;
+        top: 66px;
+        left: 34px;
         height: 100%;
         border: 3px solid #8D8D8D;
         background-color: variables.$medium-text;
+
+        @include tablet {
+            top: 100px;
+            left: 56px;
+        }
     }
 
     &--finish-icon {

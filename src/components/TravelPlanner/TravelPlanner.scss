@@ -32,10 +32,15 @@
             background: #FFFFFF;
             box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
             border-radius: 15px;
-            width: 50%;
-            width: 444px;
-            height: 486px;
-            padding: 2.8rem 2.8rem 4rem;
+            width: 200px;
+            height: 310px;
+            padding: 1.4rem 1rem 2rem;
+
+            @include tablet {
+                width: 444px;
+                height: 486px;
+                padding: 2.8rem 2.8rem 4rem;
+            }
 
             &--button {
                 text-align: center;
@@ -50,11 +55,23 @@
                 &--item {
                     display: flex;
                     align-items: center;
-                    margin-bottom: 2.8rem;
+                    margin-bottom: 1rem;
                     cursor: pointer;
+
+                    @include tablet {
+                        margin-bottom: 2.8rem;
+                    }
     
                     img {
-                        margin-right: 2.7rem;
+                        margin-right: 1rem;
+                        height: 32px;
+                        width: 32px;
+
+                        @include tablet {
+                            margin-right: 2.7rem;
+                            height: unset;
+                            width: unset;
+                        }
                     }
                 }
             }
