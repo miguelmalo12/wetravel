@@ -1,14 +1,12 @@
 import './SignIn.scss';
 import { Link } from 'react-router-dom';
 import { CopyrightFooter } from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
 import { ButtonPrimary, ButtonSecondary, ButtonGoogle } from '../../components/Button/Button';
 import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComponents';
 import { useState } from 'react';
 import axios from 'axios';
 
 const SignIn = ({ API_URL, isLoggedIn, setLoggedIn, setProfileData }) => {
-
     const [signInCredentials, setSignInCredentials] = useState({
         email: '',
         password: ''
@@ -24,9 +22,15 @@ const SignIn = ({ API_URL, isLoggedIn, setLoggedIn, setProfileData }) => {
         axios.post(`${API_URL}/auth/login`, {
             email: signInCredentials.email,
             password: signInCredentials.password
-        }).then((response) => {
-            setProfileData(response.data)
-            setLoggedIn(true)
+        }).then(() => {
+            axios({
+                method: 'get',
+                url: `${API_URL}/auth/user`
+            }).then(response => {
+                console.log(response)
+            }).catch(err => {
+                console.log(err)
+            })
         })
         event.target.reset();
 
