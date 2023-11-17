@@ -58,6 +58,11 @@
                 @include padding-all(2, 0, 4, 0);
             }
         }
+
+        .error-message {
+            margin-top: 0;
+            padding-left: 35px;
+        }
     }
 
     &__image {

@@ -1,7 +1,13 @@
 import "./Day.scss";
 import { useState } from "react";
+
+//components
+import Modal from "../Modal/Modal";
+
+// icons
 import dayIcon from "../../assets/icons/day-icon.svg";
 import editIcon from "../../assets/icons/edit.svg";
+import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
@@ -10,6 +16,8 @@ function Day({ dayNumber, date }) {
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [deleteEventIndex, setDeleteEventIndex] = useState(null);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -89,6 +97,21 @@ function Day({ dayNumber, date }) {
       return `${hour.toString().padStart(2, '0')}:${minutes}`;
   };
 
+  const handleDeleteClick = (index) => {
+    // Additional logic here
+    setDeleteEventIndex(index);
+    setModalOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    const updatedEvents = [...events];
+    setEvents(updatedEvents);
+    setModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  }
 
   return (
     <div className="day">
@@ -137,16 +160,33 @@ function Day({ dayNumber, date }) {
               <p className="day--entry--container__event">{event.title}</p>
               <p className="day--entry--container__time">{event.time && convertTo24Hour(event.time)}</p>
               <img
-                className="day--entry--container__edit"
+                className="day--entry--container__icon"
                 src={editIcon}
                 onClick={() => {
                   setInputIndex(index);
                   setInputValue(events[index].title);
                   setInputTime(convertTo24Hour(events[index].time));
                 }}
-                alt=""
+                alt="Edit icon"
               />
+              <img
+                className="day--entry--container__icon"
+                src={deleteIcon}
+                onClick={() => handleDeleteClick(index)}
+                alt="Delete icon"
+              />
+              {isModalOpen && (
+                <Modal
+                  isOpen={isModalOpen}
+                  textContent={`Are you sure you want to delete the event "${events[deleteEventIndex]?.title}"?`}
+                  buttonText="Delete"
+                  onButtonClick={handleDeleteConfirm}
+                  onCloseClick={handleCloseModal}
+                >
+                </Modal>
+              )}
             </div>
+           
           )}
         </div>
       ))}
