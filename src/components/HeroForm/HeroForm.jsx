@@ -12,9 +12,22 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
   const [location, setLocation] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [formError, setFormError] = useState("");
+
+  const validate = () => {    
+    if (!location || !fromDate || !toDate) {
+      setFormError("Please enter all the fields");
+      return false;
+    }
+
+    setFormError("");
+    return true;
+  };
 
   const handleSubmit = () => {
+    if (validate()) {
     onSubmitClick(location, fromDate, toDate);
+    }
   };
   
   return (
@@ -87,6 +100,7 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
             <img className="heroform__cta-icon" src={heroSubmitIcon} alt="submit icon" />
           </div>
         </div>
+        {formError && <p className="error-message">{formError}</p>}
       </div>
       <div className="heroform__image slidein-right">
         <img src={image} alt="travel illustration" />

@@ -5,6 +5,7 @@ import { parseISO } from 'date-fns';
 
 import HeroForm from "../../components/HeroForm/HeroForm";
 import TravelPlanner from '../../components/TravelPlanner/TravelPlanner';
+import UserTrips from '../../components/UserTrips/UserTrips';
 import CTA from "../../components/CTA/CTA";
 import Header from '../../components/Header/Header';
 import { CopyrightFooter, Footer } from '../../components/Footer/Footer';
@@ -46,6 +47,9 @@ function Plan() {
           image={heroImage}
           onSubmitClick={handleSubmitClick}
         />
+
+        {/* User Trips - Work In Progress */}
+        <UserTrips />
 
         {/* Only shows when click on submit: */}
         {showTravelPlanner && <TravelPlanner location={location} dayCount={dayCount} startDate={new Date(fromDate)} />}
