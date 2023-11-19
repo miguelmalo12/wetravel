@@ -4,18 +4,20 @@
 .footer {
     display: flex;
     flex-direction: column;
-    padding: 24px 16px;
+    padding: 2.4rem 2rem;
     gap: 24px;
+    max-width: 1920px;
+    margin: 0 auto;
 
     @include tablet {
-        padding: 32px 40px 64px;
+        padding: 3.2rem 4rem 6.4rem;
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
     }
 
     @include desktop {
-        padding: 40px 10vw 96px;
+        padding: 4rem 12.8rem 9.6rem;
     }
 
     &__intro-container {

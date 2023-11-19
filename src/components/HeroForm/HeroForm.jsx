@@ -5,7 +5,7 @@ import heroBgArrow from '../../assets/bg-arrow.png';
 import heroBgDot from '../../assets/bg-dot.png';
 import heroBgLocation from '../../assets/bg-location.png';
 import heroLocationIcon from '../../assets/icons/location.svg';
-import heroDateIcon from '../../assets/icons/date.svg';
+import { ReactComponent as HeroDateIcon } from '../../assets/icons/date.svg';
 import heroSubmitIcon from '../../assets/icons/Icon.svg';
 
 function HeroForm( { subtitle, title, image, onSubmitClick}) {
@@ -31,8 +31,9 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
   };
   
   return (
+    <>
+    <div className="heroform__gradient"></div>
     <section className="heroform">
-      <div className="heroform__gradient"></div>
       <div className="heroform__text slidein-left">
         <h6>{subtitle}</h6>
         <h1>{title}</h1>
@@ -55,7 +56,7 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
         </div>
         <div className="heroform__date-container">
           <div className="heroform__date">
-            <img src={heroDateIcon} alt="" className="heroform__icon" />
+            <HeroDateIcon className="heroform__icon" />
             <div className="heroform__input-group">
               <label htmlFor="dateFrom" className="heroform__label">
                 From
@@ -76,7 +77,7 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
             </div>
           </div>
           <div className="heroform__date">
-            <img src={heroDateIcon} alt="" className="heroform__icon" />
+            <HeroDateIcon className="heroform__icon" />
             <div className="heroform__input-group">
               <label htmlFor="dateFrom" className="heroform__label">
                 To
@@ -123,6 +124,7 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
         alt="smaller location icon"
       />
     </section>
+    </>
   );
 }
 

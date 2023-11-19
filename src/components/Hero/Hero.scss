@@ -4,19 +4,19 @@
 
 .hero {
     position: relative;
-    padding: 24px 16px;
+    padding: 24px 0;
     display: flex;
     flex-direction: column;
 
     @include tablet {
-        padding: 32px 40px;
+        padding: 32px 0;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
     }
 
     @include desktop {
-        padding: 32px 8vw;
+        padding: 32px 0;
     }
 
 

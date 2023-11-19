@@ -4,17 +4,17 @@
 .process {
     display: flex;
     flex-direction: column;
-    padding: 24px 16px;
+    padding: 24px 0;
     align-items: center;
     gap: 32px;
 
     @include tablet {
-        padding: 32px 40px;
+        padding: 32px 0;
         gap: 40px;
     }
 
     @include desktop {
-        padding: 32px 8vw;
+        padding: 32px 0;
     }
 
     &__text-container {
@@ -105,16 +105,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 24px 16px;
+    padding: 24px 0;
 
     @include tablet {
         flex-direction: row;
-        padding: 32px 40px;
+        padding: 32px 0;
         justify-content: space-between;
     }
 
     @include desktop {
-        padding: 32px 8vw;
+        padding: 32px 0;
     }
 
     &__image-container {
@@ -224,7 +224,7 @@
 
 
 .gallery {
-    padding: 24px 16px;
+    padding: 24px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -232,11 +232,11 @@
     gap: 24px;
 
     @include tablet {
-        padding: 32px 40px;
+        padding: 32px 0;
     }
 
     @include desktop {
-        padding: 32px 10vw;
+        padding: 32px 0;
     }
 
     &__text-container {
