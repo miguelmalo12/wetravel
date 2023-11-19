@@ -2,7 +2,7 @@
 @use "../../styles/partials/variables" as *;
 
 .trips {
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
 
     h2 {
         padding-bottom: 20px;
@@ -20,6 +20,7 @@
         border-radius: 15px;
         gap: 10%;
         padding-bottom: 7rem;
+        margin-bottom: 4rem;
 
         @include tablet {
             flex-direction: row;

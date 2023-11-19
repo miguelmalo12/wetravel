@@ -7,7 +7,6 @@ import HeroForm from "../../components/HeroForm/HeroForm";
 import TravelPlanner from '../../components/TravelPlanner/TravelPlanner';
 import UserTrips from '../../components/UserTrips/UserTrips';
 import CTA from "../../components/CTA/CTA";
-import Header from '../../components/Header/Header';
 import { CopyrightFooter, Footer } from '../../components/Footer/Footer';
 
 import heroImage from "../../assets/vector-illustrations/illustration_travel-planner.png";

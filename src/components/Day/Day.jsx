@@ -1,5 +1,7 @@
 import "./Day.scss";
 import { useState } from "react";
+import { useRecoilState } from 'recoil';
+import { modalState } from '../../state/modalState';
 
 //components
 import Modal from "../Modal/Modal";
@@ -16,7 +18,7 @@ function Day({ dayNumber, date }) {
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
 
   const handleInputChange = (e) => {
