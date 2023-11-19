@@ -2,11 +2,7 @@
 @use "../../styles/partials/variables";
 
 .planner {
-    padding: 0rem 2rem;
-
-    @include tablet {
-        padding: 0rem 12.8rem;
-    }
+    padding-bottom: 10rem;
 
     &--title {
         text-align: left;
