@@ -1,0 +1,109 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+
+.recommend-page {}
+
+.hero-recommend-section {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 31.24%, rgba(253, 80, 86, 0.1) 100%);
+}
+
+
+.hero-recommend {
+    padding: 24px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    @include tablet {
+        flex-direction: row;
+        align-items: center;
+        padding: 32px 40px;
+        justify-content: space-between;
+    }
+
+
+    @include desktop {
+        padding: 32px 12vw;
+    }
+
+
+    &__form-container {}
+
+    &__image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 100%;
+
+        @include tablet {
+            max-width: 50%;
+        }
+
+        @include desktop {
+            margin-right: 3rem;
+        }
+    }
+
+
+
+    &__image {
+        width: 100%;
+
+        @include tablet {
+            max-width: 600px;
+        }
+    }
+
+    &__bg-icon {
+        position: absolute;
+        display: none;
+
+        @include desktop {
+            display: block;
+        }
+
+        &--bg-arrow {
+            width: 103.92px;
+            height: 33.63px;
+            left: 52%;
+            top: 12%;
+        }
+
+        &--bg-dot {
+            width: 17.39px;
+            height: 17.39px;
+            left: 92%;
+            top: 15%;
+        }
+
+        &--bg-location {
+            left: 94%;
+            top: 29%;
+        }
+
+        &--bg-location-small {
+            left: 90%;
+            top: 45%;
+            width: 18px;
+        }
+    }
+}
+
+.recommend-form {
+
+    &__group-container {}
+
+    &__group {}
+
+    &__label {}
+
+    &__input {}
+
+    &__button {}
+
+    &__button-icon {}
+}
