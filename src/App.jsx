@@ -9,7 +9,7 @@ import Plan from './pages/Plan/Plan';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Header from './components/Header/Header';
-
+import StatusPage from './pages/StatusPage/StatusPage';
 
 function App() {
 
@@ -17,10 +17,17 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState({});
 
+
+  const knownPaths = ['/', '/recommend', '/plan', '/login', '/sign-up'];
+  const shouldShowHeader = () => {
+    const currentPath = window.location.pathname;
+    return knownPaths.includes(currentPath);
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Header isLoggedIn={isLoggedIn} />
+        {shouldShowHeader() && <Header isLoggedIn={isLoggedIn} />}
         <Routes>
           <Route path='/' element={<Home />} />
           <Route
@@ -35,7 +42,7 @@ function App() {
               isLoggedIn={isLoggedIn}
               profileData={profileData}
             />} />
-          <Route path='*' element={<Home />} />
+          <Route path='*' element={<StatusPage title=' Oops! Page Not Found' text='The page you are looking for was moved, removed, renamed or never existed.' />} />
           <Route
             path='login'
             element={<SignIn
