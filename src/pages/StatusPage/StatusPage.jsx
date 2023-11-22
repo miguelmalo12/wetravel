@@ -11,8 +11,8 @@ const StatusPage = ({ title, text }) => {
             </div>
             <div className="status-page__text-container">
                 <h1 className="status-page__heading heading--primary">{title}</h1>
-                <p className="paragraph status-page__text">{text}</p>
-                <ButtonPrimary text='Back to Home' to='/' />
+                <p className="status-page__text">{text}</p>
+                <ButtonPrimary className='status-page__button' text='Back to Home' to='/' />
             </div>
         </div>
     )

@@ -17,10 +17,10 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState({});
 
+
   const knownPaths = ['/', '/recommend', '/plan', '/login', '/sign-up'];
   const shouldShowHeader = () => {
     const currentPath = window.location.pathname;
-
     return knownPaths.includes(currentPath);
   }
 
@@ -42,7 +42,7 @@ function App() {
               isLoggedIn={isLoggedIn}
               profileData={profileData}
             />} />
-          <Route path='*' element={<StatusPage />} />
+          <Route path='*' element={<StatusPage title=' Oops! Page Not Found' text='The page you are looking for was moved, removed, renamed or never existed.' />} />
           <Route
             path='login'
             element={<SignIn
