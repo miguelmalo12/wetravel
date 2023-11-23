@@ -1,6 +1,6 @@
 import './App.scss';
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 
 import Home from './pages/Home';
@@ -11,24 +11,26 @@ import SignUp from './pages/SignUp/SignUp';
 import Header from './components/Header/Header';
 import StatusPage from './pages/StatusPage/StatusPage';
 
+
+
 function App() {
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState({});
 
-
   const knownPaths = ['/', '/recommend', '/plan', '/login', '/sign-up'];
-  const shouldShowHeader = () => {
-    const currentPath = window.location.pathname;
-    return knownPaths.includes(currentPath);
-  }
 
+  const location = useLocation();
+  const currentPath = location.pathname;
   return (
     <div className="App">
       <BrowserRouter>
-        {shouldShowHeader() && <Header isLoggedIn={isLoggedIn} />}
+        {knownPaths.includes(currentPath) && <Header isLoggedIn={isLoggedIn} />}
+
+
         <Routes>
+
           <Route path='/' element={<Home />} />
           <Route
             path='recommend'
