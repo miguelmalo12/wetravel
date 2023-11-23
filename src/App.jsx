@@ -13,22 +13,23 @@ import StatusPage from './pages/StatusPage/StatusPage';
 
 function App() {
 
+
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState({});
 
 
-  const knownPaths = ['/', '/recommend', '/plan', '/login', '/sign-up'];
-  const shouldShowHeader = () => {
-    const currentPath = window.location.pathname;
-    return knownPaths.includes(currentPath);
-  }
+
+
+
+
 
   return (
     <div className="App">
       <BrowserRouter>
-        {shouldShowHeader() && <Header isLoggedIn={isLoggedIn} />}
+        <Header isLoggedIn={isLoggedIn} />
         <Routes>
+
           <Route path='/' element={<Home />} />
           <Route
             path='recommend'
