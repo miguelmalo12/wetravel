@@ -1,13 +1,23 @@
 import "./TravelPlanner.scss";
+
+// recoil state
+import { useRecoilState } from 'recoil';
+import { tripInfoState } from '../../state/tripState';
+
+// components
 import Day from "../Day/Day";
+
 import { addDays, format } from "date-fns";
 
+//icons
 import transportationIcon from "../../assets/icons/TransportationIcon.png";
 import accommodationIcon from "../../assets/icons/AccommodationIcon.png";
 import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
-function TravelPlanner({ location, dayCount, startDate }) {
+function TravelPlanner({ location, dayCount, startDate, onSave }) {
+  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
+
   return (
     <div className="planner">
       <div className="planner--title">
@@ -68,7 +78,7 @@ function TravelPlanner({ location, dayCount, startDate }) {
             </div>
           </div>
           <div className="planner--plan__events--button">
-            <a className="primary-button" href="">Save</a>
+            <button className="primary-button" onClick={onSave}>Save</button>
           </div>
         </div>
       </div>
