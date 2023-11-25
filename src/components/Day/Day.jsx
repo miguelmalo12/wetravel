@@ -217,9 +217,10 @@ function Day({ dayNumber, date }) {
         }}
         onDrop={(e) => {
           e.preventDefault();
-          const eventTitle = e.dataTransfer.getData("text/plain");
+          const data = e.dataTransfer.getData("text/plain");
+          const [eventTitle, eventType] = data.split(',');
           // const eventTime = "00:00 AM";
-          setEvents([...events, { title: eventTitle, time: "" }]);
+          setEvents([...events, { title: eventTitle, time: "", type: eventType }]);
         }}
       >
         <p>Drag Here</p>
