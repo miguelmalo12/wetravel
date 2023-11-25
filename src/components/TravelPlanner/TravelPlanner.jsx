@@ -40,7 +40,7 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               className="planner--plan__events--items--item"
               draggable="true"
               onDragStart={(e) => {
-                e.dataTransfer.setData("text/plain", "Add Transportation");
+                e.dataTransfer.setData("text/plain", "Add Transportation,transportation");
               }}
             >
               <img src={transportationIcon} alt="" />
@@ -50,7 +50,7 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               className="planner--plan__events--items--item"
               draggable="true"
               onDragStart={(e) => {
-                e.dataTransfer.setData("text/plain", "Add Accommodation");
+                e.dataTransfer.setData("text/plain", "Add Accommodation,accommodation");
               }}
             >
               <img src={accommodationIcon} alt="" />
@@ -60,7 +60,7 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               className="planner--plan__events--items--item"
               draggable="true"
               onDragStart={(e) => {
-                e.dataTransfer.setData("text/plain", "Add Activity");
+                e.dataTransfer.setData("text/plain", "Add Activity,activity");
               }}
             >
               <img src={activityIcon} alt="" />
@@ -70,7 +70,7 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               className="planner--plan__events--items--item"
               draggable="true"
               onDragStart={(e) => {
-                e.dataTransfer.setData("text/plain", "Add Restaurant");
+                e.dataTransfer.setData("text/plain", "Add Restaurant,restaurant");
               }}
             >
               <img src={restaurantIcon} alt="" />

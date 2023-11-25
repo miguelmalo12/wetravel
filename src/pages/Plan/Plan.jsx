@@ -56,10 +56,19 @@ function Plan() {
 
   // This handles the save click on the trip planner and creates a new trip on db
   const handleSaveTrip = async () => { 
+    console.log('tripInfo', tripInfo);
+    const storedUserData = localStorage.getItem('userData');
+    const userData = storedUserData ? JSON.parse(storedUserData) : null;
+    const userId = userData ? userData.user_id : null;
     const { location, startDate, endDate, events } = tripInfo;
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
     const formattedEvents = [];
+
+    if (!userId) {
+      console.error("User ID is missing");
+      return;
+    }
 
     if (!isValid(fromDate) || !isValid(toDate)) {
       console.error("Invalid startDate or endDate");
@@ -80,18 +89,22 @@ function Plan() {
         });
       });
     });
-
+    console.log("formattedEvents", formattedEvents);
     const tripData = {
+      user_id: userId,
       destination: location,
       start_date: format(fromDate, "yyyy-MM-dd"),
       end_date: format(toDate, "yyyy-MM-dd"),
       events: formattedEvents,
     };
-
-    const response = await axios.post(`${API_URL}/plan`, tripData);
-
-    if (response.status === 200) {
+    console.log("tripData", tripData);
+    try {
+      await axios.post(`${API_URL}/plan`, tripData, {
+        withCredentials: true,
+      });
       console.log("Trip saved successfully!");
+    } catch (error) {
+      console.error("Error saving trip:", error.response ? error.response.data : error);
     }
   };
 
