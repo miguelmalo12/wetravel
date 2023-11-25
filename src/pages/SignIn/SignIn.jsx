@@ -1,12 +1,21 @@
 import './SignIn.scss';
 import { Link } from 'react-router-dom';
-import { CopyrightFooter } from '../../components/Footer/Footer';
-import { ButtonPrimary, ButtonSecondary, ButtonGoogle } from '../../components/Button/Button';
-import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComponents';
 import { useState } from 'react';
 import axios from 'axios';
 
+// recoil state
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../../state/userState';
+
+//components
+import { CopyrightFooter } from '../../components/Footer/Footer';
+import { ButtonPrimary, ButtonSecondary, ButtonGoogle } from '../../components/Button/Button';
+import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComponents';
+
+
 const SignIn = ({ API_URL, isLoggedIn, setLoggedIn, setProfileData }) => {
+    const setUser = useSetRecoilState(userState);
+
     const [signInCredentials, setSignInCredentials] = useState({
         email: '',
         password: ''
@@ -18,23 +27,22 @@ const SignIn = ({ API_URL, isLoggedIn, setLoggedIn, setProfileData }) => {
         })
     }
     const handleFormSubmit = (event) => {
-        event.preventDefault();
-        axios.post(`${API_URL}/auth/login`, {
-            email: signInCredentials.email,
-            password: signInCredentials.password
-        }).then(() => {
-            axios({
-                method: 'get',
-                url: `${API_URL}/auth/user`
-            }).then(response => {
-                console.log(response)
-            }).catch(err => {
-                console.log(err)
-            })
+      event.preventDefault();
+      axios
+        .post(`${API_URL}/auth/login`, {
+          email: signInCredentials.email,
+          password: signInCredentials.password,
         })
-        event.target.reset();
-
-    }
+        .then((response) => {
+          const { user } = response.data;
+            localStorage.setItem("userData", JSON.stringify(user));
+            setUser(user);
+            setLoggedIn(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
     return (
 
