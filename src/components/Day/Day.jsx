@@ -1,7 +1,10 @@
 import "./Day.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// recoil state
 import { useRecoilState } from 'recoil';
 import { modalState } from '../../state/modalState';
+import { tripInfoState } from "../../state/tripState";
 
 //components
 import Modal from "../Modal/Modal";
@@ -20,6 +23,7 @@ function Day({ dayNumber, date }) {
   const [inputTime, setInputTime] = useState("");
   const [isModalOpen, setModalOpen] = useRecoilState(modalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
+  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -49,19 +53,22 @@ function Day({ dayNumber, date }) {
   };
 
   const handleUpdateEventAndTime = (index) => {
-    const updatedEvents = [...events];
-    updatedEvents[index].title = inputValue;
-    
-    if (inputTime.includes('AM') || inputTime.includes('PM')) {
-        updatedEvents[index].time = inputTime;
-    } else {
-        updatedEvents[index].time = formatTime(inputTime);
-    }
-    
+    const updatedEvent = {
+      ...events[index],
+      title: inputValue,
+      time: inputTime.includes('AM') || inputTime.includes('PM') ? inputTime : formatTime(inputTime),
+    };
+  
+    const updatedEvents = [
+      ...events.slice(0, index),
+      updatedEvent,
+      ...events.slice(index + 1)
+    ];
+  
     setEvents(updatedEvents);
     setInputIndex(null);
     setInputValue("");
-};
+  };  
 
   const formatTime = (time) => {
     const [hours, minutes] = time.split(":");
@@ -114,6 +121,17 @@ function Day({ dayNumber, date }) {
   const handleCloseModal = () => {
     setModalOpen(false);
   }
+
+  // Updates tripInfo everytime a Day state changes
+  useEffect(() => {
+    setTripInfo((prevTripInfo) => ({
+      ...prevTripInfo,
+      events: {
+        ...prevTripInfo.events,
+        [date]: events,
+      },
+    }));
+  }, [events, setTripInfo, date]);
 
   return (
     <div className="day">

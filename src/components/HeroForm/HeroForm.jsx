@@ -1,6 +1,11 @@
 import './HeroForm.scss';
 import { useState } from 'react';
 
+// recoil state
+import { useRecoilState } from 'recoil';
+import { tripInfoState } from '../../state/tripState';
+
+// icons
 import heroBgArrow from '../../assets/bg-arrow.png';
 import heroBgDot from '../../assets/bg-dot.png';
 import heroBgLocation from '../../assets/bg-location.png';
@@ -8,14 +13,15 @@ import heroLocationIcon from '../../assets/icons/location.svg';
 import { ReactComponent as HeroDateIcon } from '../../assets/icons/date.svg';
 import heroSubmitIcon from '../../assets/icons/Icon.svg';
 
-function HeroForm( { subtitle, title, image, onSubmitClick}) {
-  const [location, setLocation] = useState("");
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+function HeroForm( { subtitle, title, image, onFormSubmit }) {
   const [formError, setFormError] = useState("");
+  const [localLocation, setLocalLocation] = useState("");
+  const [localStartDate, setLocalStartDate] = useState("");
+  const [localEndDate, setLocalEndDate] = useState("");
+  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 
   const validate = () => {    
-    if (!location || !fromDate || !toDate) {
+    if (!localLocation || !localStartDate || !localEndDate) {
       setFormError("Please enter all the fields");
       return false;
     }
@@ -26,7 +32,15 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
 
   const handleSubmit = () => {
     if (validate()) {
-    onSubmitClick(location, fromDate, toDate);
+      setTripInfo({
+        ...tripInfo,
+        location: localLocation,
+        startDate: localStartDate,
+        endDate: localEndDate,
+      });
+      if (onFormSubmit) {
+        onFormSubmit();
+      }
     }
   };
   
@@ -48,8 +62,8 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
                 type="text"
                 placeholder="Enter City/Country"
                 className="heroform__input"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                value={localLocation}
+                onChange={(e) => setLocalLocation(e.target.value)}
               />
             </div>
           </div>
@@ -62,7 +76,7 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
                 From
               </label>
               <input
-                type="text"
+                type="date"
                 id="dateFrom"
                 placeholder="Select Date"
                 className="heroform__input"
@@ -71,8 +85,8 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
                   e.currentTarget.value === "" &&
                   (e.currentTarget.type = "text")
                 }
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
+                value={localStartDate}
+                onChange={(e) => setLocalStartDate(e.target.value)}
               />
             </div>
           </div>
@@ -83,8 +97,8 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
                 To
               </label>
               <input
-                type="text"
-                id="dateFrom"
+                type="date"
+                id="dateTo"
                 placeholder="Select Date"
                 className="heroform__input"
                 onFocus={(e) => (e.currentTarget.type = "date")}
@@ -92,12 +106,12 @@ function HeroForm( { subtitle, title, image, onSubmitClick}) {
                   e.currentTarget.value === "" &&
                   (e.currentTarget.type = "text")
                 }
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
+                value={localEndDate}
+                onChange={(e) => setLocalEndDate(e.target.value)}
               />
             </div>
           </div>
-          <div className="heroform__cta" onClick={handleSubmit}>
+          <div onClick={handleSubmit} className="heroform__cta">
             <img className="heroform__cta-icon" src={heroSubmitIcon} alt="submit icon" />
           </div>
         </div>

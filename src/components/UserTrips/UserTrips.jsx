@@ -1,4 +1,6 @@
 import "./UserTrips.scss";
+
+// recoil state
 import { useRecoilState } from 'recoil';
 import { modalState } from '../../state/modalState';
 

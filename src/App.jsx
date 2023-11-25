@@ -1,7 +1,10 @@
 import './App.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+// recoil state
+import { useSetRecoilState } from 'recoil';
+import { userState } from './state/userState';
 
 import Home from './pages/Home';
 import Recommend from './pages/Recommend/Recommend';
@@ -13,16 +16,19 @@ import StatusPage from './pages/StatusPage/StatusPage';
 
 function App() {
 
-
   const API_URL = process.env.REACT_APP_BACKEND_URL;
+  const setUser = useSetRecoilState(userState);
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState({});
 
-
-
-
-
-
+  // check if user is logged in every time the app renders
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+        setUser(JSON.parse(storedUser));
+        setLoggedIn(true);
+    }
+  }, [setUser]);
 
   return (
     <div className="App">
