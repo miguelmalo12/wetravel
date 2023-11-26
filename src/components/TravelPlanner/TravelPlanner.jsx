@@ -1,9 +1,5 @@
 import "./TravelPlanner.scss";
 
-// recoil state
-import { useRecoilState } from 'recoil';
-import { tripInfoState } from '../../state/tripState';
-
 // components
 import Day from "../Day/Day";
 
@@ -16,7 +12,6 @@ import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
 function TravelPlanner({ location, dayCount, startDate, onSave }) {
-  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 
   return (
     <div className="planner">

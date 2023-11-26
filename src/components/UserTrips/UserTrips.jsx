@@ -16,6 +16,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 function UserTrips() {
   const [trips, setTrips] = useState([]);
   const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [selectedTripId, setSelectedTripId] = useState(null);
 
   // GET Trips from db
   useEffect(() => {
@@ -42,10 +43,24 @@ function UserTrips() {
     getTrips();
   }, []);
 
-  // Handles the delete click on the modal
-  const handleDeleteConfirm = (tripId) => {
-    console.log("Deleting trip with ID:", tripId);
+  // DELETE Trip from db
+  const handleDeleteConfirm = async () => {
+    try {
+      await axios.delete(`${API_URL}/plan/${selectedTripId}`, {
+        withCredentials: true,
+      });
+      setTrips(trips.filter(trip => trip.trip_id !== selectedTripId));
+      console.log("Trip deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting trip:", error);
+    }
     setModalOpen(false);
+  };
+
+  // Opens modal after clicking delete
+  const handleDeleteClick = (tripId) => {
+    setSelectedTripId(tripId);
+    setModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -56,14 +71,14 @@ function UserTrips() {
     <div className="trips">
       <h2>Your Trips</h2>
       {trips.map((trip) => (
-        <UserTripCard key={trip.trip_id} trip={trip} />
+        <UserTripCard key={trip.trip_id} trip={trip} onDeleteClick={() => handleDeleteClick(trip.trip_id)} />
       ))}
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          textContent={`Are you sure you want to delete the event?`}
+          textContent={`Are you sure you want to delete this trip?`}
           buttonText="Delete"
-          onButtonClick={() => console.log("Delete confirmed")}
+          onButtonClick={handleDeleteConfirm}
           onCloseClick={() => setModalOpen(false)}
         />
       )}

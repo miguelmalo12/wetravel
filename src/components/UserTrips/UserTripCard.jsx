@@ -1,20 +1,13 @@
 import "./UserTrips.scss";
-import { useState } from "react";
-
-// recoil state
-import { useRecoilState } from "recoil";
-import { modalState } from "../../state/modalState";
 
 // icons
 import { ReactComponent as DateIcon } from "../../assets/icons/date.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg";
 
-function UserTripCard({ trip }) {
-  const [setModalOpen] = useRecoilState(modalState);
+function UserTripCard({ trip, onDeleteClick }) {
 
-  // Opens modal after clicking delete
-  const handleDeleteClick = () => {
-    setModalOpen(true);
+  const handleDeleteIconClick = () => {
+    onDeleteClick();
   };
 
   // Formats data from db to display in the card
@@ -39,7 +32,7 @@ function UserTripCard({ trip }) {
           <h5>{formatDate(trip.end_date)}</h5>
         </div>
         <div
-          onClick={() => handleDeleteClick()}
+          onClick={handleDeleteIconClick}
           className="trips--container__info__delete"
         >
           <p>Delete</p>
