@@ -1,0 +1,81 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+
+.recommend-page {
+    width: 100vw;
+
+    &__hero {
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 31.24%, rgba(253, 80, 86, 0.10) 100%);
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__text-container {
+        padding: 24px 20px;
+        text-align: center;
+    }
+
+    &__image-container {
+        width: 100%;
+    }
+
+    &__image {
+        width: 100%;
+    }
+
+
+}
+
+.recommend-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    &__group-container {
+        display: flex;
+        align-items: flex-start;
+        border-radius: 75px;
+        background-color: $white;
+        box-shadow: 0px 15px 60px 0px rgba(0, 0, 0, 0.10);
+        padding: 1rem 2rem;
+        width: 100%;
+        gap: 4px;
+    }
+
+    &__icon {
+        margin-top: 4px;
+        height: 14px;
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        gap: 4px;
+
+    }
+
+    &__label {
+        font-size: 16px;
+        color: #8C849F;
+        font-weight: 900;
+    }
+
+    &__input {
+        font-size: 13px;
+        border: none;
+        color: $dark-color;
+        font-weight: 700;
+        width: 100%;
+        outline: none;
+        border-radius: 0;
+        padding: 4px;
+
+        &:focus {
+            border: 1px solid $primary-color;
+        }
+    }
+}

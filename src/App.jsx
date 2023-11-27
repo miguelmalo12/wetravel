@@ -7,7 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import { userState } from './state/userState';
 
 import Home from './pages/Home';
-import Recommend from './pages/Recommend/Recommend';
+import RecommendPage from './pages/RecommendPage/RecommendPage';
 import Plan from './pages/Plan/Plan';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
@@ -25,8 +25,8 @@ function App() {
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
     if (storedUser) {
-        setUser(JSON.parse(storedUser));
-        setLoggedIn(true);
+      setUser(JSON.parse(storedUser));
+      setLoggedIn(true);
     }
   }, [setUser]);
 
@@ -39,7 +39,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route
             path='recommend'
-            element={<Recommend
+            element={<RecommendPage
               isLoggedIn={isLoggedIn}
               profileData={profileData}
             />} />
