@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // recoil state
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { modalState } from "../../state/modalState";
+import { viewTripState } from "../../state/viewTripState";
 
 // components
 import UserTripCard from "./UserTripCard";
@@ -17,6 +18,8 @@ function UserTrips() {
   const [trips, setTrips] = useState([]);
   const [isModalOpen, setModalOpen] = useRecoilState(modalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
+  const setViewTrip = useSetRecoilState(viewTripState);
+
 
   // GET Trips from db
   useEffect(() => {
@@ -57,21 +60,36 @@ function UserTrips() {
     setModalOpen(false);
   };
 
+  // GET Specific Trip from db when clicking View Trip
+  const handleViewClick = async (tripId) => {
+    try {
+      const response = await axios.get(`${API_URL}/plan/${tripId}`, {
+        withCredentials: true,
+      });
+      
+      // Sets trip data to recoil state
+      setViewTrip(response.data);
+    } catch (error) {
+      console.error("Error getting trip details:", error);
+    }
+  };
+
   // Opens modal after clicking delete
   const handleDeleteClick = (tripId) => {
     setSelectedTripId(tripId);
     setModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
-
   return (
     <div className="trips">
       <h2>Your Trips</h2>
       {trips.map((trip) => (
-        <UserTripCard key={trip.trip_id} trip={trip} onDeleteClick={() => handleDeleteClick(trip.trip_id)} />
+        <UserTripCard
+          key={trip.trip_id}
+          trip={trip}
+          onDeleteClick={() => handleDeleteClick(trip.trip_id)}
+          onViewClick={handleViewClick}
+        />
       ))}
       {isModalOpen && (
         <Modal

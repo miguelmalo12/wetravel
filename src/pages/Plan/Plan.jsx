@@ -1,16 +1,18 @@
 import "./Plan.scss";
 import axios from 'axios';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { parseISO, format, isValid } from 'date-fns';
 
 // recoil state
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { tripInfoState } from '../../state/tripState';
+import { viewTripState } from "../../state/viewTripState";
 
 // components
 import HeroForm from "../../components/HeroForm/HeroForm";
 import TravelPlanner from '../../components/TravelPlanner/TravelPlanner';
+import TravelPlannerView from '../../components/TravelPlanner/TravelPlannerView';
 import UserTrips from '../../components/UserTrips/UserTrips';
 import CTA from "../../components/CTA/CTA";
 import { CopyrightFooter, Footer } from '../../components/Footer/Footer';
@@ -23,26 +25,18 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 function Plan() {
   const [dayCount, setDayCount] = useState(0);
   const [showTravelPlanner, setShowTravelPlanner] = useState(false);
+  const travelPlannerRef = useRef(null);
+  const travelPlannerViewRef = useRef(null);
 
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
+  const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
 
   const handleFormSubmit = () => {
     setShowTravelPlanner(true);
+    setViewTripDetails(null);
   };
 
-  // This opens the trip planner with empty days to be able to create a new trip
-  const handleSubmitClick = () => {
-    const fromDate = parseISO(tripInfo.startDate);
-    const toDate = parseISO(tripInfo.endDate);
-
-    if (!isValid(fromDate) || !isValid(toDate)) {
-      console.error("Invalid fromDate or toDate");
-      return;
-    }
-
-    setShowTravelPlanner(true);
-  };
-
+  // Calculates the number of days between the start and end date for TravelPlanner
   useEffect(() => {
     if (tripInfo.startDate && tripInfo.endDate) {
       const date1 = new Date(tripInfo.startDate);
@@ -108,6 +102,15 @@ function Plan() {
     }
   };
 
+  // Scroll to TravelPlanner or TravelPlannerView when become visible
+  useEffect(() => {
+    if (showTravelPlanner && travelPlannerRef.current) {
+      travelPlannerRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (viewTripDetails && travelPlannerViewRef.current) {
+      travelPlannerViewRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [showTravelPlanner, viewTripDetails, travelPlannerRef, travelPlannerViewRef]);
+
   return (
     <div>
       <main>
@@ -121,15 +124,26 @@ function Plan() {
         {/* User Trips - Work In Progress */}
         <UserTrips />
 
-        {/* Only shows when click on submit: */}
-        {showTravelPlanner && (
-          <TravelPlanner
-            location={tripInfo.location}
-            dayCount={dayCount}
-            startDate={new Date(tripInfo.startDate)}
-            onSave={handleSaveTrip}
+        {/* Only shows if form filled or view trip clicked */}
+        {viewTripDetails ?
+          <div ref={travelPlannerViewRef}>
+            <TravelPlannerView
+            tripDetails={viewTripDetails}
+            // other props
           />
-        )}
+          </div>
+        :
+          (showTravelPlanner && (
+            <div ref={travelPlannerRef}>
+              <TravelPlanner
+                location={tripInfo.location}
+                dayCount={dayCount}
+                startDate={new Date(tripInfo.startDate)}
+                onSave={handleSaveTrip}
+              />
+            </div>
+          ))
+        }
 
         <CTA
           title={"Need A Recommendation?"}

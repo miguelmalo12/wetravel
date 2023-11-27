@@ -4,7 +4,7 @@ import "./UserTrips.scss";
 import { ReactComponent as DateIcon } from "../../assets/icons/date.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg";
 
-function UserTripCard({ trip, onDeleteClick }) {
+function UserTripCard({ trip, onDeleteClick, onViewClick }) {
 
   const handleDeleteIconClick = () => {
     onDeleteClick();
@@ -39,7 +39,7 @@ function UserTripCard({ trip, onDeleteClick }) {
           <DeleteIcon />
         </div>
       </div>
-      <div className="trips--container__view">
+      <div className="trips--container__view" onClick={() => onViewClick(trip.trip_id)}>
         <DateIcon />
         <p>View Trip</p>
       </div>
