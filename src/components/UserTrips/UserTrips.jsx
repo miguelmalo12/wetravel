@@ -1,75 +1,107 @@
 import "./UserTrips.scss";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 // recoil state
-import { useRecoilState } from 'recoil';
-import { modalState } from '../../state/modalState';
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { modalState } from "../../state/modalState";
+import { viewTripState } from "../../state/viewTripState";
 
-// icons
-import { ReactComponent as DateIcon } from '../../assets/icons/date.svg';
-import { ReactComponent as DeleteIcon } from '../../assets/icons/delete.svg';
-
-//components
+// components
+import UserTripCard from "./UserTripCard";
 import Modal from "../Modal/Modal";
 
+// .env variables
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 function UserTrips() {
-    const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [trips, setTrips] = useState([]);
+  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [selectedTripId, setSelectedTripId] = useState(null);
+  const setViewTrip = useSetRecoilState(viewTripState);
 
-    const handleDeleteClick = () => {
-        setModalOpen(true);
-    }
 
-    const handleDeleteConfirm = () => {
-        // To do: delete the trip
-        setModalOpen(false);
-      };
+  // GET Trips from db
+  useEffect(() => {
+    const getTrips = async () => {
+      try {
+        const storedUserData = localStorage.getItem('userData');
+        const userData = storedUserData ? JSON.parse(storedUserData) : null;
+        const userId = userData ? userData.user_id : null;
 
-    const handleCloseModal = () => {
-        setModalOpen(false);
+        if (!userId) {
+          console.error("User ID is missing");
+          return;
+        }
+        
+        const response = await axios.get(`${API_URL}/plan?user_id=${userId}`, {
+          withCredentials: true,
+        });
+        setTrips(response.data);
+      } catch (error) {
+        console.error("Error getting trips:", error);
       }
+    };
+
+    getTrips();
+  }, []);
+
+  // DELETE Trip from db
+  const handleDeleteConfirm = async () => {
+    try {
+      await axios.delete(`${API_URL}/plan/${selectedTripId}`, {
+        withCredentials: true,
+      });
+      setTrips(trips.filter(trip => trip.trip_id !== selectedTripId));
+      console.log("Trip deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting trip:", error);
+    }
+    setModalOpen(false);
+  };
+
+  // GET Specific Trip from db when clicking View Trip
+  const handleViewClick = async (tripId) => {
+    try {
+      const response = await axios.get(`${API_URL}/plan/${tripId}`, {
+        withCredentials: true,
+      });
+      
+      // Sets trip data to recoil state
+      setViewTrip(response.data);
+    } catch (error) {
+      console.error("Error getting trip details:", error);
+    }
+  };
+
+  // Opens modal after clicking delete
+  const handleDeleteClick = (tripId) => {
+    setSelectedTripId(tripId);
+    setModalOpen(true);
+  };
 
   return (
     <div className="trips">
       <h2>Your Trips</h2>
-      <div className="trips--container">
-        <div className="trips--container__info">
-          <div className="trips--container__info--entry">
-            <p>Destination</p>
-            <h5>Madrid</h5>
-          </div>
-          <div className="trips--container__info--entry">
-            <p>From</p>
-            <h5>12 Nov, 2023</h5>
-          </div>
-          <div className="trips--container__info--entry">
-            <p>To</p>
-            <h5>16 Nov, 2023</h5>
-          </div>
-          <div
-            onClick={() => handleDeleteClick()}
-            className="trips--container__info__delete"
-          >
-            <p>Delete</p>
-            <DeleteIcon />
-          </div>
-          {isModalOpen && (
-            <Modal
-              isOpen={isModalOpen}
-              textContent={`Are you sure you want to delete the event?`}
-              buttonText="Delete"
-              onButtonClick={handleDeleteConfirm}
-              onCloseClick={handleCloseModal}
-            ></Modal>
-          )}
-        </div>
-
-        <div className="trips--container__view">
-          <DateIcon />
-          <p>View Trip</p>
-        </div>
-      </div>
+      {trips.map((trip) => (
+        <UserTripCard
+          key={trip.trip_id}
+          trip={trip}
+          onDeleteClick={() => handleDeleteClick(trip.trip_id)}
+          onViewClick={handleViewClick}
+        />
+      ))}
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          textContent={`Are you sure you want to delete this trip?`}
+          buttonText="Delete"
+          onButtonClick={handleDeleteConfirm}
+          onCloseClick={() => setModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
 
-export default UserTrips
+export default UserTrips;
