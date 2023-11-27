@@ -1,9 +1,9 @@
 import "./TravelPlanner.scss";
 
-// components
-import Day from "../Day/Day";
+import { addDays, differenceInCalendarDays, parseISO, format } from 'date-fns';
 
-import { addDays, format } from "date-fns";
+// components
+import DayView from "../Day/DayView";
 
 //icons
 import transportationIcon from "../../assets/icons/TransportationIcon.png";
@@ -11,20 +11,35 @@ import accommodationIcon from "../../assets/icons/AccommodationIcon.png";
 import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
-function TravelPlanner({ location, dayCount, startDate, onSave }) {
+function TravelPlannerView({ tripDetails, onSave }) {
+  console.log("tripDetails", tripDetails);
+
+  // Generate an array of dates from start_date to end_date
+  const startDate = parseISO(tripDetails.start_date);
+  const endDate = parseISO(tripDetails.end_date);
+  const dayCount = differenceInCalendarDays(endDate, startDate) + 1; // +1 to include end date
+  const dates = Array.from({ length: dayCount }, (_, i) => format(addDays(startDate, i), 'dd MMM yyyy'));
+
+  // Helper function to find events for a given date
+  const getEventsForDate = (date) => {
+    return tripDetails.events.filter(event => event.date === date);
+  };
 
   return (
     <div className="planner">
       <div className="planner--title">
-        <h2>Your Trip to {location}</h2>
+        <h2>Your Trip to {tripDetails.destination}</h2>
       </div>
       <div className="planner--plan">
         <div className="planner--plan__days">
-          {Array.from({ length: dayCount }, (_, i) => {
-            const date = addDays(new Date(startDate), i);
-            const formattedDate = format(date, "E, dd MMM"); // format the date as desired
-            return <Day key={i} dayNumber={i + 1} date={formattedDate} />;
-          })}
+            {dates.map((date, index) => (
+                <DayView
+                key={index}
+                dayNumber={index + 1}
+                date={date}
+                eventsProp={getEventsForDate(date)}
+                />
+            ))}
         </div>
         <div className="planner--plan__events">
           <div className="planner--plan__events--items">
@@ -35,7 +50,10 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               className="planner--plan__events--items--item"
               draggable="true"
               onDragStart={(e) => {
-                e.dataTransfer.setData("text/plain", "Add Transportation,transportation");
+                e.dataTransfer.setData(
+                  "text/plain",
+                  "Add Transportation,transportation"
+                );
               }}
             >
               <img src={transportationIcon} alt="" />
@@ -45,7 +63,10 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               className="planner--plan__events--items--item"
               draggable="true"
               onDragStart={(e) => {
-                e.dataTransfer.setData("text/plain", "Add Accommodation,accommodation");
+                e.dataTransfer.setData(
+                  "text/plain",
+                  "Add Accommodation,accommodation"
+                );
               }}
             >
               <img src={accommodationIcon} alt="" />
@@ -65,7 +86,10 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               className="planner--plan__events--items--item"
               draggable="true"
               onDragStart={(e) => {
-                e.dataTransfer.setData("text/plain", "Add Restaurant,restaurant");
+                e.dataTransfer.setData(
+                  "text/plain",
+                  "Add Restaurant,restaurant"
+                );
               }}
             >
               <img src={restaurantIcon} alt="" />
@@ -73,7 +97,9 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
             </div>
           </div>
           <div className="planner--plan__events--button">
-            <button className="primary-button" onClick={onSave}>Save</button>
+            <button className="primary-button" onClick={onSave}>
+              Save
+            </button>
           </div>
         </div>
       </div>
@@ -81,4 +107,4 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
   );
 }
 
-export default TravelPlanner;
+export default TravelPlannerView;

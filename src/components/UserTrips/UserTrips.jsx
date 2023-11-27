@@ -21,7 +21,7 @@ function UserTrips() {
   const setViewTrip = useSetRecoilState(viewTripState);
 
 
-  // GET Trips from db
+  // GET All Trips from db
   useEffect(() => {
     const getTrips = async () => {
       try {
@@ -66,7 +66,7 @@ function UserTrips() {
       const response = await axios.get(`${API_URL}/plan/${tripId}`, {
         withCredentials: true,
       });
-      
+
       // Sets trip data to recoil state
       setViewTrip(response.data);
     } catch (error) {
