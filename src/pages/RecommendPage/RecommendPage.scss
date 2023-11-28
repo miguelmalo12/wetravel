@@ -27,21 +27,24 @@
 }
 
 .recommend-form {
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
+    gap: 16px;
 
     &__group-container {
+        position: relative;
         display: flex;
         align-items: flex-start;
         border-radius: 75px;
         background-color: $white;
         box-shadow: 0px 15px 60px 0px rgba(0, 0, 0, 0.10);
-        padding: 1rem 2rem;
+        padding: 1rem 3rem;
         width: 100%;
-        gap: 4px;
+        gap: 10px;
     }
 
     &__icon {
@@ -66,7 +69,7 @@
 
     &__input {
         font-size: 13px;
-        border: none;
+        border: 1px solid transparent;
         color: $dark-color;
         font-weight: 700;
         width: 100%;
@@ -77,5 +80,17 @@
         &:focus {
             border: 1px solid $primary-color;
         }
+    }
+
+    &__submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50%;
+        padding: 16px;
+        background-color: $secondary-color;
+        position: absolute;
+        right: 10px;
     }
 }
