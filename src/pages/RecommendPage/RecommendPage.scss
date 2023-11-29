@@ -80,17 +80,10 @@
         &:focus {
             border: 1px solid $primary-color;
         }
+
+        &--select {}
+
+        &--option {}
     }
 
-    &__submit {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        border-radius: 50%;
-        padding: 16px;
-        background-color: $secondary-color;
-        position: absolute;
-        right: 10px;
-    }
 }
