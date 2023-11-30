@@ -2,8 +2,8 @@ import "./Day.scss";
 import { useState, useEffect } from "react";
 
 // recoil state
-import { useRecoilState } from 'recoil';
-import { modalState } from '../../state/modalState';
+import { useRecoilState } from "recoil";
+import { modalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
 
 //components
@@ -27,6 +27,7 @@ function DayView({ dayNumber, date, eventsProp }) {
 
   console.log("events", events);
   console.log("eventsProp", eventsProp);
+  console.log(`Events for Day ${dayNumber} (${date}):`, eventsProp);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -59,19 +60,22 @@ function DayView({ dayNumber, date, eventsProp }) {
     const updatedEvent = {
       ...events[index],
       title: inputValue,
-      time: inputTime.includes('AM') || inputTime.includes('PM') ? inputTime : formatTime(inputTime),
+      time:
+        inputTime.includes("AM") || inputTime.includes("PM")
+          ? inputTime
+          : formatTime(inputTime),
     };
-  
+
     const updatedEvents = [
       ...events.slice(0, index),
       updatedEvent,
-      ...events.slice(index + 1)
+      ...events.slice(index + 1),
     ];
-  
+
     setEvents(updatedEvents);
     setInputIndex(null);
     setInputValue("");
-  };  
+  };
 
   const formatTime = (time) => {
     const [hours, minutes] = time.split(":");
@@ -95,23 +99,22 @@ function DayView({ dayNumber, date, eventsProp }) {
 
   // Function to convert time input to 24 hour time
   const convertTo24Hour = (time) => {
-    if (!time.includes('AM') && !time.includes('PM')) {
+    if (!time.includes("AM") && !time.includes("PM")) {
       // Time is already in 24-hour format
       return time;
     }
-  
-    let [hours, minutes] = time.split(':')[0].padStart(2, '0');
-    const period = time.includes('PM') ? 'PM' : 'AM';
-  
-    if (period === 'PM' && hours !== '12') {
-      hours = (parseInt(hours, 10) + 12).toString().padStart(2, '0');
-    } else if (period === 'AM' && hours === '12') {
-      hours = '00';
+
+    let [hours, minutes] = time.split(":")[0].padStart(2, "0");
+    const period = time.includes("PM") ? "PM" : "AM";
+
+    if (period === "PM" && hours !== "12") {
+      hours = (parseInt(hours, 10) + 12).toString().padStart(2, "0");
+    } else if (period === "AM" && hours === "12") {
+      hours = "00";
     }
-  
+
     return `${hours}:${minutes}`;
   };
-  
 
   const handleDeleteClick = (index) => {
     // Additional logic here
@@ -127,7 +130,7 @@ function DayView({ dayNumber, date, eventsProp }) {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-  }
+  };
 
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
@@ -162,7 +165,9 @@ function DayView({ dayNumber, date, eventsProp }) {
             <div className="day--entry--container">
               <div>
                 <p className="day--entry--container__event">{event.event_description}</p>
-                <p className="day--entry--container__time">{event.event_time && convertTo24Hour(event.event_time)}</p>
+                <p className="day--entry--container__time">
+                  {event.event_time && convertTo24Hour(event.event_time)}
+                </p>
               </div>
               <div>
                 <input
@@ -189,7 +194,9 @@ function DayView({ dayNumber, date, eventsProp }) {
           ) : (
             <div className="day--entry--container">
               <p className="day--entry--container__event">{event.event_description}</p>
-              <p className="day--entry--container__time">{event.event_time && convertTo24Hour(event.event_time)}</p>
+              <p className="day--entry--container__time">
+                {event.event_time && convertTo24Hour(event.event_time)}
+              </p>
               <img
                 className="day--entry--container__icon"
                 src={editIcon}
@@ -220,20 +227,12 @@ function DayView({ dayNumber, date, eventsProp }) {
           const data = e.dataTransfer.getData("text/plain");
           const [eventTitle, eventType] = data.split(",");
           // const eventTime = "00:00 AM";
-          setEvents([
-            ...events,
-            { title: eventTitle, time: "", type: eventType },
-          ]);
-        }}
-      >
+          setEvents([...events, { title: eventTitle, time: "", type: eventType }]);
+        }}>
         <p>Drag Here</p>
       </div>
       <div className="day--line">
-        <img
-          src={finishIcon}
-          alt="Icon description"
-          className="day--finish-icon"
-        />
+        <img src={finishIcon} alt="Icon description" className="day--finish-icon" />
       </div>
       {isModalOpen && (
         <Modal
@@ -241,8 +240,7 @@ function DayView({ dayNumber, date, eventsProp }) {
           textContent={`Are you sure you want to delete the event "${events[deleteEventIndex]?.title}"?`}
           buttonText="Delete"
           onButtonClick={handleDeleteConfirm}
-          onCloseClick={handleCloseModal}
-        ></Modal>
+          onCloseClick={handleCloseModal}></Modal>
       )}
     </div>
   );

@@ -2,8 +2,8 @@ import "./Day.scss";
 import { useState, useEffect } from "react";
 
 // recoil state
-import { useRecoilState } from 'recoil';
-import { modalState } from '../../state/modalState';
+import { useRecoilState } from "recoil";
+import { modalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
 
 //components
@@ -56,19 +56,22 @@ function Day({ dayNumber, date }) {
     const updatedEvent = {
       ...events[index],
       title: inputValue,
-      time: inputTime.includes('AM') || inputTime.includes('PM') ? inputTime : formatTime(inputTime),
+      time:
+        inputTime.includes("AM") || inputTime.includes("PM")
+          ? inputTime
+          : formatTime(inputTime),
     };
-  
+
     const updatedEvents = [
       ...events.slice(0, index),
       updatedEvent,
-      ...events.slice(index + 1)
+      ...events.slice(index + 1),
     ];
-  
+
     setEvents(updatedEvents);
     setInputIndex(null);
     setInputValue("");
-  };  
+  };
 
   const formatTime = (time) => {
     const [hours, minutes] = time.split(":");
@@ -92,18 +95,18 @@ function Day({ dayNumber, date }) {
 
   // Function to convert time input to 24 hour time
   const convertTo24Hour = (time) => {
-      const [hours, minutes] = time.split(':');
-      const period = time.includes('PM') ? 'PM' : 'AM';
+    const [hours, minutes] = time.split(":");
+    const period = time.includes("PM") ? "PM" : "AM";
 
-      let hour = parseInt(hours, 10);
+    let hour = parseInt(hours, 10);
 
-      if (period === 'PM' && hour !== 12) {
-          hour += 12;
-      } else if (period === 'AM' && hour === 12) {
-          hour = 0;
-      }
+    if (period === "PM" && hour !== 12) {
+      hour += 12;
+    } else if (period === "AM" && hour === 12) {
+      hour = 0;
+    }
 
-      return `${hour.toString().padStart(2, '0')}:${minutes}`;
+    return `${hour.toString().padStart(2, "0")}:${minutes}`;
   };
 
   const handleDeleteClick = (index) => {
@@ -120,7 +123,7 @@ function Day({ dayNumber, date }) {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-  }
+  };
 
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
@@ -150,7 +153,9 @@ function Day({ dayNumber, date }) {
             <div className="day--entry--container">
               <div>
                 <p className="day--entry--container__event">{event.title}</p>
-                <p className="day--entry--container__time">{event.time && convertTo24Hour(event.time)}</p>
+                <p className="day--entry--container__time">
+                  {event.time && convertTo24Hour(event.time)}
+                </p>
               </div>
               <div>
                 <input
@@ -178,7 +183,9 @@ function Day({ dayNumber, date }) {
           ) : (
             <div className="day--entry--container">
               <p className="day--entry--container__event">{event.title}</p>
-              <p className="day--entry--container__time">{event.time && convertTo24Hour(event.time)}</p>
+              <p className="day--entry--container__time">
+                {event.time && convertTo24Hour(event.time)}
+              </p>
               <img
                 className="day--entry--container__icon"
                 src={editIcon}
@@ -201,12 +208,9 @@ function Day({ dayNumber, date }) {
                   textContent={`Are you sure you want to delete the event "${events[deleteEventIndex]?.title}"?`}
                   buttonText="Delete"
                   onButtonClick={handleDeleteConfirm}
-                  onCloseClick={handleCloseModal}
-                >
-                </Modal>
+                  onCloseClick={handleCloseModal}></Modal>
               )}
             </div>
-           
           )}
         </div>
       ))}
@@ -218,17 +222,15 @@ function Day({ dayNumber, date }) {
         onDrop={(e) => {
           e.preventDefault();
           const data = e.dataTransfer.getData("text/plain");
-          const [eventTitle, eventType] = data.split(',');
+          const [eventTitle, eventType] = data.split(",");
           // const eventTime = "00:00 AM";
           setEvents([...events, { title: eventTitle, time: "", type: eventType }]);
-        }}
-      >
+        }}>
         <p>Drag Here</p>
       </div>
       <div className="day--line">
         <img src={finishIcon} alt="Icon description" className="day--finish-icon" />
       </div>
-      
     </div>
   );
 }

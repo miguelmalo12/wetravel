@@ -53,11 +53,12 @@ function Plan() {
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
+    console.log('tripInfo',tripInfo)
     const { location, startDate, endDate, events } = tripInfo;
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
     const formattedEvents = [];
-
+    
     if (!userId) {
       console.error("User ID is missing");
       return;
@@ -133,7 +134,13 @@ function Plan() {
   // Check if viewTripDetails is valid
   const hasTripDetails = viewTripDetails && Array.isArray(viewTripDetails.events) && viewTripDetails.events.length > 0;
 
-
+  // Helper function to adjust time zone
+  function adjustDateForTimezone(dateStr) {
+    const date = new Date(dateStr);
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() + userTimezoneOffset);
+  }
+  
   return (
     <div>
       <main>
@@ -162,7 +169,7 @@ function Plan() {
               <TravelPlanner
                 location={tripInfo.location}
                 dayCount={dayCount}
-                startDate={new Date(tripInfo.startDate)}
+                startDate={adjustDateForTimezone(tripInfo.startDate)}
                 onSave={handleSaveTrip}
               />
             </div>

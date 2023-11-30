@@ -18,12 +18,22 @@ function TravelPlannerView({ tripDetails, onSave }) {
   const startDate = parseISO(tripDetails.start_date);
   const endDate = parseISO(tripDetails.end_date);
   const dayCount = differenceInCalendarDays(endDate, startDate) + 1; // +1 to include end date
-  const dates = Array.from({ length: dayCount }, (_, i) => format(addDays(startDate, i), 'dd MMM yyyy'));
+  const dates = Array.from({ length: dayCount }, (_, i) => format(addDays(startDate, i), 'yyyy-MM-dd'));
 
   // Helper function to find events for a given date
   const getEventsForDate = (date) => {
     return tripDetails.events.filter(event => event.date === date);
   };
+
+  console.log(tripDetails.events);
+  console.log('dates',dates)
+
+  dates.forEach((date, index) => {
+    console.log(`Finding events for date: ${date}`);
+
+    const dayEvents = getEventsForDate(date);
+    console.log(`Found ${dayEvents.length} events for date: ${date}`, dayEvents);
+});
 
   return (
     <div className="planner">
