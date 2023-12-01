@@ -1,9 +1,10 @@
 import "./Day.scss";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 // recoil state
 import { useRecoilState } from "recoil";
-import { modalState } from "../../state/modalState";
+import { dayViewModalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
 
 //components
@@ -16,18 +17,24 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 function DayView({ dayNumber, date, eventsProp }) {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(eventsProp);
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
-  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
+  const [eventToDelete, setEventToDelete] = useState(null);
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 
-  console.log("events", events);
-  console.log("eventsProp", eventsProp);
   console.log(`Events for Day ${dayNumber} (${date}):`, eventsProp);
+
+  // This keeps the events state in sync with the eventsProp
+  useEffect(() => {
+    setEvents(eventsProp);
+  }, [eventsProp]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -117,16 +124,32 @@ function DayView({ dayNumber, date, eventsProp }) {
   };
 
   const handleDeleteClick = (index) => {
-    // Additional logic here
-    setDeleteEventIndex(index);
+    const event = events[index];
+    setEventToDelete(event);
     setModalOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
-    const updatedEvents = [...events];
-    setEvents(updatedEvents);
+  const handleDeleteConfirm = async (eventToDelete) => {
+
+    if (!eventToDelete) {
+      console.error("Event ID not found");
+      return;
+    }
+  
+    try {
+      await axios.delete(`${API_URL}/${tripInfo.trip_id}/event/${eventToDelete.event_id}`);
+      console.log("Event deleted successfully");
+  
+      // Remove the event from local state using filter and event_id
+      const updatedEvents = events.filter(event => event.event_id !== eventToDelete.event_id);
+      setEvents(updatedEvents);
+    } catch (error) {
+      console.error("Error deleting event:", error);
+    }
+  
     setModalOpen(false);
-  };
+    setEventToDelete(null);
+  };  
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -134,19 +157,17 @@ function DayView({ dayNumber, date, eventsProp }) {
 
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
-    setTripInfo((prevTripInfo) => ({
-      ...prevTripInfo,
-      events: {
-        ...prevTripInfo.events,
-        [date]: events,
-      },
-    }));
-  }, [events, setTripInfo, date]);
-
-  // If eventsProp is not available, render a placeholder or return null
-  if (!Array.isArray(eventsProp)) {
-    return <div>Loading events...</div>;
-  }
+    // Only update tripInfo if the events for this date have changed
+    if (JSON.stringify(tripInfo.events[date]) !== JSON.stringify(events)) {
+      setTripInfo((prevTripInfo) => ({
+        ...prevTripInfo,
+        events: {
+          ...prevTripInfo.events,
+          [date]: events,
+        },
+      }));
+    }
+  }, [events, setTripInfo, date, tripInfo.events]);
 
   return (
     <div className="day">
@@ -237,10 +258,14 @@ function DayView({ dayNumber, date, eventsProp }) {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          textContent={`Are you sure you want to delete the event "${events[deleteEventIndex]?.title}"?`}
+          textContent={`Are you sure you want to delete the event "${eventToDelete?.title}"?`}
           buttonText="Delete"
-          onButtonClick={handleDeleteConfirm}
-          onCloseClick={handleCloseModal}></Modal>
+          onButtonClick={() => handleDeleteConfirm(eventToDelete)}
+          onCloseClick={() => {
+            setModalOpen(false);
+            setEventToDelete(null); // Reset the eventToDelete state when closing the modal
+          }}>
+        </Modal>
       )}
     </div>
   );

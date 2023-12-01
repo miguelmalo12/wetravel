@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 // recoil state
 import { useRecoilState } from "recoil";
-import { modalState } from "../../state/modalState";
+import { dayViewModalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
 
 //components
@@ -21,7 +21,7 @@ function Day({ dayNumber, date }) {
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
-  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 

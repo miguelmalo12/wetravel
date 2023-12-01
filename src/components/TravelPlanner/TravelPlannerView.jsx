@@ -12,7 +12,6 @@ import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
 function TravelPlannerView({ tripDetails, onSave }) {
-  console.log("tripDetails", tripDetails);
 
   // Generate an array of dates from start_date to end_date
   const startDate = parseISO(tripDetails.start_date);
@@ -24,16 +23,6 @@ function TravelPlannerView({ tripDetails, onSave }) {
   const getEventsForDate = (date) => {
     return tripDetails.events.filter(event => event.date === date);
   };
-
-  console.log(tripDetails.events);
-  console.log('dates',dates)
-
-  dates.forEach((date, index) => {
-    console.log(`Finding events for date: ${date}`);
-
-    const dayEvents = getEventsForDate(date);
-    console.log(`Found ${dayEvents.length} events for date: ${date}`, dayEvents);
-});
 
   return (
     <div className="planner">

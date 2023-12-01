@@ -4,7 +4,7 @@ import axios from "axios";
 
 // recoil state
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { modalState } from "../../state/modalState";
+import { userTripsModalState } from "../../state/modalState";
 import { viewTripState } from "../../state/viewTripState";
 
 // components
@@ -16,7 +16,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 function UserTrips() {
   const [trips, setTrips] = useState([]);
-  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [isModalOpen, setModalOpen] = useRecoilState(userTripsModalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const setViewTrip = useSetRecoilState(viewTripState);
 
