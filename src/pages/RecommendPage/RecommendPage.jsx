@@ -7,6 +7,10 @@ import timerIcon from '../../assets/icons/timerIcon.svg';
 import companionIcon from '../../assets/icons/companionIcon.svg';
 import dateIcon from '../../assets/icons/dateIcon.svg';
 import { ButtonHeroFormSubmit } from '../../components/Button/Button';
+import heroBgArrow from '../../assets/bg-arrow.png';
+import heroBgDot from '../../assets/bg-dot.png';
+import heroBgLocation from '../../assets/bg-location.png';
+import heroBgLocationSmall from '../../assets/bg-location.png';
 
 function RecommendPage() {
   return (
@@ -79,6 +83,10 @@ function RecommendPage() {
         <div className="recommend-page__image-container">
           <img src={HeroImage} alt="" className="recommend-page__image" />
         </div>
+        <img className="recommend-page__bgicon recommend-page__bgicon--bg-arrow" src={heroBgArrow} alt="arrow icon" />
+        <img className="recommend-page__bgicon recommend-page__bgicon--bg-dot" src={heroBgDot} alt="dot icon" />
+        <img className="recommend-page__bgicon recommend-page__bgicon--bg-location" src={heroBgLocation} alt="location icon" />
+        <img className="recommend-page__bgicon recommend-page__bgicon--bg-location-small" src={heroBgLocationSmall} alt="smaller location icon" />
       </section>
       <div className="recommend-page__main">
         <CTA title='Need To Plan Your Trip?' text='Your perfect planning tool. One click away' buttonText='Go To Travel Planner' to='/plan' />
