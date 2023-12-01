@@ -81,7 +81,7 @@ function RecommendPage() {
         </div>
       </section>
       <div className="recommend-page__main">
-        <CTA />
+        <CTA title='Need To Plan Your Trip?' text='Your perfect planning tool. One click away' buttonText='Go To Travel Planner' to='/plan' />
       </div>
       <Footer />
       <CopyrightFooter />
