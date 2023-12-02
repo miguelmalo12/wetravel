@@ -140,7 +140,7 @@ function Plan() {
     const userTimezoneOffset = date.getTimezoneOffset() * 60000;
     return new Date(date.getTime() + userTimezoneOffset);
   }
-  
+
   return (
     <div>
       <main>
@@ -158,9 +158,7 @@ function Plan() {
         {hasTripDetails ?
           <div ref={travelPlannerViewRef}>
             <TravelPlannerView
-            tripDetails={viewTripDetails}
             onSave={handleSaveTrip}
-            // other props
           />
           </div>
         :
