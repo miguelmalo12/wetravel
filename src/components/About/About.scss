@@ -1,302 +1,273 @@
+@use "../../styles/partials/media";
 @use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/variables";
 
 .process {
-    display: flex;
-    flex-direction: column;
-    padding: 24px 0;
-    align-items: center;
-    gap: 32px;
+    @include padding-two(0,2);
 
-    @include tablet {
-        padding: 32px 0;
-        gap: 40px;
+    @include media.desktop {
+        @include padding-all(12,0,8,0);
     }
-
-    @include desktop {
-        padding: 32px 0;
-    }
-
-    &__text-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    
+    &__icons {
         text-align: center;
-        gap: 16px;
-    }
 
-    &__text {
-        font-family: 'Nunito Sans';
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: $medium-text;
-        text-align: center;
-        width: 80%;
-
-        @include tablet {
-            font-size: 16px;
-            line-height: 30px;
+        @include media.desktop {
+            @include padding-two(0,8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @include desktop {
-            width: 80%;
+        &__step {
+            @include padding(2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            @include media.tablet {
+                @include padding-two(2,8); 
+            }
+
+            @include media.desktop {
+                width: 40rem;
+
+                h5 {
+                    padding-bottom: 1.6rem;
+                }
+            }
+
+            img {
+                @include padding-two(2,0);
+                width: 40%;
+                
+                @include media.tablet {
+                    max-width: 18%;
+                }
+
+                @include media.desktop {
+                    max-width: 18rem;
+                }
+            }
         }
-    }
-
-
-    &__step-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-
-        @include tablet {
-            flex-direction: row;
-            align-items: flex-start;
-        }
-
-        @include desktop {
-            justify-content: space-between;
-            gap: 0;
-        }
-
     }
 }
 
-.step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-
-    &__icon {
-        width: 95px;
-    }
-
-    &__heading {
-        font-size: 18px;
-        line-height: 28px;
-        color: $dark-color;
-    }
-
-    &__text {
-        font-family: 'Nunito Sans';
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: $medium-text;
-        text-align: center;
-        width: 80%;
-
-        @include tablet {
-            font-size: 16px;
-            line-height: 30px;
-        }
-
-        @include desktop {
-            width: 60%;
-        }
-    }
-}
 
 .about {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 0;
 
-    @include tablet {
+    @include media.desktop {
+        @include padding-all(0,16,8,16);
+        display: flex;
+        align-items: center;
+        text-align: left;
         flex-direction: row;
-        padding: 32px 0;
-        justify-content: space-between;
-    }
-
-    @include desktop {
-        padding: 32px 0;
-    }
-
-    &__image-container {
-        position: relative;
-        width: 100%;
-
-        @include tablet {
-            width: 50%;
-            max-width: 600px;
-        }
     }
 
     &__image {
-        width: 100%;
+       order: 2;
+       position: relative;
+
+       @include media.desktop {
+        order:1;
+        flex-basis: 50%;
+        flex-grow: 0;
+       }
+
+        &--illustration {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+
+            @include media.tablet {
+                max-width: 70%;
+                max-width: 600px;
+            }
+        }
     }
 
-    &__bg-icon {
+    &__bgicon {
+        display: none;
         position: absolute;
 
-        &--bg-arrow {
-            left: 65%;
-            top: 12%;
-            transform: rotate(-26.94deg);
-        }
-
-        &--bg-dot-yellow {
-            width: 11.59px;
-            height: 11.59px;
-            top: 12%;
-            left: 18%;
-            background: #FFCA00;
-            border-radius: 6.5px;
-        }
-
-        &--bg-dot-blue {
-            width: 11.59px;
-            height: 11.59px;
-            left: 16%;
-            top: 86%;
-            background: #1EBBD7;
-            border-radius: 4px;
-            transform: rotate(14.24deg);
-        }
-
-        &--bg-dot-red {
-            width: 11.59px;
-            height: 11.59px;
-            left: 90%;
-            top: 70%;
-            background: #FD5056;
-            border-radius: 4px;
-            transform: rotate(-41.14deg);
+        @include media.desktop {
+            display: block;
         }
     }
 
-    &__text-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 16px;
-
-        @include tablet {
-            width: 50%;
-        }
-    }
-}
-
-.statistic {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    gap: 8px;
-
-    @include desktop {
-        width: 80%;
+    .bg-arrow {
+        left: 65%;
+        top: 12%;
+        transform: rotate(-26.94deg);
     }
 
-    &__item {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+    .bg-dot-yellow {
+        width: 11.59px;
+        height: 11.59px;
+        top: 12%;
+        left: 18%;
+        background: #FFCA00;
+        border-radius: 6.5px;
     }
 
-    &__count {
-        color: $primary-color;
-        font-family: 'Laila', serif;
-        font-size: 28px;
-        font-weight: 700;
-
-        @include tablet {
-            font-size: 32px;
-        }
+    .bg-dot-blue {
+        width: 11.59px;
+        height: 11.59px;
+        left: 16%;
+        top: 86%;
+        background: #1EBBD7;
+        border-radius: 4px;
+        transform: rotate(14.24deg);
     }
 
-    &__title {
-        font-size: 14px;
-        font-weight: 900;
-        color: $medium-text;
-
-        @include tablet {
-            font-size: 16px;
-        }
-    }
-}
-
-
-.gallery {
-    padding: 24px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-
-    @include tablet {
-        padding: 32px 0;
-    }
-
-    @include desktop {
-        padding: 32px 0;
-    }
-
-    &__text-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        text-align: center;
-        gap: 16px;
+    .bg-dot-red {
+        width: 11.59px;
+        height: 11.59px;
+        left: 90%;
+        top: 70%;
+        background: #FD5056;
+        border-radius: 4px;
+        transform: rotate(-41.14deg);
     }
 
     &__text {
-        font-family: 'Nunito Sans';
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: $medium-text;
-        text-align: center;
-        width: 100%;
+        order: 1;
+        @include padding-all(4,2,0,2);
 
-        @include tablet {
-            font-size: 16px;
-            line-height: 30px;
+        @include media.tablet {
+            @include padding-all(8,4,0,4); 
         }
 
-        @include desktop {
-            width: 80%;
+        @include media.desktop {
+            order:2;
+            flex-basis: 50%;
+            flex-grow: 0;
+           }
+
+        p {
+            @include media.tablet {
+                @include padding-two(0,4); 
+            }
+            @include media.desktop {
+                @include padding-all(2,0,0,0);
+            }
+        }
+
+        &__numbers {
+            @include padding-all(2,0,0,0);
+            
+            @include media.desktop {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            div {
+                @include padding-two (1,0);
+            }
+        }
+    }
+}
+
+.gallery {
+    @include padding-all(0,2,2,2);
+
+    @include media.tablet {
+        @include padding-all(0,4,4,4); 
+    }
+
+    @include media.desktop {
+        @include padding-all(2,16,8,16); 
+    }
+
+    &__intro {
+        @include padding-all(0,0,3,0);
+
+        @include media.desktop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        p {
+            @include padding-all(1,0,3,0);
+            
+            @include media.tablet {
+                @include padding-all(1,4,3,4); 
+            }
+
+            @include media.desktop {
+                max-width: 600px;
+            }
         }
     }
 
-    &__image-container {
+// Gallery in phone view
+    &__images {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
+        flex-wrap: wrap;
 
-
-        @include tablet {
-            display: grid;
-            grid-gap: 24px;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(2, 1fr);
+        @include media.desktop {
+            display: none;
         }
 
+        img {
+            @include padding(2);
+            border-radius: 25px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
 
+            @include media.tablet {
+                width: 50%;
+
+                &:last-child {
+                    display: none;
+                }
+            }
+
+            @include media.desktop {
+                &:last-child {
+                    display: flex;
+                }
+            }
+        }
     }
 
-    &__image {
-        width: 100%;
-        aspect-ratio: 1/1;
-        border-radius: 20px;
-        object-fit: cover;
-        object-position: top;
+// Gallery in desktop view
+    &__images-desktop {
+        display: none;
 
-        &--1 {
-            @include tablet {
-                grid-row: 1/span 2;
-                grid-column: 1/span 2;
+        @include media.desktop {
+            display: flex;
+            justify-content: center;
+
+            img {
+                @include padding(2);
+                border-radius: 25px;
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                aspect-ratio: 1 / 1;
+            }
+
+            &--left {
+                flex-basis: 50%;
+                height: 100%;
+            }
+
+            &--right {
+                flex-basis: 50%;
+                display: flex;
+                flex-wrap: wrap;
+                height: 100%;
+
+                div {
+                    flex-basis: 50%;
+                    height: 50%;
+                }
             }
         }
     }

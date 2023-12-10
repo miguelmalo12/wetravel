@@ -1,20 +1,22 @@
 import './CTA.scss';
-import ctaImage from '../../assets/vector-illustrations/illustration_cta.png';
-import { ButtonPrimary } from '../Button/Button';
 
-function CTA({ title, text, buttonText, to }) {
-    return (
-        <section className="cta">
-            <div className="cta__text-container">
-                <h2 className='cta__heading'>{title}</h2>
-                <p className='cta__text'>{text}</p>
-                <ButtonPrimary text={buttonText} to={to} />
+import ctaImage from '../../assets/vector-illustrations/illustration_cta.png';
+
+function CTA( { title, text, buttonText  } ) {
+  return (
+    <div>
+       <section className="cta">
+            <div className="cta__text">
+                <h2>{title}</h2>
+                <p>{text}</p>
+                <a className="primary-button" href="">{buttonText}</a>
             </div>
-            <div className="cta__image-container">
-                <img className='cta__image' src={ctaImage} alt="travel illustration" />
+            <div className="cta__image">
+                <img src={ctaImage} alt="travel illustration"/>
             </div>
-        </section>
-    )
+        </section> 
+    </div>
+  )
 }
 
 export default CTA

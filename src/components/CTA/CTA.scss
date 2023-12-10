@@ -1,85 +1,55 @@
+@use "../../styles/partials/media";
 @use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/variables";
 
 .cta {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    background-color: $bg-color;
-    margin-top: 25%;
-    margin: 16px;
-    border-radius: 20px;
-    padding: 24px 16px;
+    @include padding-all(4,2,1,2);
 
+    background-color: variables.$bg-color;
 
-    @include tablet {
-        flex-direction: row;
-        align-items: center;
-        margin: 40px;
-        padding: 32px;
-        justify-content: space-between;
+    @include media.tablet {
+        @include padding-all(6,4,1,4); 
     }
 
-    @include desktop {
-        margin: 4rem 0;
-        gap: 2rem;
-        padding: 40px 5vw;
-    }
-
-    &__text-container {
+    @include media.desktop {
+        @include padding-two(2,8);
+        margin: 12.8rem;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        text-align: center;
-        gap: 16px;
-        width: 100%;
-
-        @include tablet {
-            width: 60%;
-            align-items: flex-start;
-            text-align: left;
-
-        }
-    }
-
-    &__heading {
-        @include desktop {
-            width: 80%;
-        }
+        text-align: left;
+        border-radius: 15px;
     }
 
     &__text {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: $medium-text;
-
-        @include tablet {
-            font-size: 16px;
-            line-height: 30px;
+        
+        @include media.desktop {
+            flex-basis: 60%;
         }
-
-        @include desktop {
-            width: 80%;
-        }
-    }
-
-    &__image-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        @include tablet {
-            width: 40%;
-            justify-content: flex-end;
+        
+        p {
+            @include padding-all(1,0,3,0);
         }
     }
 
     &__image {
-        width: 100%;
-        max-width: 400px;
+        text-align: center;
+        @include media.desktop {
+            flex-basis: 40%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+
+            @include media.tablet {
+                max-width: 500px;
+            }
+
+            @include media.desktop {
+                max-width: 400px;
+            }
+        }
     }
 }
+
