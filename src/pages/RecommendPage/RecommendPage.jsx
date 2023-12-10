@@ -24,8 +24,8 @@ function RecommendPage() {
           <img className="recommend-page__bgicon recommend-page__bgicon--bg-location-small" src={heroBgLocationSmall} alt="smaller location icon" />
 
           <div className="recommend-page__text-container slidein-left">
-            <h6 className='heading--secondary'>Explore The World</h6>
-            <h1 className='heading--primary'>Travel planning made simple</h1>
+            <h6>Get your perfect Destination match</h6>
+            <h1>Recommend Me!</h1>
             <form className="recommend-form recommend-form--mobile">
               <div className="recommend-form__group-container">
                 <img src={heroLocationIcon} alt="" className="recommend-form__icon" />
@@ -100,7 +100,7 @@ function RecommendPage() {
                   </select>
                 </div>
               </div>
-              <div className="recommend-form__wrapper">
+              <div className="recommend-form__wrapper recommend-form__wrapper--simple">
                 <div className="recommend-form__group-container recommend-form__group-container--double">
                   <img src={heroLocationIcon} alt="" className="recommend-form__icon" />
                   <div className="recommend-form__group">
@@ -139,7 +139,7 @@ function RecommendPage() {
                     </select>
                   </div>
                 </div>
-                <div className="recommend-form__group-container recommend-form__group-container--double">
+                <div className="recommend-form__group-container recommend-form__group-container--double recommend-form__group-container--submit">
                   <img src={dateIcon} alt="" className="recommend-form__icon" />
                   <div className="recommend-form__group">
                     <label htmlFor="" className="recommend-form__label">Preferred Travel Month</label>

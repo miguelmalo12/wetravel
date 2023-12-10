@@ -36,34 +36,34 @@
     }
 
     &__text-container {
-        padding: 24px 20px;
         text-align: center;
+        padding: 24px 0;
         width: 100%;
 
         @include tablet {
             width: 60%;
-            padding: 36px;
             text-align: left;
-        }
-
-        @include desktop {
-            // padding-left: 12vw;
+            align-items: center;
         }
     }
 
     &__image-container {
         display: none;
+        z-index: -1;
 
         @include tablet {
-            width: 40%;
             display: flex;
-            padding: 36px;
+            justify-content: center;
+            min-width: 320px;
+            z-index: -1;
         }
 
         @include desktop {
-            padding: 0;
-            // padding-right: 12vw;
+            width: 50%;
+            flex-grow: 0;
         }
+
+
     }
 
     &__image {
@@ -160,7 +160,11 @@
         overflow: hidden;
         border-radius: 60px;
         flex-shrink: 0;
+        width: 600px;
 
+        &--simple {
+            padding-right: 20px;
+        }
 
 
     }
@@ -187,7 +191,13 @@
         &--double {
             border-radius: 0;
             box-shadow: none;
+            width: 290px;
         }
+
+        &--submit {
+            width: auto;
+        }
+
 
 
     }
@@ -228,6 +238,8 @@
         &:focus+.recommend-form__group-container {
             border: 1px solid $secondary-color;
         }
+
+
 
         &--select {
             background-color: transparent;
