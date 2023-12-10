@@ -1,61 +1,64 @@
-@use "../../styles/partials/media";
 @use "../../styles/partials/mixins" as *;
-@use "../../styles/partials/variables";
+@use "../../styles/partials/variables" as *;
+
 
 .hero {
     position: relative;
-    
-    @include media.desktop {
-        @include padding-two(0,8);
-        display: flex;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+
+    @include tablet {
+        padding: 32px 0;
+        flex-direction: row;
         align-items: center;
-        text-align: left;
+        justify-content: space-between;
     }
 
-    &__text {
-        @include padding-all(4,2,0,2);
-        
-        @include media.tablet {
-            @include padding-all(4,4,0,4); 
+    @include desktop {
+        padding: 32px 0;
+    }
+
+
+
+    &__text-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+
+        @include tablet {
+            align-items: flex-start;
+            text-align: left;
+            max-width: 50%;
+        }
+    }
+
+
+
+
+    &__image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 100%;
+
+        @include tablet {
+            max-width: 50%;
         }
 
-        @include media.desktop {
-            @include padding-all(4,8,0,8);
-            flex-basis: 50%;
-            flex-grow: 0; 
-        }
-        
-        p {
-            @include padding-all(1,0,3,0);
-
-            @include media.tablet {
-                @include padding-all(2,4,3,4); 
-            }
-
-            @include media.desktop {
-                @include padding-all(2,0,4,0);
-            }
+        @include desktop {
+            margin-right: 3rem;
         }
     }
 
     &__image {
-        display: flex;
-        justify-content: center;
+        width: 100%;
 
-        @include media.desktop {
-            flex-basis: 50%;
-            flex-grow: 0;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-
-            @include media.tablet {
-                max-width: 70%;
-                max-width: 600px;
-            }
+        @include tablet {
+            max-width: 600px;
         }
     }
 
@@ -63,12 +66,18 @@
     &__map {
         background-image: url("../../assets/map-BG.png");
         background-repeat: no-repeat;
+        background-size: contain;
         position: absolute;
-        width: 1216px;
-        height: 482px;
+        width: 50%;
+        height: 70%;
         left: 0px;
         top: 0px;
         opacity: 0.1;
+        display: none;
+
+        @include desktop {
+            display: block;
+        }
     }
 
     // Background small icons, only visible on desktop
@@ -76,26 +85,30 @@
         position: absolute;
         display: none;
 
-        @include media.desktop {
+        @include desktop {
             display: block;
         }
     }
+
     .bg-arrow {
         width: 103.92px;
         height: 33.63px;
         left: 52%;
         top: 12%;
     }
+
     .bg-dot {
         width: 17.39px;
         height: 17.39px;
         left: 92%;
-        top: 15%; 
+        top: 15%;
     }
+
     .bg-location {
         left: 94%;
         top: 29%;
     }
+
     .bg-location-small {
         left: 90%;
         top: 45%;

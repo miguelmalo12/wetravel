@@ -1,49 +1,71 @@
 @use "../../styles/partials/fonts";
-@use "../../styles/partials/media" as *;
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/variables";
 @use "../../styles/partials/buttons";
 @use "../../styles/partials/animations";
 
-.hero {
+.heroform {
     position: relative;
-    
-    @include desktop {
-        @include padding-two(0,8);
+    margin-bottom: 8%;
+
+    @include tablet {
         display: flex;
         align-items: center;
         text-align: left;
+        margin-bottom: 2%;
+    }
+
+    @include desktop {
+        margin-bottom: 0;
     }
 
     &__text {
-        @include padding-all(4,2,0,2);
-        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+
         @include tablet {
-            @include padding-all(4,4,0,4); 
+            width: 50%;
         }
 
         @include desktop {
-            @include padding-all(4,8,0,8);
             flex-basis: 50%;
-            flex-grow: 0; 
+            flex-grow: 0;
+            width: unset;
         }
-        
-        p {
-            @include padding-all(1,0,3,0);
+
+        h1 {
+            padding-bottom: 1rem;
 
             @include tablet {
-                @include padding-all(2,4,3,4); 
+                padding-bottom: 0;
+            }
+        }
+
+        p {
+            @include padding-all(1, 0, 3, 0);
+
+            @include tablet {
+                @include padding-all(2, 4, 3, 4);
             }
 
             @include desktop {
-                @include padding-all(2,0,4,0);
+                @include padding-all(2, 0, 4, 0);
             }
+        }
+
+        .error-message {
+            margin-top: 0;
+            padding-left: 35px;
         }
     }
 
     &__image {
         display: flex;
         justify-content: center;
+        min-width: 320px;
+        z-index: -1;
 
         @include desktop {
             flex-basis: 50%;
@@ -51,11 +73,16 @@
         }
 
         img {
+            display: none;
             max-width: 100%;
             height: auto;
             object-fit: contain;
 
             @include tablet {
+                display: block;
+            }
+
+            @include desktop {
                 max-width: 70%;
                 max-width: 600px;
             }
@@ -64,15 +91,19 @@
 
     // Background gradient
 
-    &__gradient{
+    &__gradient {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 31.24%, rgba(253, 80, 86, 0.1) 100%);
         opacity: 0.6;
         background-repeat: no-repeat;
         position: absolute;
         width: 100vw;
-        height: 482px;
+        height: 294px;
         left: 0px;
         top: 0px;
+
+        @include tablet {
+            height: 482px;
+        }
     }
 
     // Background small icons, only visible on desktop
@@ -84,92 +115,129 @@
             display: block;
         }
     }
+
     .bg-arrow {
         width: 103.92px;
         height: 33.63px;
         left: 52%;
         top: 12%;
     }
+
     .bg-dot {
         width: 17.39px;
         height: 17.39px;
         left: 92%;
-        top: 15%; 
+        top: 15%;
     }
+
     .bg-location {
         left: 94%;
         top: 29%;
     }
+
     .bg-location-small {
         left: 90%;
         top: 45%;
         width: 18px;
     }
-    &__location-container{
+
+    &__location-container {
         display: flex;
-        justify-content: center;
         align-items: center;
-        width: 290px;
-       height: 77px;
-       background: #FFFFFF;
-box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
-border-radius: 75px;
-margin-bottom: 15px;
-    }
-    &__location{
-       background-color: white;
-       display: flex;
-       align-items: baseline;
-       gap: 10px;
-       
-    }
-    &__icon{
-        width: 12px;
-        height: 14px;
+        width: 70%;
+        height: 63px;
+        background: #FFFFFF;
+        box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
+        border-radius: 75px;
+        margin-bottom: 15px;
+        padding-left: 20px;
+
+        @include tablet {
+            width: 290px;
+            height: 77px;
+            padding-left: 35px;
+        }
     }
 
-    &__input-group{
+    &__location {
+        background-color: white;
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
+
+    &__icon {
+        width: 12px;
+        height: 14px;
+        color: variables.$primary-color;
+    }
+
+    &__input-group {
         display: flex;
         flex-direction: column;
 
     }
 
-    &__label{
-       font-size: 18px;
-       font-weight: 900;
-       font-family: 'Nunito Sans';
-       color: #8C849F;
+    &__label {
+        font-size: 16px;
+        font-weight: 900;
+        font-family: 'Nunito Sans';
+        color: #8C849F;
+        text-align: left;
+
+        @include tablet {
+            font-size: 18px;
+        }
     }
 
-    &__input{
-        border: none;
-        font-size: 16px;
+    &__input {
+        border: 2px solid transparent;
+        font-size: 14px;
         font-weight: 700;
-        color: #333745;
-        width: 100%;
-       
+        color: variables.$dark-text;
+        width: 83%;
+        padding: 1px 0 1px 4px;
+
+        @include tablet {
+            font-size: 16px;
+            width: 100%;
+        }
+
+        &::placeholder {
+            color: variables.$dark-text;
+        }
+
     }
-    &__date-container{
+
+    &__date-container {
         display: flex;
-        justify-content: center;
         align-items: center;
-        width: 534px;
-        height: 77px;
+        height: 63px;
         background: #FFFFFF;
         box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
         border-radius: 75px;
         position: relative;
-    }
-    &__date{
+        padding-left: 20px;
+        width: 100%;
 
-        background-color: white;
-       display: flex;
-       align-items: baseline;
-       gap: 10px;
+        @include tablet {
+            width: 534px;
+            height: 77px;
+            padding-left: 35px;
+        }
     }
-    &__cta{
-        width: 59px;
-        height: 59px;
+
+    &__date {
+        background-color: white;
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        width: 40%;
+    }
+
+    &__cta {
+        width: 44px;
+        height: 44px;
         border: none;
         border-radius: 1000px;
         background-color: #1EBBD7;
@@ -178,10 +246,15 @@ margin-bottom: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
+
+        @include tablet {
+            width: 59px;
+            height: 59px;
+        }
     }
-    &__cta-icon{
+
+    &__cta-icon {
         width: 22px;
     }
 }
-
-

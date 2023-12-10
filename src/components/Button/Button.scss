@@ -1,0 +1,78 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+
+.button {
+    width: 100%;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 25px;
+    text-align: center;
+    padding: 8px 32px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+
+    @include tablet {
+        width: auto;
+        font-size: 16px;
+    }
+
+    &--primary {
+
+        background: $primary-color;
+        color: $white;
+        border: 2px solid $primary-color;
+        box-shadow: 0px 7px 20px 0px rgba(253, 80, 86, 0.30);
+
+
+        &:hover {
+            background-color: $white;
+            color: $primary-color;
+        }
+    }
+
+    &--secondary {
+        background: $white;
+        color: $primary-color;
+        border: 2px solid $primary-color;
+        box-shadow: 0px 7px 20px 0px rgba(253, 80, 86, 0.30);
+
+
+        &:hover {
+            background-color: $primary-color;
+            color: $white;
+        }
+    }
+
+    &--google {
+        background-color: $white;
+        border: 1px solid $light-text;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: $medium-text;
+        font-weight: 700;
+    }
+}
+
+.hero-form-button {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    padding: 16px;
+    background-color: $secondary-color;
+
+
+    &__icon {
+        transform: translate(-2px, 1px);
+
+        &--color {}
+    }
+}
