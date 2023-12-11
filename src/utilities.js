@@ -25,3 +25,18 @@ export const country_list =
         "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam",
         "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"
     ];
+
+
+export const arrayToObject = (arr) => {
+    if (!Array.isArray(arr)) {
+        throw new Error('Invalid input array');
+    }
+
+    const result = {};
+
+    for (let i = 0; i < arr.length; i++) {
+        result[i] = arr[i];
+    }
+
+    return result;
+}

@@ -1,4 +1,4 @@
-import 'HeroFormInput.scss';
+import './HeroFormInput.scss';
 import { ButtonHeroFormSubmit } from '../Button/Button';
 
 export const SingleHeroFormSelect = ({ icon, label, options, name }) => {
