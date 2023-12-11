@@ -21,7 +21,7 @@ export const SingleHeroFormSelect = ({ icon, label, options, name }) => {
 
 export const SingleHeroFormSelectSubmit = ({ icon, label, options, name }) => {
     return (
-        <div className="hero-form-input__group-container">
+        <div className="hero-form-input__group-container hero-form-input__group-container--submit-button">
             <img src={icon} alt="" className="hero-form-input__icon" />
             <div className="hero-form-input__group">
                 <label htmlFor={name} className="hero-form-input__label">{label}</label>

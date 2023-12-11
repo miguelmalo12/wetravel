@@ -11,8 +11,17 @@ import heroBgArrow from '../../assets/bg-arrow.png';
 import heroBgDot from '../../assets/bg-dot.png';
 import heroBgLocation from '../../assets/bg-location.png';
 import heroBgLocationSmall from '../../assets/bg-location.png';
+import { arrayToObject } from '../../utilities';
+import { SingleHeroFormSelect, SingleHeroFormSelectSubmit } from '../../components/HeroFormInput/HeroFormInput';
+
 
 function RecommendPage() {
+
+  const destinationType = ['City', 'Area', 'Region']
+  const destinationScope = ['Within Country', 'International']
+
+
+
   return (
     <div className="recommend-page">
       <main>
@@ -27,64 +36,11 @@ function RecommendPage() {
             <h6>Get your perfect Destination match</h6>
             <h1>Recommend Me!</h1>
             <form className="recommend-form recommend-form--mobile">
-              <div className="recommend-form__group-container">
-                <img src={heroLocationIcon} alt="" className="recommend-form__icon" />
-                <div className="recommend-form__group">
-                  <label htmlFor="" className="recommend-form__label">Destination Type</label>
-                  <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                    <option value="" className="recommend-form__input recommend-form__input--option">City</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Area</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Region</option>
-                  </select>
-                </div>
-              </div>
-              <div className="recommend-form__group-container">
-                <img src={heroLocationIcon} alt="" className="recommend-form__icon" />
-                <div className="recommend-form__group">
-                  <label htmlFor="" className="recommend-form__label">Destination Scope</label>
-                  <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                    <option value="" className="recommend-form__input recommend-form__input--option">International</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Within Country</option>
-                  </select>
-                </div>
-              </div>
-              <div className="recommend-form__group-container">
-                <img src={companionIcon} alt="" className="recommend-form__icon" />
-                <div className="recommend-form__group">
-                  <label htmlFor="" className="recommend-form__label">Companionship Preference</label>
-                  <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                    <option value="" className="recommend-form__input recommend-form__input--option">Family</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Friend</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Partner</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Solo</option>
-                  </select>
-                </div>
-              </div>
-              <div className="recommend-form__group-container">
-                <img src={timerIcon} alt="" className="recommend-form__icon" />
-                <div className="recommend-form__group">
-                  <label htmlFor="" className="recommend-form__label">Length of Journey</label>
-                  <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                    {Array.from({ length: 31 }, (_, index) => (
-                      <option key={index + 1} value={index + 1} className="recommend-form__input recommend-form__input--option">
-                        {index + 1} {(index + 1 === 1 ? 'day' : 'days')}
-                      </option>
-                    ))}
-
-                  </select>
-                </div>
-              </div>
-              <div className="recommend-form__group-container">
-                <img src={dateIcon} alt="" className="recommend-form__icon" />
-                <div className="recommend-form__group">
-                  <label htmlFor="" className="recommend-form__label">Preferred Travel Month</label>
-                  <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                    <option value="" className="recommend-form__input recommend-form__input--option">Urban</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Rural</option>
-                  </select>
-                </div>
-                <ButtonHeroFormSubmit className='recommend-form__button' />
-              </div>
+              <SingleHeroFormSelect label='Destination Type' icon={heroLocationIcon} options={destinationType} />
+              <SingleHeroFormSelect label='Destination Scope' icon={heroLocationIcon} options={destinationScope} />
+              <SingleHeroFormSelect label='Companionship Preference' icon={companionIcon} options={destinationScope} />
+              <SingleHeroFormSelect label='Length of Journey' icon={timerIcon} options={destinationScope} />
+              <SingleHeroFormSelectSubmit label='Preferred Travel Month' icon={dateIcon} options={destinationScope} />
             </form>
 
             {/* Tablet Design */}
