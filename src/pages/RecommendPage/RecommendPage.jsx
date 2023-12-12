@@ -6,13 +6,11 @@ import heroLocationIcon from '../../assets/icons/location.svg';
 import timerIcon from '../../assets/icons/timerIcon.svg';
 import companionIcon from '../../assets/icons/companionIcon.svg';
 import dateIcon from '../../assets/icons/dateIcon.svg';
-import { ButtonHeroFormSubmit } from '../../components/Button/Button';
 import heroBgArrow from '../../assets/bg-arrow.png';
 import heroBgDot from '../../assets/bg-dot.png';
 import heroBgLocation from '../../assets/bg-location.png';
 import heroBgLocationSmall from '../../assets/bg-location.png';
-import { arrayToObject } from '../../utilities';
-import { SingleHeroFormSelect, SingleHeroFormSelectSubmit } from '../../components/HeroFormInput/HeroFormInput';
+import { SingleHeroFormSelect, SingleHeroFormSelectSubmit, DoubleHeroFormSelect, DoubleHeroFormSelectSubmit } from '../../components/HeroFormInput/HeroFormInput';
 
 
 function RecommendPage() {
@@ -45,68 +43,9 @@ function RecommendPage() {
 
             {/* Tablet Design */}
             <form className="recommend-form recommend-form--tablet">
-              <div className="recommend-form__group-container recommend-form__group-container--single">
-                <img src={heroLocationIcon} alt="" className="recommend-form__icon" />
-                <div className="recommend-form__group">
-                  <label htmlFor="" className="recommend-form__label">Destination Type</label>
-                  <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                    <option value="" className="recommend-form__input recommend-form__input--option">City</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Area</option>
-                    <option value="" className="recommend-form__input recommend-form__input--option">Region</option>
-                  </select>
-                </div>
-              </div>
-              <div className="recommend-form__wrapper recommend-form__wrapper--simple">
-                <div className="recommend-form__group-container recommend-form__group-container--double">
-                  <img src={heroLocationIcon} alt="" className="recommend-form__icon" />
-                  <div className="recommend-form__group">
-                    <label htmlFor="" className="recommend-form__label">Destination Scope</label>
-                    <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                      <option value="" className="recommend-form__input recommend-form__input--option">International</option>
-                      <option value="" className="recommend-form__input recommend-form__input--option">Within Country</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="recommend-form__group-container recommend-form__group-container--double">
-                  <img src={companionIcon} alt="" className="recommend-form__icon" />
-                  <div className="recommend-form__group">
-                    <label htmlFor="" className="recommend-form__label">Companionship Preference</label>
-                    <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                      <option value="" className="recommend-form__input recommend-form__input--option">Family</option>
-                      <option value="" className="recommend-form__input recommend-form__input--option">Friend</option>
-                      <option value="" className="recommend-form__input recommend-form__input--option">Partner</option>
-                      <option value="" className="recommend-form__input recommend-form__input--option">Solo</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="recommend-form__wrapper">
-                <div className="recommend-form__group-container recommend-form__group-container--double">
-                  <img src={timerIcon} alt="" className="recommend-form__icon" />
-                  <div className="recommend-form__group">
-                    <label htmlFor="" className="recommend-form__label">Length of Journey</label>
-                    <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                      {Array.from({ length: 31 }, (_, index) => (
-                        <option key={index + 1} value={index + 1} className="recommend-form__input recommend-form__input--option">
-                          {index + 1} {(index + 1 === 1 ? 'day' : 'days')}
-                        </option>
-                      ))}
-
-                    </select>
-                  </div>
-                </div>
-                <div className="recommend-form__group-container recommend-form__group-container--double recommend-form__group-container--submit">
-                  <img src={dateIcon} alt="" className="recommend-form__icon" />
-                  <div className="recommend-form__group">
-                    <label htmlFor="" className="recommend-form__label">Preferred Travel Month</label>
-                    <select placeholder='Enter City / Country' type="text" className="recommend-form__input recommend-form__input--select" >
-                      <option value="" className="recommend-form__input recommend-form__input--option">Urban</option>
-                      <option value="" className="recommend-form__input recommend-form__input--option">Rural</option>
-                    </select>
-                  </div>
-                  <ButtonHeroFormSubmit className='recommend-form__button' />
-                </div>
-              </div>
+              <SingleHeroFormSelect label='Destination Type' icon={heroLocationIcon} options={destinationType} />
+              <DoubleHeroFormSelect label1='Destination Scope' icon1={heroLocationIcon} label2='Companionship Preference' icon2={companionIcon} options1={destinationType} options2={destinationType} />
+              <DoubleHeroFormSelectSubmit label1='Length of Journey' icon1={timerIcon} label2='Preferred Travel Month' icon2={dateIcon} options1={destinationType} options2={destinationType} />
             </form>
           </div>
           <div className="recommend-page__image-container slidein-right">

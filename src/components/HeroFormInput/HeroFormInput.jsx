@@ -89,7 +89,7 @@ export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1
                     </select>
                 </div>
             </div>
-            <div className="hero-form-input__group-container hero-form-input__group-container--double hero-form-input__group-container--submit">
+            <div className="hero-form-input__group-container hero-form-input__group-container--double hero-form-input__group-container--submit  hero-form-input__group-container--submit-button">
                 <img src={icon2} alt="" className="hero-form-input__icon" />
                 <div className="hero-form-input__group">
                     <label htmlFor={name1} className="hero-form-input__label">{label2}</label>
