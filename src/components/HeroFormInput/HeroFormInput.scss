@@ -38,12 +38,7 @@
         overflow: hidden;
         border-radius: 60px;
         flex-shrink: 0;
-        width: 600px;
-
-        &--simple {
-            padding-right: 20px;
-        }
-
+        width: 620px;
 
     }
 
@@ -57,6 +52,7 @@
         padding: 1rem 3rem;
         width: 100%;
         gap: 10px;
+        border: 1px solid transparent;
 
         @include tablet {
             width: 290px;
@@ -69,9 +65,8 @@
 
 
         &--double {
-            border-radius: 0;
             box-shadow: none;
-            width: 290px;
+            width: 50%
         }
 
         &--submit {
@@ -115,12 +110,6 @@
         border-radius: 0;
         padding: 4px;
 
-        &:focus+.hero-form-input__group-container {
-            border: 1px solid $secondary-color;
-        }
-
-
-
         &--select {
             background-color: transparent;
             font-weight: 700;
@@ -136,4 +125,8 @@
 
     &__button {}
 
+}
+
+.focused {
+    border: 1px solid $secondary-color;
 }
