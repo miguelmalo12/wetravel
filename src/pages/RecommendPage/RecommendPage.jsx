@@ -17,6 +17,10 @@ function RecommendPage() {
 
   const destinationType = ['City', 'Area', 'Region']
   const destinationScope = ['Within Country', 'International']
+  const companionPreference = ['Friend', 'Family', 'Partner', 'Solo']
+  const lengthOfTrip = Array.from({ length: 30 }, (_, index) => `${index + 1} ${(index + 1 === 1) ? 'day' : 'days'} `);
+  const preferredMonth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 
 
 
@@ -36,16 +40,16 @@ function RecommendPage() {
             <form className="recommend-form recommend-form--mobile">
               <SingleHeroFormSelect label='Destination Type' icon={heroLocationIcon} options={destinationType} />
               <SingleHeroFormSelect label='Destination Scope' icon={heroLocationIcon} options={destinationScope} />
-              <SingleHeroFormSelect label='Companionship Preference' icon={companionIcon} options={destinationScope} />
-              <SingleHeroFormSelect label='Length of Journey' icon={timerIcon} options={destinationScope} />
-              <SingleHeroFormSelectSubmit label='Preferred Travel Month' icon={dateIcon} options={destinationScope} />
+              <SingleHeroFormSelect label='Companionship Preference' icon={companionIcon} options={companionPreference} />
+              <SingleHeroFormSelect label='Length of Journey' icon={timerIcon} options={lengthOfTrip} />
+              <SingleHeroFormSelectSubmit label='Preferred Travel Month' icon={dateIcon} options={preferredMonth} />
             </form>
 
             {/* Tablet Design */}
             <form className="recommend-form recommend-form--tablet">
               <SingleHeroFormSelect label='Destination Type' icon={heroLocationIcon} options={destinationType} />
-              <DoubleHeroFormSelect label1='Destination Scope' icon1={heroLocationIcon} label2='Companionship Preference' icon2={companionIcon} options1={destinationType} options2={destinationType} />
-              <DoubleHeroFormSelectSubmit label1='Length of Journey' icon1={timerIcon} label2='Preferred Travel Month' icon2={dateIcon} options1={destinationType} options2={destinationType} />
+              <DoubleHeroFormSelect label1='Destination Scope' icon1={heroLocationIcon} label2='Companionship Preference' icon2={companionIcon} options1={destinationScope} options2={companionPreference} />
+              <DoubleHeroFormSelectSubmit label1='Length of Journey' icon1={timerIcon} label2='Preferred Travel Month' icon2={dateIcon} options1={lengthOfTrip} options2={preferredMonth} />
             </form>
           </div>
           <div className="recommend-page__image-container slidein-right">
