@@ -1,9 +1,17 @@
 import './Header.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import WeTravelLogo from '../../assets/wetravel-logo-red.png';
-import { useState } from 'react';
+import axios from 'axios';
+import { userState } from '../../state/userState';
+import Modal from '../Modal/Modal';
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { modalState } from "../../state/modalState";
+import { loginState } from '../../state/loginState';
 
-const NavbarList = ({ isLoggedIn }) => {
+const NavbarList = () => {
+  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [isLoggedIn, setLoggedIn] = useRecoilState(loginState)
+
   return (
 
     (!isLoggedIn) ? (
@@ -11,12 +19,6 @@ const NavbarList = ({ isLoggedIn }) => {
         <li className="navbar-list__item">
           <Link to='/#' className="navbar-list__link navbar-list__link--active">Home</Link>
         </li>
-        {/* <li className="navbar-list__item">
-          <Link to='/recommend' className="navbar-list__link">Recommend</Link>
-        </li>
-        <li className="navbar-list__item">
-          <Link to='/plan' className="navbar-list__link">Plan</Link>
-        </li> */}
         <li className="navbar-list__item">
           <Link to='/login' className="navbar-list__link navbar-list__link--button-primary">Login</Link>
         </li>
@@ -39,7 +41,10 @@ const NavbarList = ({ isLoggedIn }) => {
           <Link to='/login' className="navbar-list__link navbar-list__link--button-primary">Profile</Link>
         </li>
         <li className="navbar-list__item">
-          <Link to='/sign-up' className="navbar-list__link navbar-list__link--button-secondary">Logout</Link>
+          <Link className="navbar-list__link navbar-list__link--button-secondary" onClick={(e) => {
+            e.preventDefault()
+            setModalOpen(true)
+          }}>Logout</Link>
         </li>
       </ul>
     )
@@ -47,7 +52,27 @@ const NavbarList = ({ isLoggedIn }) => {
 }
 
 
-const Header = ({ isLoggedIn }) => {
+const Header = () => {
+  const setUser = useSetRecoilState(userState);
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    axios.post(`${API_URL}/auth/logout`).then(response => {
+      if (response.status === 200) {
+        localStorage.removeItem('userData')
+        setUser(null)
+      }
+    }).then(() => {
+      setIsLoggedIn(false)
+      setModalOpen(false)
+      navigate('/')
+    })
+  }
+
 
   return (
     <header className="header">
@@ -74,6 +99,13 @@ const Header = ({ isLoggedIn }) => {
       <nav className="navbar">
         <NavbarList isLoggedIn={isLoggedIn} />
       </nav>
+      {isModalOpen && (
+        <Modal
+          textContent={`Are you sure you want to logout?`}
+          buttonText="Logout"
+          onButtonClick={handleLogout}
+          onCloseClick={() => setModalOpen(false)} />
+      )}
     </header>
   )
 
