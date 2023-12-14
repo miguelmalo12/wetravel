@@ -11,9 +11,12 @@ import { userState } from '../../state/userState';
 import { CopyrightFooter } from '../../components/Footer/Footer';
 import { ButtonPrimary, ButtonSecondary, ButtonGoogle } from '../../components/Button/Button';
 import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComponents';
+import { useRecoilState } from 'recoil';
+import { loginState } from '../../state/loginState';
 
 
-const SignIn = ({ API_URL, isLoggedIn, setLoggedIn, setProfileData }) => {
+const SignIn = ({ API_URL }) => {
+    const [isLoggedIn, setLoggedIn] = useRecoilState(loginState)
     const setUser = useSetRecoilState(userState);
 
     const [signInCredentials, setSignInCredentials] = useState({
@@ -27,21 +30,21 @@ const SignIn = ({ API_URL, isLoggedIn, setLoggedIn, setProfileData }) => {
         })
     }
     const handleFormSubmit = (event) => {
-      event.preventDefault();
-      axios
-        .post(`${API_URL}/auth/login`, {
-          email: signInCredentials.email,
-          password: signInCredentials.password,
-        })
-        .then((response) => {
-          const { user } = response.data;
-            localStorage.setItem("userData", JSON.stringify(user));
-            setUser(user);
-            setLoggedIn(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        event.preventDefault();
+        axios
+            .post(`${API_URL}/auth/login`, {
+                email: signInCredentials.email,
+                password: signInCredentials.password,
+            })
+            .then((response) => {
+                const { user } = response.data;
+                localStorage.setItem("userData", JSON.stringify(user));
+                setUser(user);
+                setLoggedIn(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
