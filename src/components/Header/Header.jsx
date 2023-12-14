@@ -8,10 +8,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { modalState } from "../../state/modalState";
 import { loginState } from '../../state/loginState';
 
-const NavbarList = () => {
-  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
-  const [isLoggedIn, setLoggedIn] = useRecoilState(loginState)
-
+const NavbarList = ({ isLoggedIn, setModalOpen }) => {
   return (
 
     (!isLoggedIn) ? (
@@ -38,7 +35,7 @@ const NavbarList = () => {
           <Link to='/plan' className="navbar-list__link">Plan</Link>
         </li>
         <li className="navbar-list__item">
-          <Link to='/login' className="navbar-list__link navbar-list__link--button-primary">Profile</Link>
+          <Link to='/profile' className="navbar-list__link navbar-list__link--button-primary">Profile</Link>
         </li>
         <li className="navbar-list__item">
           <Link className="navbar-list__link navbar-list__link--button-secondary" onClick={(e) => {
@@ -57,7 +54,6 @@ const Header = () => {
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   const [isModalOpen, setModalOpen] = useRecoilState(modalState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(loginState);
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -76,28 +72,21 @@ const Header = () => {
 
   return (
     <header className="header">
-
       <Link to='/#' className="header__logo-container">
         <img src={WeTravelLogo} alt="WeTravel Logo" className="header__logo" />
       </Link>
-
-
-
-
       <div className="navbar-hamburger">
         <input type="checkbox" className="navbar-hamburger__checkbox" id="navi-toggle" />
         <label htmlFor="navi-toggle" className="navbar-hamburger__button">
           <span className="navbar-hamburger__icon">&nbsp;</span>
         </label>
-
         <div className="navbar-hamburger__background">&nbsp;</div>
-
         <nav className="navbar-hamburger__nav">
-          <NavbarList isLoggedIn={isLoggedIn} />
+          <NavbarList isLoggedIn={isLoggedIn} setModalOpen={setModalOpen} />
         </nav>
       </div>
       <nav className="navbar">
-        <NavbarList isLoggedIn={isLoggedIn} />
+        <NavbarList isLoggedIn={isLoggedIn} setModalOpen={setModalOpen} />
       </nav>
       {isModalOpen && (
         <Modal
