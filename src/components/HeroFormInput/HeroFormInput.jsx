@@ -11,9 +11,9 @@ export const SingleHeroFormSelect = ({ icon, label, options, name }) => {
             <div className="hero-form-input__group">
                 <label htmlFor={name} className="hero-form-input__label">{label}</label>
                 <select type="text" name={name} className={`hero-form-input__input hero-form-input__input--select`} onFocus={handleFocus} onBlur={handleBlur}>
-                    {options.map((option) => {
+                    {options.map((option, index) => {
                         return (
-                            <option value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
+                            <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
                         )
                     })}
                 </select>
@@ -30,9 +30,9 @@ export const SingleHeroFormSelectSubmit = ({ icon, label, options, name }) => {
             <div className="hero-form-input__group">
                 <label htmlFor={name} className="hero-form-input__label">{label}</label>
                 <select type="text" name={name} className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus} onBlur={handleBlur}>
-                    {options.map((option) => {
+                    {options.map((option, index) => {
                         return (
-                            <option value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
+                            <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
                         )
                     })}
                 </select>
@@ -55,9 +55,9 @@ export const DoubleHeroFormSelect = ({ icon1, icon2, label1, label2, name1, name
                 <div className="hero-form-input__group">
                     <label htmlFor={name1} className="hero-form-input__label">{label1}</label>
                     <select name={name1} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus1} onBlur={handleBlur1}>
-                        {options1.map((option) => {
+                        {options1.map((option, index) => {
                             return (
-                                <option value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
+                                <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
                             )
                         })}
                     </select>
@@ -68,9 +68,9 @@ export const DoubleHeroFormSelect = ({ icon1, icon2, label1, label2, name1, name
                 <div className="hero-form-input__group">
                     <label htmlFor={name2} className="hero-form-input__label">{label2}</label>
                     <select name={name2} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus2} onBlur={handleBlur2}>
-                        {options2.map((option) => {
+                        {options2.map((option, index) => {
                             return (
-                                <option value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
+                                <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
                             )
                         })}
                     </select>
@@ -93,9 +93,9 @@ export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1
                 <div className="hero-form-input__group">
                     <label htmlFor={name1} className="hero-form-input__label">{label1}</label>
                     <select name={name1} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus1} onBlur={handleBlur1}>
-                        {options1.map((option) => {
+                        {options1.map((option, index) => {
                             return (
-                                <option value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
+                                <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
                             )
                         })}
                     </select>
@@ -106,9 +106,9 @@ export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1
                 <div className="hero-form-input__group">
                     <label htmlFor={name1} className="hero-form-input__label">{label2}</label>
                     <select name={name2} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus2} onBlur={handleBlur2}>
-                        {options2.map((option) => {
+                        {options2.map((option, index) => {
                             return (
-                                <option value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
+                                <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
                             )
                         })}
                     </select>

@@ -6,12 +6,8 @@ import heroLocationIcon from '../../assets/icons/location.svg';
 import timerIcon from '../../assets/icons/timerIcon.svg';
 import companionIcon from '../../assets/icons/companionIcon.svg';
 import dateIcon from '../../assets/icons/dateIcon.svg';
-import heroBgArrow from '../../assets/bg-arrow.png';
-import heroBgDot from '../../assets/bg-dot.png';
-import heroBgLocation from '../../assets/bg-location.png';
-import heroBgLocationSmall from '../../assets/bg-location.png';
 import { SingleHeroFormSelect, SingleHeroFormSelectSubmit, DoubleHeroFormSelect, DoubleHeroFormSelectSubmit } from '../../components/HeroFormInput/HeroFormInput';
-
+import HeroBgIcons from '../../components/HeroBgIcons/HeroBgIcons';
 
 function RecommendPage() {
 
@@ -29,10 +25,7 @@ function RecommendPage() {
       <main>
         <div className="recommend-page__gradient"></div>
         <section className="recommend-page__hero">
-          <img className="recommend-page__bgicon recommend-page__bgicon--bg-arrow" src={heroBgArrow} alt="arrow icon" />
-          <img className="recommend-page__bgicon recommend-page__bgicon--bg-dot" src={heroBgDot} alt="dot icon" />
-          <img className="recommend-page__bgicon recommend-page__bgicon--bg-location" src={heroBgLocation} alt="location icon" />
-          <img className="recommend-page__bgicon recommend-page__bgicon--bg-location-small" src={heroBgLocationSmall} alt="smaller location icon" />
+          <HeroBgIcons />
 
           <div className="recommend-page__text-container slidein-left">
             <h6>Get your perfect Destination match</h6>
