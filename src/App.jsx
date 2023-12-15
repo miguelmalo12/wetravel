@@ -19,18 +19,17 @@ function App() {
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   const setUser = useSetRecoilState(userState);
-  // const [isLoggedIn, setLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState({});
-
+  const setLoggedIn = useSetRecoilState(loginState)
   // check if user is logged in every time the app renders
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-      // setLoggedIn(true);
+      setLoggedIn(true);
     }
 
-  }, [setUser]);
+  }, [setUser, setLoggedIn]);
 
   return (
     <div className="App">

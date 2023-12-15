@@ -1,5 +1,5 @@
 import './SignIn.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -13,6 +13,7 @@ import { ButtonPrimary, ButtonSecondary, ButtonGoogle } from '../../components/B
 import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComponents';
 import { useRecoilState } from 'recoil';
 import { loginState } from '../../state/loginState';
+import Modal from '../../components/Modal/Modal';
 
 
 const SignIn = ({ API_URL }) => {
@@ -23,6 +24,8 @@ const SignIn = ({ API_URL }) => {
         email: '',
         password: ''
     });
+
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         setSignInCredentials({
@@ -41,6 +44,7 @@ const SignIn = ({ API_URL }) => {
                 localStorage.setItem("userData", JSON.stringify(user));
                 setUser(user);
                 setLoggedIn(true);
+                navigate('/')
             })
             .catch((error) => {
                 console.log(error);
@@ -50,30 +54,45 @@ const SignIn = ({ API_URL }) => {
     return (
 
         <div className="login-page">
+            {!isLoggedIn ? (
+                <div className="authentication-form-container">
+                    <p className="authentication-form-container__heading">To continue, sign in to WeTravel</p>
+                    <ButtonGoogle />
+                    <p className="divider-or">or</p>
+                    <form onSubmit={handleFormSubmit} className="authentication-form">
+                        <FormGroupInput onChange={handleInputChange} label='Email' type='email' name='email' />
+                        <FormGroupInput onChange={handleInputChange} label='Password' type='password' name='password' />
 
-            <div className="authentication-form-container">
-                <p className="authentication-form-container__heading">To continue, sign in to WeTravel</p>
-                <ButtonGoogle />
-                <p className="divider-or">or</p>
-                <form onSubmit={handleFormSubmit} className="authentication-form">
-                    <FormGroupInput onChange={handleInputChange} label='Email' type='email' name='email' />
-                    <FormGroupInput onChange={handleInputChange} label='Password' type='password' name='password' />
-
-                    <div className="authentication-form__wrapper">
-                        <Link className="authentication-form__link">Forget you password?</Link>
-                        <div className="authentication-form__group--checkbox">
-                            <label htmlFor="" className="authentication-form__label--checkbox">Remember Me</label>
-                            <input type="checkbox" className="authentication-form__input--checkbox" />
+                        <div className="authentication-form__wrapper">
+                            <Link className="authentication-form__link">Forget you password?</Link>
+                            <div className="authentication-form__group--checkbox">
+                                <label htmlFor="" className="authentication-form__label--checkbox">Remember Me</label>
+                                <input type="checkbox" className="authentication-form__input--checkbox" />
+                            </div>
                         </div>
-                    </div>
-                    <ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' />
+                        <ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' />
 
 
-                </form>
-                <p className="authentication-form-container__heading">Don’t have an account?</p>
-                <ButtonSecondary text='Sign Up' />
-            </div>
-
+                    </form>
+                    <p className="authentication-form-container__heading">Don’t have an account?</p>
+                    <ButtonSecondary text='Sign Up' />
+                </div>
+            ) : (
+                <div className="empty-page">
+                    <Modal
+                        textContent='You have already Logged In'
+                        buttonText='Home'
+                        onButtonClick={(e) => {
+                            e.preventDefault();
+                            navigate('/')
+                        }}
+                        onCloseClick={(e) => {
+                            e.preventDefault();
+                            navigate('/')
+                        }}
+                    />
+                </div>
+            )}
             <CopyrightFooter />
 
         </div>
