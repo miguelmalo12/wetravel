@@ -28,3 +28,8 @@ input:focus {
     border: 2px solid #1EBBD7;
     border-radius: 50px;
 }
+
+.empty-page {
+    width: 100%;
+    height: calc(100vh - 94px);
+}
