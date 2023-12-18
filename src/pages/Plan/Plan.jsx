@@ -8,6 +8,7 @@ import { parseISO, format, isValid } from 'date-fns';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { tripInfoState } from '../../state/tripState';
 import { viewTripState } from "../../state/viewTripState";
+import { updatedTripState } from "../../state/updatedTripState";
 
 // components
 import HeroForm from "../../components/HeroForm/HeroForm";
@@ -30,7 +31,11 @@ function Plan() {
 
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
+  const updatedTripDetails = useRecoilValue(updatedTripState);
 
+  console.log('viewTripDetails',viewTripDetails)
+
+  // This handles the form submit on the hero form
   const handleFormSubmit = () => {
     setShowTravelPlanner(true);
     setViewTripDetails(null);
@@ -109,18 +114,16 @@ function Plan() {
     }
   };
 
-  // Helper function to convert 12-hour format to 24-hour format
-  function convertTo24HourFormat(timeString) {
-    const [time, modifier] = timeString.split(' ');
-    let [hours, minutes] = time.split(':');
-    if (hours === '12') {
-      hours = '00';
+  // This handles the update click on the trip planner and updates the trip on db
+  const handleUpdateTrip = async () => {  
+    console.log('updatedTripDetails',updatedTripDetails)
+    try {
+      const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, updatedTripDetails);
+      console.log("Trip updated successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating trip:", error);
     }
-    if (modifier === 'PM') {
-      hours = parseInt(hours, 10) + 12;
-    }
-    return `${hours}:${minutes}`;
-  }
+  };
 
   // Scroll to TravelPlanner or TravelPlannerView when become visible
   useEffect(() => {
@@ -133,6 +136,19 @@ function Plan() {
 
   // Check if viewTripDetails is valid
   const hasTripDetails = viewTripDetails && Array.isArray(viewTripDetails.events) && viewTripDetails.events.length > 0;
+  
+  // Helper function to convert 12-hour format to 24-hour format
+  function convertTo24HourFormat(timeString) {
+    const [time, modifier] = timeString.split(' ');
+    let [hours, minutes] = time.split(':');
+    if (hours === '12') {
+      hours = '00';
+    }
+    if (modifier === 'PM') {
+      hours = parseInt(hours, 10) + 12;
+    }
+    return `${hours}:${minutes}`;
+  }
 
   // Helper function to adjust time zone
   function adjustDateForTimezone(dateStr) {
@@ -158,7 +174,7 @@ function Plan() {
         {hasTripDetails ?
           <div ref={travelPlannerViewRef}>
             <TravelPlannerView
-            onSave={handleSaveTrip}
+            onUpdate={handleUpdateTrip}
           />
           </div>
         :

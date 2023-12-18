@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { dayViewModalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
+import { viewTripState } from "../../state/viewTripState";
+import { updatedTripState } from "../../state/updatedTripState";
 
 // icons
 import dayIcon from "../../assets/icons/day-icon.svg";
@@ -19,11 +21,50 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
+    console.log('events',events)
+    console.log('tripInfo',tripInfo)
+  // Local state for day's events
+  const [dayEvents, setDayEvents] = useState(eventsProp);
 
-  // This keeps the events state in sync with the eventsProp
+  // Global Recoil state for the trip
+  const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
+  const [updatedTrip, setUpdatedTrip] = useRecoilState(updatedTripState);
+      
+  // Initialize updatedTripState with viewTripState data when the component mounts
   useEffect(() => {
-    setEvents(eventsProp);
-  }, [eventsProp]);
+    if (viewTripDetails) {
+      setUpdatedTrip(viewTripDetails);
+    }
+  }, [viewTripDetails, setUpdatedTrip]);
+
+  // This function adds an event to the day's events
+  const addEventToDay = (eventData) => {
+    const newEvent = {
+      date: date,
+      event_time: eventData.time || "00:00",
+      event_type: eventData.type,
+      event_description: eventData.title
+    };
+
+    // Update state
+    setEvents(prevEvents => [...prevEvents, newEvent]);
+
+    // Update global state
+    setUpdatedTrip(prevTrip => {
+        const existingEvents = Array.isArray(prevTrip.events) ? prevTrip.events : [];
+        const updatedEvents = [...existingEvents, newEvent];
+        return { ...prevTrip, events: updatedEvents };
+      });
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text/plain");
+    const [title, type] = data.split(",");
+    console.log("title:", title, "type:", type);
+    console.log("data:", data)
+    addEventToDay({ title, type });
+  };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -36,7 +77,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   const handleEnterEvent = (e, index) => {
     if (e.key === "Enter") {
       const updatedEvents = [...events];
-      updatedEvents[index].title = inputValue;
+      updatedEvents[index].event_description = inputValue;
       setEvents(updatedEvents);
       setInputIndex(null);
       setInputValue("");
@@ -54,12 +95,9 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
   const handleUpdateEventAndTime = (index) => {
     const updatedEvent = {
-      ...events[index],
-      title: inputValue,
-      time:
-        inputTime.includes("AM") || inputTime.includes("PM")
-          ? inputTime
-          : formatTime(inputTime),
+        ...events[index],
+        event_description: inputValue,
+        event_time: inputTime.includes("AM") || inputTime.includes("PM") ? inputTime : formatTime(inputTime),
     };
 
     const updatedEvents = [
@@ -68,33 +106,54 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
       ...events.slice(index + 1),
     ];
 
+    console.log("updatedEvents", updatedEvents);
+
     setEvents(updatedEvents);
+
+    const eventsArray = Object.keys(tripInfo.events).reduce((acc, date) => {
+        const eventsForDate = tripInfo.events[date].map(event => ({
+            ...event,
+            date: date
+        }));
+        return acc.concat(eventsForDate);
+    }, []);
+
+    setUpdatedTrip(prevTrip => ({
+        ...prevTrip,
+        events: eventsArray,
+    }));
+
     setInputIndex(null);
     setInputValue("");
   };
-
+    
+    // Helper function to format time
   const formatTime = (time) => {
-    const [hours, minutes] = time.split(":");
-    let formattedTime = "";
-    let period = "AM";
-
-    if (parseInt(hours, 10) === 0) {
-      formattedTime = `12:${minutes}`;
-    } else if (parseInt(hours, 10) < 12) {
-      formattedTime = `${parseInt(hours, 10)}:${minutes}`;
-    } else if (parseInt(hours, 10) === 12) {
-      formattedTime = `12:${minutes}`;
-      period = "PM";
-    } else {
-      formattedTime = `${parseInt(hours, 10) - 12}:${minutes}`;
-      period = "PM";
+    if (!time) {
+      return "";
     }
-
-    return `${formattedTime} ${period}`;
+  
+    // Check if time includes AM/PM. If so, return as is.
+    if (time.includes("AM") || time.includes("PM")) {
+      return time;
+    }
+  
+    // Assuming time is in 24-hour format HH:MM
+    const [hours, minutes] = time.split(":").map(Number);
+  
+    // Format hours and AM/PM based on 24-hour time
+    const period = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+  
+    return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
   };
 
-  // Function to convert time input to 24 hour time
+  // Helper function to convert time input to 24 hour time
   const convertTo24Hour = (time) => {
+    if (!time) {
+        return ""; // return an empty string or a default value
+      }
+    
     if (!time.includes("AM") && !time.includes("PM")) {
       // Time is already in 24-hour format
       return time;
@@ -144,7 +203,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
         </div>
       </div>
       {events.map((event, index) => (
-        <div className="day--entry" key={index}>
+        <div className="day--entry" key={event.id || index}>
           {inputIndex === index ? (
             <div className="day--entry--container">
               <div>
@@ -179,15 +238,15 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
             <div className="day--entry--container">
               <p className="day--entry--container__event">{event.event_description}</p>
               <p className="day--entry--container__time">
-                {event.event_time && convertTo24Hour(event.event_time)}
+                {event.event_time && formatTime(event.event_time)}
               </p>
               <img
                 className="day--entry--container__icon"
                 src={editIcon}
                 onClick={() => {
                   setInputIndex(index);
-                  setInputValue(events[index].title);
-                  setInputTime(convertTo24Hour(events[index].time));
+                  setInputValue(events[index].event_description);
+                  setInputTime(convertTo24Hour(events[index].event_time));
                 }}
                 alt="Edit icon"
               />
@@ -206,13 +265,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
         onDragOver={(e) => {
           e.preventDefault(); // This is necessary to allow a drop
         }}
-        onDrop={(e) => {
-          e.preventDefault();
-          const data = e.dataTransfer.getData("text/plain");
-          const [eventTitle, eventType] = data.split(",");
-          // const eventTime = "00:00 AM";
-          setEvents([...events, { title: eventTitle, time: "", type: eventType }]);
-        }}>
+        onDrop={onDrop}>
         <p>Drag Here</p>
       </div>
       <div className="day--line">
