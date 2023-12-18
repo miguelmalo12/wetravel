@@ -10,7 +10,7 @@ export const SingleHeroFormSelect = ({ icon, label, options, name, onChange }) =
             <img src={icon} alt="" className="hero-form-input__icon" />
             <div className="hero-form-input__group">
                 <label htmlFor={name} className="hero-form-input__label">{label}</label>
-                <select onChange={onChange} type="text" name={name} className={`hero-form-input__input hero-form-input__input--select`} onFocus={handleFocus} onBlur={handleBlur}>
+                <select id={name} onChange={onChange} type="text" name={name} className={`hero-form-input__input hero-form-input__input--select`} onFocus={handleFocus} onBlur={handleBlur}>
                     {options.map((option, index) => {
                         return (
                             <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
@@ -29,7 +29,7 @@ export const SingleHeroFormSelectSubmit = ({ icon, label, options, name, onChang
             <img src={icon} alt="" className="hero-form-input__icon" />
             <div className="hero-form-input__group">
                 <label htmlFor={name} className="hero-form-input__label">{label}</label>
-                <select onChange={onChange} type="text" name={name} className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus} onBlur={handleBlur}>
+                <select id={name} onChange={onChange} type="text" name={name} className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus} onBlur={handleBlur}>
                     {options.map((option, index) => {
                         return (
                             <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
@@ -54,7 +54,7 @@ export const DoubleHeroFormSelect = ({ icon1, icon2, label1, label2, name1, name
                 <img src={icon1} alt="" className="hero-form-input__icon" />
                 <div className="hero-form-input__group">
                     <label htmlFor={name1} className="hero-form-input__label">{label1}</label>
-                    <select onChange={onChange} name={name1} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus1} onBlur={handleBlur1}>
+                    <select id={name1} onChange={onChange} name={name1} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus1} onBlur={handleBlur1}>
                         {options1.map((option, index) => {
                             return (
                                 <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
@@ -67,7 +67,7 @@ export const DoubleHeroFormSelect = ({ icon1, icon2, label1, label2, name1, name
                 <img src={icon2} alt="" className="hero-form-input__icon" />
                 <div className="hero-form-input__group">
                     <label htmlFor={name2} className="hero-form-input__label">{label2}</label>
-                    <select onChange={onChange} name={name2} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus2} onBlur={handleBlur2}>
+                    <select id={name2} onChange={onChange} name={name2} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus2} onBlur={handleBlur2}>
                         {options2.map((option, index) => {
                             return (
                                 <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
@@ -92,7 +92,7 @@ export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1
                 <img src={icon1} alt="" className="hero-form-input__icon" />
                 <div className="hero-form-input__group">
                     <label htmlFor={name1} className="hero-form-input__label">{label1}</label>
-                    <select onChange={onChange} name={name1} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus1} onBlur={handleBlur1}>
+                    <select id={name1} onChange={onChange} name={name1} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus1} onBlur={handleBlur1}>
                         {options1.map((option, index) => {
                             return (
                                 <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
@@ -104,8 +104,8 @@ export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1
             <div className={`hero-form-input__group-container hero-form-input__group-container--double hero-form-input__group-container--submit  hero-form-input__group-container--submit-button ${isFocused2 ? 'focused' : ''}`}>
                 <img src={icon2} alt="" className="hero-form-input__icon" />
                 <div className="hero-form-input__group">
-                    <label htmlFor={name1} className="hero-form-input__label">{label2}</label>
-                    <select onChange={onChange} name={name2} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus2} onBlur={handleBlur2}>
+                    <label htmlFor={name2} className="hero-form-input__label">{label2}</label>
+                    <select id={name2} onChange={onChange} name={name2} type="text" className="hero-form-input__input hero-form-input__input--select" onFocus={handleFocus2} onBlur={handleBlur2}>
                         {options2.map((option, index) => {
                             return (
                                 <option key={index} value={option} className="hero-form-input__input hero-form-input__input--option">{option}</option>
