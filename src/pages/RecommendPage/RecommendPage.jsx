@@ -10,6 +10,7 @@ import { SingleHeroFormSelect, SingleHeroFormSelectSubmit, DoubleHeroFormSelect,
 import HeroBgIcons from '../../components/HeroBgIcons/HeroBgIcons';
 import { useState } from 'react';
 import { ButtonDropDown } from '../../components/Button/Button';
+import RecommendCard from '../../components/RecommendCard/RecommendCard';
 
 function RecommendPage() {
 
@@ -67,6 +68,7 @@ function RecommendPage() {
           </div>
 
         </section>
+        <RecommendCard />
         <section className="dropdown">
           <div className="dropdown__header">
             <div className="dropdown__heading-container">
