@@ -50,15 +50,15 @@ function Plan() {
 
   // This handles the save click on the trip planner and creates a new trip on db
   const handleSaveTrip = async () => { 
-    console.log('tripInfo', tripInfo);
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
+    console.log('tripInfo',tripInfo)
     const { location, startDate, endDate, events } = tripInfo;
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
     const formattedEvents = [];
-
+    
     if (!userId) {
       console.error("User ID is missing");
       return;
@@ -75,15 +75,22 @@ function Plan() {
           console.error("Invalid event date", key);
           return;
         }
+
+        // Convert event date to ISO format
+        const eventDateISO = format(new Date(key), "yyyy-MM-dd");
+
+        // Convert event time to 24-hour format
+        const eventTime24Hour = convertTo24HourFormat(event.time);
+    
         formattedEvents.push({
-          date: key,
-          event_time: event.time,
+          date: eventDateISO,
+          event_time: eventTime24Hour,
           event_type: event.type,
           event_description: event.title,
         });
       });
     });
-    console.log("formattedEvents", formattedEvents);
+
     const tripData = {
       user_id: userId,
       destination: location,
@@ -102,6 +109,19 @@ function Plan() {
     }
   };
 
+  // Helper function to convert 12-hour format to 24-hour format
+  function convertTo24HourFormat(timeString) {
+    const [time, modifier] = timeString.split(' ');
+    let [hours, minutes] = time.split(':');
+    if (hours === '12') {
+      hours = '00';
+    }
+    if (modifier === 'PM') {
+      hours = parseInt(hours, 10) + 12;
+    }
+    return `${hours}:${minutes}`;
+  }
+
   // Scroll to TravelPlanner or TravelPlannerView when become visible
   useEffect(() => {
     if (showTravelPlanner && travelPlannerRef.current) {
@@ -110,6 +130,16 @@ function Plan() {
       travelPlannerViewRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [showTravelPlanner, viewTripDetails, travelPlannerRef, travelPlannerViewRef]);
+
+  // Check if viewTripDetails is valid
+  const hasTripDetails = viewTripDetails && Array.isArray(viewTripDetails.events) && viewTripDetails.events.length > 0;
+
+  // Helper function to adjust time zone
+  function adjustDateForTimezone(dateStr) {
+    const date = new Date(dateStr);
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() + userTimezoneOffset);
+  }
 
   return (
     <div>
@@ -125,11 +155,10 @@ function Plan() {
         <UserTrips />
 
         {/* Only shows if form filled or view trip clicked */}
-        {viewTripDetails ?
+        {hasTripDetails ?
           <div ref={travelPlannerViewRef}>
             <TravelPlannerView
-            tripDetails={viewTripDetails}
-            // other props
+            onSave={handleSaveTrip}
           />
           </div>
         :
@@ -138,7 +167,7 @@ function Plan() {
               <TravelPlanner
                 location={tripInfo.location}
                 dayCount={dayCount}
-                startDate={new Date(tripInfo.startDate)}
+                startDate={adjustDateForTimezone(tripInfo.startDate)}
                 onSave={handleSaveTrip}
               />
             </div>

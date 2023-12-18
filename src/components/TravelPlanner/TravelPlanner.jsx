@@ -4,6 +4,7 @@ import "./TravelPlanner.scss";
 import Day from "../Day/Day";
 
 import { addDays, format } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 
 //icons
 import transportationIcon from "../../assets/icons/TransportationIcon.png";
@@ -20,9 +21,10 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
       </div>
       <div className="planner--plan">
         <div className="planner--plan__days">
-          {Array.from({ length: dayCount }, (_, i) => {
-            const date = addDays(new Date(startDate), i);
-            const formattedDate = format(date, "E, dd MMM"); // format the date as desired
+        {Array.from({ length: dayCount }, (_, i) => {
+            const dateUTC = addDays(startDate, i);
+            const zonedDate = utcToZonedTime(dateUTC, Intl.DateTimeFormat().resolvedOptions().timeZone);
+            const formattedDate = format(zonedDate, "E, dd MMM");
             return <Day key={i} dayNumber={i + 1} date={formattedDate} />;
           })}
         </div>

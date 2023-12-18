@@ -6,9 +6,6 @@ import { useRecoilState } from "recoil";
 import { dayViewModalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
 
-//components
-import Modal from "../Modal/Modal";
-
 // icons
 import dayIcon from "../../assets/icons/day-icon.svg";
 import editIcon from "../../assets/icons/edit.svg";
@@ -16,14 +13,17 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
-function Day({ dayNumber, date }) {
-  const [events, setEvents] = useState([]);
+function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
+  const [events, setEvents] = useState(eventsProp);
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
-  const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
-  const [deleteEventIndex, setDeleteEventIndex] = useState(null);
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
+
+  // This keeps the events state in sync with the eventsProp
+  useEffect(() => {
+    setEvents(eventsProp);
+  }, [eventsProp]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -95,46 +95,42 @@ function Day({ dayNumber, date }) {
 
   // Function to convert time input to 24 hour time
   const convertTo24Hour = (time) => {
-    const [hours, minutes] = time.split(":");
-    const period = time.includes("PM") ? "PM" : "AM";
-
-    let hour = parseInt(hours, 10);
-
-    if (period === "PM" && hour !== 12) {
-      hour += 12;
-    } else if (period === "AM" && hour === 12) {
-      hour = 0;
+    if (!time.includes("AM") && !time.includes("PM")) {
+      // Time is already in 24-hour format
+      return time;
     }
 
-    return `${hour.toString().padStart(2, "0")}:${minutes}`;
+    let [hours, minutes] = time.split(":")[0].padStart(2, "0");
+    const period = time.includes("PM") ? "PM" : "AM";
+
+    if (period === "PM" && hours !== "12") {
+      hours = (parseInt(hours, 10) + 12).toString().padStart(2, "0");
+    } else if (period === "AM" && hours === "12") {
+      hours = "00";
+    }
+
+    return `${hours}:${minutes}`;
   };
 
   const handleDeleteClick = (index) => {
-    // Additional logic here
-    setDeleteEventIndex(index);
-    setModalOpen(true);
-  };
-
-  const handleDeleteConfirm = () => {
-    const updatedEvents = [...events];
-    setEvents(updatedEvents);
-    setModalOpen(false);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
+    const eventToBeDeleted = events[index];
+    console.log("Event to be deleted:", eventToBeDeleted);
+    onDeleteEvent(eventToBeDeleted);
   };
 
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
-    setTripInfo((prevTripInfo) => ({
-      ...prevTripInfo,
-      events: {
-        ...prevTripInfo.events,
-        [date]: events,
-      },
-    }));
-  }, [events, setTripInfo, date]);
+    // Only update tripInfo if the events for this date have changed
+    if (JSON.stringify(tripInfo.events[date]) !== JSON.stringify(events)) {
+      setTripInfo((prevTripInfo) => ({
+        ...prevTripInfo,
+        events: {
+          ...prevTripInfo.events,
+          [date]: events,
+        },
+      }));
+    }
+  }, [events, setTripInfo, date, tripInfo.events]);
 
   return (
     <div className="day">
@@ -152,9 +148,9 @@ function Day({ dayNumber, date }) {
           {inputIndex === index ? (
             <div className="day--entry--container">
               <div>
-                <p className="day--entry--container__event">{event.title}</p>
+                <p className="day--entry--container__event">{event.event_description}</p>
                 <p className="day--entry--container__time">
-                  {event.time && convertTo24Hour(event.time)}
+                  {event.event_time && convertTo24Hour(event.event_time)}
                 </p>
               </div>
               <div>
@@ -177,14 +173,13 @@ function Day({ dayNumber, date }) {
                   onClick={() => handleUpdateEventAndTime(index)}
                   alt=""
                 />
-                {/* <button onClick={() => handleUpdateEventAndTime(index)}>Update</button> */}
               </div>
             </div>
           ) : (
             <div className="day--entry--container">
-              <p className="day--entry--container__event">{event.title}</p>
+              <p className="day--entry--container__event">{event.event_description}</p>
               <p className="day--entry--container__time">
-                {event.time && convertTo24Hour(event.time)}
+                {event.event_time && convertTo24Hour(event.event_time)}
               </p>
               <img
                 className="day--entry--container__icon"
@@ -202,14 +197,6 @@ function Day({ dayNumber, date }) {
                 onClick={() => handleDeleteClick(index)}
                 alt="Delete icon"
               />
-              {isModalOpen && (
-                <Modal
-                  isOpen={isModalOpen}
-                  textContent={`Are you sure you want to delete the event "${events[deleteEventIndex]?.title}"?`}
-                  buttonText="Delete"
-                  onButtonClick={handleDeleteConfirm}
-                  onCloseClick={handleCloseModal}></Modal>
-              )}
             </div>
           )}
         </div>
@@ -235,4 +222,4 @@ function Day({ dayNumber, date }) {
   );
 }
 
-export default Day;
+export default DayView;
