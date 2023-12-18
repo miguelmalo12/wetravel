@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { dayViewModalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
+import { viewTripState } from "../../state/viewTripState";
 import { updatedTripState } from "../../state/updatedTripState";
 
 // icons
@@ -21,11 +22,20 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   const [inputTime, setInputTime] = useState("");
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
     console.log('events',events)
+    console.log('tripInfo',tripInfo)
   // Local state for day's events
   const [dayEvents, setDayEvents] = useState(eventsProp);
 
   // Global Recoil state for the trip
+  const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
   const [updatedTrip, setUpdatedTrip] = useRecoilState(updatedTripState);
+      
+  // Initialize updatedTripState with viewTripState data when the component mounts
+  useEffect(() => {
+    if (viewTripDetails) {
+      setUpdatedTrip(viewTripDetails);
+    }
+  }, [viewTripDetails, setUpdatedTrip]);
 
   // This function adds an event to the day's events
   const addEventToDay = (eventData) => {
@@ -41,9 +51,10 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
     // Update global state
     setUpdatedTrip(prevTrip => {
-      const updatedEvents = [...prevTrip.events, newEvent];
-      return { ...prevTrip, events: updatedEvents };
-    });
+        const existingEvents = Array.isArray(prevTrip.events) ? prevTrip.events : [];
+        const updatedEvents = [...existingEvents, newEvent];
+        return { ...prevTrip, events: updatedEvents };
+      });
   };
 
   const onDrop = (e) => {
@@ -84,12 +95,9 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
   const handleUpdateEventAndTime = (index) => {
     const updatedEvent = {
-      ...events[index],
-      event_description: inputValue,
-      event_time:
-        inputTime.includes("AM") || inputTime.includes("PM")
-          ? inputTime
-          : formatTime(inputTime),
+        ...events[index],
+        event_description: inputValue,
+        event_time: inputTime.includes("AM") || inputTime.includes("PM") ? inputTime : formatTime(inputTime),
     };
 
     const updatedEvents = [
@@ -101,6 +109,20 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     console.log("updatedEvents", updatedEvents);
 
     setEvents(updatedEvents);
+
+    const eventsArray = Object.keys(tripInfo.events).reduce((acc, date) => {
+        const eventsForDate = tripInfo.events[date].map(event => ({
+            ...event,
+            date: date
+        }));
+        return acc.concat(eventsForDate);
+    }, []);
+
+    setUpdatedTrip(prevTrip => ({
+        ...prevTrip,
+        events: eventsArray,
+    }));
+
     setInputIndex(null);
     setInputValue("");
   };

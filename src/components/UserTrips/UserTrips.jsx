@@ -82,7 +82,7 @@ function UserTrips() {
 
   return (
     <div className="trips">
-      <h2>Your Trips</h2>
+      {trips.length > 0 && <h2>Your Trips</h2>} {/* Render header only if there are trips */}
       {trips.map((trip) => (
         <UserTripCard
           key={trip.trip_id}

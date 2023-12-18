@@ -33,6 +33,8 @@ function Plan() {
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
   const updatedTripDetails = useRecoilValue(updatedTripState);
 
+  console.log('viewTripDetails',viewTripDetails)
+
   // This handles the form submit on the hero form
   const handleFormSubmit = () => {
     setShowTravelPlanner(true);
@@ -114,8 +116,9 @@ function Plan() {
 
   // This handles the update click on the trip planner and updates the trip on db
   const handleUpdateTrip = async () => {  
+    console.log('updatedTripDetails',updatedTripDetails)
     try {
-      const response = await axios.put(API_URL, updatedTripDetails);
+      const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, updatedTripDetails);
       console.log("Trip updated successfully:", response.data);
     } catch (error) {
       console.error("Error updating trip:", error);
@@ -171,7 +174,7 @@ function Plan() {
         {hasTripDetails ?
           <div ref={travelPlannerViewRef}>
             <TravelPlannerView
-            onSave={handleUpdateTrip}
+            onUpdate={handleUpdateTrip}
           />
           </div>
         :
