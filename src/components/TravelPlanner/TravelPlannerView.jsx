@@ -20,7 +20,7 @@ import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-function TravelPlannerView({ onSave }) {
+function TravelPlannerView({ onUpdate }) {
     
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState); 
 
@@ -154,8 +154,8 @@ function TravelPlannerView({ onSave }) {
             </div>
           </div>
           <div className="planner--plan__events--button">
-            <button className="primary-button" onClick={onSave}>
-              Save
+            <button className="primary-button" onClick={onUpdate}>
+              Update
             </button>
           </div>
         </div>
