@@ -257,3 +257,50 @@
     &__button {}
 
 }
+
+.dropdown {
+    padding: 24px 0;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 1rem;
+    }
+
+    &__heading-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__button {}
+
+
+    &__text-container {
+        padding-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        color: $dark-text;
+
+
+        @include tablet {
+            gap: 24px;
+            width: 90%;
+        }
+    }
+
+    &__text {
+        font-size: 14px;
+        font-weight: 400;
+        font-family: 'Nunito Sans';
+        line-height: 28px;
+
+        @include tablet {
+            font-size: 16px;
+            line-height: 30px;
+        }
+    }
+
+}

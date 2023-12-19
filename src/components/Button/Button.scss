@@ -76,3 +76,28 @@
         &--color {}
     }
 }
+
+.dropdown-button {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    background-color: $secondary-color;
+    width: 45px;
+    height: 45px;
+    transition: all .2s ease;
+
+
+    &__icon {
+        &--up {
+            transform: rotate(0);
+        }
+
+        &--down {
+            transform: translateY(-2px) rotate(180deg);
+        }
+    }
+}
