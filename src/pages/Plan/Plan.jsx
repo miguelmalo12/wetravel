@@ -4,11 +4,13 @@ import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import { parseISO, format, isValid } from 'date-fns';
 
+// utils
+import { to12HourFormat } from '../../convertHourUtils';
+
 // recoil state
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { tripInfoState } from '../../state/tripState';
 import { viewTripState } from "../../state/viewTripState";
-import { updatedTripState } from "../../state/updatedTripState";
 
 // components
 import HeroForm from "../../components/HeroForm/HeroForm";
@@ -31,9 +33,8 @@ function Plan() {
 
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
-  const updatedTripDetails = useRecoilValue(updatedTripState);
 
-  console.log('viewTripDetails',viewTripDetails)
+  console.log('viewTripDetails on Plan.jsx',viewTripDetails)
 
   // This handles the form submit on the hero form
   const handleFormSubmit = () => {
@@ -53,12 +54,11 @@ function Plan() {
     }
   }, [tripInfo.startDate, tripInfo.endDate]);
 
-  // This handles the save click on the trip planner and creates a new trip on db
+  // POST This handles the save click on the trip planner and creates a new trip on db
   const handleSaveTrip = async () => { 
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
-    console.log('tripInfo',tripInfo)
     const { location, startDate, endDate, events } = tripInfo;
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
@@ -83,13 +83,10 @@ function Plan() {
 
         // Convert event date to ISO format
         const eventDateISO = format(new Date(key), "yyyy-MM-dd");
-
-        // Convert event time to 24-hour format
-        const eventTime24Hour = convertTo24HourFormat(event.time);
     
         formattedEvents.push({
           date: eventDateISO,
-          event_time: eventTime24Hour,
+          event_time: event.time,
           event_type: event.type,
           event_description: event.title,
         });
@@ -103,7 +100,7 @@ function Plan() {
       end_date: format(toDate, "yyyy-MM-dd"),
       events: formattedEvents,
     };
-    console.log("tripData", tripData);
+    console.log("tripData on save trip function", tripData);
     try {
       await axios.post(`${API_URL}/plan`, tripData, {
         withCredentials: true,
@@ -114,11 +111,11 @@ function Plan() {
     }
   };
 
-  // This handles the update click on the trip planner and updates the trip on db
+  // PUT This handles the update click on the trip planner and updates the trip on db
   const handleUpdateTrip = async () => {  
-    console.log('updatedTripDetails',updatedTripDetails)
+    console.log('viewTripDetails Plan.jsx',viewTripDetails)
     try {
-      const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, updatedTripDetails);
+      const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, viewTripDetails);
       console.log("Trip updated successfully:", response.data);
     } catch (error) {
       console.error("Error updating trip:", error);
@@ -136,19 +133,6 @@ function Plan() {
 
   // Check if viewTripDetails is valid
   const hasTripDetails = viewTripDetails && Array.isArray(viewTripDetails.events) && viewTripDetails.events.length > 0;
-  
-  // Helper function to convert 12-hour format to 24-hour format
-  function convertTo24HourFormat(timeString) {
-    const [time, modifier] = timeString.split(' ');
-    let [hours, minutes] = time.split(':');
-    if (hours === '12') {
-      hours = '00';
-    }
-    if (modifier === 'PM') {
-      hours = parseInt(hours, 10) + 12;
-    }
-    return `${hours}:${minutes}`;
-  }
 
   // Helper function to adjust time zone
   function adjustDateForTimezone(dateStr) {
@@ -167,7 +151,7 @@ function Plan() {
           onFormSubmit={handleFormSubmit}
         />
 
-        {/* User Trips - Work In Progress */}
+        {/* User Trips */}
         <UserTrips />
 
         {/* Only shows if form filled or view trip clicked */}

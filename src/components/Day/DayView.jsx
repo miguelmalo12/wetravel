@@ -1,12 +1,14 @@
 import "./Day.scss";
 import { useState, useEffect } from "react";
 
+// utils
+import { to12HourFormat } from '../../convertHourUtils';
+
 // recoil state
 import { useRecoilState } from "recoil";
 import { dayViewModalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
 import { viewTripState } from "../../state/viewTripState";
-import { updatedTripState } from "../../state/updatedTripState";
 
 // icons
 import dayIcon from "../../assets/icons/day-icon.svg";
@@ -21,21 +23,9 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
-    console.log('events',events)
-    console.log('tripInfo',tripInfo)
-  // Local state for day's events
-  const [dayEvents, setDayEvents] = useState(eventsProp);
 
   // Global Recoil state for the trip
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
-  const [updatedTrip, setUpdatedTrip] = useRecoilState(updatedTripState);
-      
-  // Initialize updatedTripState with viewTripState data when the component mounts
-  useEffect(() => {
-    if (viewTripDetails) {
-      setUpdatedTrip(viewTripDetails);
-    }
-  }, [viewTripDetails, setUpdatedTrip]);
 
   // This function adds an event to the day's events
   const addEventToDay = (eventData) => {
@@ -46,14 +36,14 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
       event_description: eventData.title
     };
 
-    // Update state
+    // Update local state
     setEvents(prevEvents => [...prevEvents, newEvent]);
 
     // Update global state
-    setUpdatedTrip(prevTrip => {
-        const existingEvents = Array.isArray(prevTrip.events) ? prevTrip.events : [];
+    setViewTripDetails(prevTripDetails => {
+        const existingEvents = Array.isArray(prevTripDetails.events) ? prevTripDetails.events : [];
         const updatedEvents = [...existingEvents, newEvent];
-        return { ...prevTrip, events: updatedEvents };
+        return { ...prevTripDetails, events: updatedEvents };
       });
   };
 
@@ -93,6 +83,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     }
   };
 
+  // Updates an specific event description and/or time
   const handleUpdateEventAndTime = (index) => {
     const updatedEvent = {
         ...events[index],
@@ -100,28 +91,27 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
         event_time: inputTime.includes("AM") || inputTime.includes("PM") ? inputTime : formatTime(inputTime),
     };
 
-    const updatedEvents = [
+    const updatedDayEvents = [
       ...events.slice(0, index),
       updatedEvent,
       ...events.slice(index + 1),
     ];
 
-    console.log("updatedEvents", updatedEvents);
+    setEvents(updatedDayEvents);
 
-    setEvents(updatedEvents);
+    setViewTripDetails(prevDetails => {
+        const updatedAllEvents = prevDetails.events.map(event => {
+            if(event.date === date && event.event_id === updatedEvent.event_id) {
+                return updatedEvent;
+            }
+            return event;
+        });
 
-    const eventsArray = Object.keys(tripInfo.events).reduce((acc, date) => {
-        const eventsForDate = tripInfo.events[date].map(event => ({
-            ...event,
-            date: date
-        }));
-        return acc.concat(eventsForDate);
-    }, []);
-
-    setUpdatedTrip(prevTrip => ({
-        ...prevTrip,
-        events: eventsArray,
-    }));
+        return {
+          ...prevDetails,
+          events: updatedAllEvents,
+        };
+    });
 
     setInputIndex(null);
     setInputValue("");
@@ -149,27 +139,27 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   };
 
   // Helper function to convert time input to 24 hour time
-  const convertTo24Hour = (time) => {
-    if (!time) {
-        return ""; // return an empty string or a default value
-      }
+//   const convertTo24Hour = (time) => {
+//     if (!time) {
+//         return ""; // return an empty string or a default value
+//       }
     
-    if (!time.includes("AM") && !time.includes("PM")) {
-      // Time is already in 24-hour format
-      return time;
-    }
+//     if (!time.includes("AM") && !time.includes("PM")) {
+//       // Time is already in 24-hour format
+//       return time;
+//     }
 
-    let [hours, minutes] = time.split(":")[0].padStart(2, "0");
-    const period = time.includes("PM") ? "PM" : "AM";
+//     let [hours, minutes] = time.split(":")[0].padStart(2, "0");
+//     const period = time.includes("PM") ? "PM" : "AM";
 
-    if (period === "PM" && hours !== "12") {
-      hours = (parseInt(hours, 10) + 12).toString().padStart(2, "0");
-    } else if (period === "AM" && hours === "12") {
-      hours = "00";
-    }
+//     if (period === "PM" && hours !== "12") {
+//       hours = (parseInt(hours, 10) + 12).toString().padStart(2, "0");
+//     } else if (period === "AM" && hours === "12") {
+//       hours = "00";
+//     }
 
-    return `${hours}:${minutes}`;
-  };
+//     return `${hours}:${minutes}`;
+//   };
 
   const handleDeleteClick = (index) => {
     const eventToBeDeleted = events[index];
@@ -209,7 +199,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
               <div>
                 <p className="day--entry--container__event">{event.event_description}</p>
                 <p className="day--entry--container__time">
-                  {event.event_time && convertTo24Hour(event.event_time)}
+                  {event.event_time && to12HourFormat(event.event_time)}
                 </p>
               </div>
               <div>
@@ -246,7 +236,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
                 onClick={() => {
                   setInputIndex(index);
                   setInputValue(events[index].event_description);
-                  setInputTime(convertTo24Hour(events[index].event_time));
+                  setInputTime(to12HourFormat(events[index].event_time));
                 }}
                 alt="Edit icon"
               />

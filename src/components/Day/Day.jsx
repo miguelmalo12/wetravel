@@ -1,6 +1,9 @@
 import "./Day.scss";
 import { useState, useEffect } from "react";
 
+// utils
+import { to12HourFormat } from '../../convertHourUtils';
+
 // recoil state
 import { useRecoilState } from "recoil";
 import { dayViewModalState } from "../../state/modalState";
@@ -45,21 +48,20 @@ function Day({ dayNumber, date }) {
 
   const handleEnterTime = (e, index) => {
     if (e.key === "Enter") {
+      const formattedTime = to12HourFormat(inputTime);
       const updatedEvents = [...events];
-      updatedEvents[index].time = formatTime(inputTime);
+      updatedEvents[index].time = formattedTime;
       setEvents(updatedEvents);
       setInputIndex(null);
     }
   };
 
   const handleUpdateEventAndTime = (index) => {
+    const formattedTime = to12HourFormat(inputTime); 
     const updatedEvent = {
       ...events[index],
       title: inputValue,
-      time:
-        inputTime.includes("AM") || inputTime.includes("PM")
-          ? inputTime
-          : formatTime(inputTime),
+      time: formattedTime,
     };
 
     const updatedEvents = [
@@ -71,42 +73,6 @@ function Day({ dayNumber, date }) {
     setEvents(updatedEvents);
     setInputIndex(null);
     setInputValue("");
-  };
-
-  const formatTime = (time) => {
-    const [hours, minutes] = time.split(":");
-    let formattedTime = "";
-    let period = "AM";
-
-    if (parseInt(hours, 10) === 0) {
-      formattedTime = `12:${minutes}`;
-    } else if (parseInt(hours, 10) < 12) {
-      formattedTime = `${parseInt(hours, 10)}:${minutes}`;
-    } else if (parseInt(hours, 10) === 12) {
-      formattedTime = `12:${minutes}`;
-      period = "PM";
-    } else {
-      formattedTime = `${parseInt(hours, 10) - 12}:${minutes}`;
-      period = "PM";
-    }
-
-    return `${formattedTime} ${period}`;
-  };
-
-  // Function to convert time input to 24 hour time
-  const convertTo24Hour = (time) => {
-    const [hours, minutes] = time.split(":");
-    const period = time.includes("PM") ? "PM" : "AM";
-
-    let hour = parseInt(hours, 10);
-
-    if (period === "PM" && hour !== 12) {
-      hour += 12;
-    } else if (period === "AM" && hour === 12) {
-      hour = 0;
-    }
-
-    return `${hour.toString().padStart(2, "0")}:${minutes}`;
   };
 
   const handleDeleteClick = (index) => {
@@ -154,7 +120,7 @@ function Day({ dayNumber, date }) {
               <div>
                 <p className="day--entry--container__event">{event.title}</p>
                 <p className="day--entry--container__time">
-                  {event.time && convertTo24Hour(event.time)}
+                  {event.time}
                 </p>
               </div>
               <div>
@@ -177,14 +143,13 @@ function Day({ dayNumber, date }) {
                   onClick={() => handleUpdateEventAndTime(index)}
                   alt=""
                 />
-                {/* <button onClick={() => handleUpdateEventAndTime(index)}>Update</button> */}
               </div>
             </div>
           ) : (
             <div className="day--entry--container">
               <p className="day--entry--container__event">{event.title}</p>
               <p className="day--entry--container__time">
-                {event.time && convertTo24Hour(event.time)}
+                {event.time}
               </p>
               <img
                 className="day--entry--container__icon"
@@ -192,7 +157,8 @@ function Day({ dayNumber, date }) {
                 onClick={() => {
                   setInputIndex(index);
                   setInputValue(events[index].title);
-                  setInputTime(convertTo24Hour(events[index].time));
+                  const formattedTime = event.time ? to12HourFormat(event.time) : "";
+                  setInputTime(formattedTime);
                 }}
                 alt="Edit icon"
               />
