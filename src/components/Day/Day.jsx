@@ -2,7 +2,7 @@ import "./Day.scss";
 import { useState, useEffect } from "react";
 
 // utils
-import { to12HourFormat } from '../../convertHourUtils';
+import { to12HourFormat } from '../../utils/convertHourUtils';
 
 // recoil state
 import { useRecoilState } from "recoil";

@@ -1,6 +1,11 @@
   // Helper function to convert 24-hour format to 12-hour format + AM/PM
 
-export function to12HourFormat(timeString) {
+  export function to12HourFormat(timeString) {
+    if (timeString.includes("AM") || timeString.includes("PM")) {
+        // Time is already in 12-hour format
+        return timeString;
+    }
+
     const [hours24, minutes] = timeString.split(':').map(Number);
     const period = hours24 >= 12 ? 'PM' : 'AM';
     const hours12 = hours24 % 12 || 12; // Convert 00 and 12 to 12

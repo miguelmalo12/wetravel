@@ -2,7 +2,7 @@ import "./Day.scss";
 import { useState, useEffect } from "react";
 
 // utils
-import { to12HourFormat } from '../../convertHourUtils';
+import { to12HourFormat } from '../../utils/convertHourUtils';
 
 // recoil state
 import { useRecoilState } from "recoil";
@@ -77,7 +77,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   const handleEnterTime = (e, index) => {
     if (e.key === "Enter") {
       const updatedEvents = [...events];
-      updatedEvents[index].time = formatTime(inputTime);
+      updatedEvents[index].time = to12HourFormat(inputTime);
       setEvents(updatedEvents);
       setInputIndex(null);
     }
@@ -88,8 +88,9 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     const updatedEvent = {
         ...events[index],
         event_description: inputValue,
-        event_time: inputTime.includes("AM") || inputTime.includes("PM") ? inputTime : formatTime(inputTime),
+        event_time: to12HourFormat(inputTime),
     };
+    console.log("updatedEvent:", updatedEvent);
 
     const updatedDayEvents = [
       ...events.slice(0, index),
@@ -116,50 +117,6 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     setInputIndex(null);
     setInputValue("");
   };
-    
-    // Helper function to format time
-  const formatTime = (time) => {
-    if (!time) {
-      return "";
-    }
-  
-    // Check if time includes AM/PM. If so, return as is.
-    if (time.includes("AM") || time.includes("PM")) {
-      return time;
-    }
-  
-    // Assuming time is in 24-hour format HH:MM
-    const [hours, minutes] = time.split(":").map(Number);
-  
-    // Format hours and AM/PM based on 24-hour time
-    const period = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-  
-    return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
-  };
-
-  // Helper function to convert time input to 24 hour time
-//   const convertTo24Hour = (time) => {
-//     if (!time) {
-//         return ""; // return an empty string or a default value
-//       }
-    
-//     if (!time.includes("AM") && !time.includes("PM")) {
-//       // Time is already in 24-hour format
-//       return time;
-//     }
-
-//     let [hours, minutes] = time.split(":")[0].padStart(2, "0");
-//     const period = time.includes("PM") ? "PM" : "AM";
-
-//     if (period === "PM" && hours !== "12") {
-//       hours = (parseInt(hours, 10) + 12).toString().padStart(2, "0");
-//     } else if (period === "AM" && hours === "12") {
-//       hours = "00";
-//     }
-
-//     return `${hours}:${minutes}`;
-//   };
 
   const handleDeleteClick = (index) => {
     const eventToBeDeleted = events[index];
@@ -228,7 +185,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
             <div className="day--entry--container">
               <p className="day--entry--container__event">{event.event_description}</p>
               <p className="day--entry--container__time">
-                {event.event_time && formatTime(event.event_time)}
+                {event.event_time && to12HourFormat(event.event_time)}
               </p>
               <img
                 className="day--entry--container__icon"

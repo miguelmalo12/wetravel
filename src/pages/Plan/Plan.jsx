@@ -4,9 +4,6 @@ import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import { parseISO, format, isValid } from 'date-fns';
 
-// utils
-import { to12HourFormat } from '../../convertHourUtils';
-
 // recoil state
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { tripInfoState } from '../../state/tripState';
@@ -34,6 +31,7 @@ function Plan() {
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
 
+    console.log('tripInfo on Plan.jsx',tripInfo)
   console.log('viewTripDetails on Plan.jsx',viewTripDetails)
 
   // This handles the form submit on the hero form
@@ -74,15 +72,24 @@ function Plan() {
       return;
     }
 
+    const year = new Date(tripInfo.startDate).getFullYear(); // Extract the year from startDate
+
     Object.entries(events).forEach(([key, dayEvents]) => {
+      
+      const [dayOfWeek, dateStr] = key.split(', ');
+      const [day, monthName] = dateStr.split(' ');
+
+      // Convert month name to month number
+      const monthNumber = new Date(`${monthName} 1`).getMonth() + 1;
+
+      // Construct the full date string with the correct year
+      const eventDateISO = `${year}-${monthNumber.toString().padStart(2, '0')}-${day.padStart(2, '0')}`;
+
       dayEvents.forEach((event) => {
-        if (!isValid(new Date(key))) {
-          console.error("Invalid event date", key);
+        if (!isValid(new Date(eventDateISO))) {
+          console.error("Invalid event date", eventDateISO);
           return;
         }
-
-        // Convert event date to ISO format
-        const eventDateISO = format(new Date(key), "yyyy-MM-dd");
     
         formattedEvents.push({
           date: eventDateISO,
