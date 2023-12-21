@@ -41,35 +41,41 @@ function TravelPlannerView({ onUpdate }) {
 
   const handleDeleteConfirm = async () => {
     console.log('Deleting event:', eventToDelete);
-    if (!eventToDelete || !viewTrip.trip_id) {
-      console.error("Event ID or Trip ID not found");
-      return;
+    if (!eventToDelete) {
+        console.error("Event not found");
+        return;
     }
     
-    try {
+    // Check if the event has a tempId (not saved in the database yet)
+    if (eventToDelete.tempId) {
+        // Remove the event from the UI and state without making a server call
+        removeEventFromState(eventToDelete.tempId);
+    } else if (viewTrip.trip_id && eventToDelete.event_id) {
+        // If the event is saved in the database, make a server call to delete it
+        try {
         await axios.delete(`${API_URL}/plan/${viewTrip.trip_id}/event/${eventToDelete.event_id}`);
         console.log("Event deleted successfully");
-
-        // Remove the deleted event from your events array
-        const updatedEvents = viewTrip.events.filter(event => event.event_id !== eventToDelete.event_id);
-        
-        // Update your viewTrip state with the new events array
-        const updatedTripDetails = {
-          ...viewTrip,
-          events: updatedEvents
-        };
-        // This will trigger a re-render of the DayView component
-        setViewTrip(updatedTripDetails);
-
-        console.log("Event deleted successfully");
-  
-    } catch (error) {
+        removeEventFromState(eventToDelete.event_id);
+        } catch (error) {
         console.error("Error deleting event:", error);
+        }
+    } else {
+        console.error("Invalid event or trip ID");
     }
 
     setModalOpen(false);
     setEventToDelete(null);
   };
+
+    // Helper function to remove an event from the state
+    const removeEventFromState = (identifier) => {
+        const updatedEvents = viewTrip.events.filter(event =>
+            event.event_id !== identifier && event.tempId !== identifier
+        );
+
+        // Update viewTrip state with the new events array
+        setViewTrip({ ...viewTrip, events: updatedEvents });
+    };
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -90,7 +96,7 @@ function TravelPlannerView({ onUpdate }) {
         <div className="planner--plan__days">
             {dates.map((date, index) => (
                 <DayView
-                    key={index}
+                    key={`${date}-${viewTrip.events.length}`}
                     dayNumber={index + 1}
                     date={date}
                     eventsProp={getEventsForDate(date)}

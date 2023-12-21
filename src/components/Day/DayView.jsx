@@ -29,11 +29,13 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
   // This function adds an event to the day's events
   const addEventToDay = (eventData) => {
+    const tempId = Date.now();
     const newEvent = {
-      date: date,
-      event_time: eventData.time || "00:00",
-      event_type: eventData.type,
-      event_description: eventData.title
+        tempId,
+        date: date,
+        event_time: eventData.time || "00:00",
+        event_type: eventData.type,
+        event_description: eventData.title
     };
 
     // Update local state

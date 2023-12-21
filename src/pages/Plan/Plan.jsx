@@ -31,7 +31,6 @@ function Plan() {
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
 
-    console.log('tripInfo on Plan.jsx',tripInfo)
   console.log('viewTripDetails on Plan.jsx',viewTripDetails)
 
   // This handles the form submit on the hero form
@@ -120,9 +119,21 @@ function Plan() {
 
   // PUT This handles the update click on the trip planner and updates the trip on db
   const handleUpdateTrip = async () => {  
-    console.log('viewTripDetails Plan.jsx',viewTripDetails)
+    // Only filter out events that have been deleted (those without event_id and tempId)
+    const filteredEvents = viewTripDetails.events.filter(event => event.event_id || event.tempId);
+
+    const updatedTripDetails = {
+      ...viewTripDetails,
+      events: filteredEvents.map(event => {
+        const { tempId, ...eventData } = event;
+        return eventData;
+      })
+    };
+
+    console.log('filtered viewTripDetails for PUT request',updatedTripDetails)
+
     try {
-      const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, viewTripDetails);
+      const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, updatedTripDetails);
       console.log("Trip updated successfully:", response.data);
     } catch (error) {
       console.error("Error updating trip:", error);
