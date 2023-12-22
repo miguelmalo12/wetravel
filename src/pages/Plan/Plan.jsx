@@ -27,11 +27,12 @@ function Plan() {
   const [showTravelPlanner, setShowTravelPlanner] = useState(false);
   const travelPlannerRef = useRef(null);
   const travelPlannerViewRef = useRef(null);
+  const userTripsRef = useRef(null);
 
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
 
-  console.log('viewTripDetails on Plan.jsx',viewTripDetails)
+  const [userTripsUpdate, setUserTripsUpdate] = useState(0); // To trigger re-render of UserTrips
 
   // This handles the form submit on the hero form
   const handleFormSubmit = () => {
@@ -60,7 +61,7 @@ function Plan() {
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
     const formattedEvents = [];
-    
+
     if (!userId) {
       console.error("User ID is missing");
       return;
@@ -74,8 +75,11 @@ function Plan() {
     const year = new Date(tripInfo.startDate).getFullYear(); // Extract the year from startDate
 
     Object.entries(events).forEach(([key, dayEvents]) => {
-      
       const [dayOfWeek, dateStr] = key.split(', ');
+      if (!dateStr) {
+        console.error("dateStr is undefined in handleSaveTrip");
+        return;
+      }
       const [day, monthName] = dateStr.split(' ');
 
       // Convert month name to month number
@@ -108,10 +112,11 @@ function Plan() {
     };
     console.log("tripData on save trip function", tripData);
     try {
-      await axios.post(`${API_URL}/plan`, tripData, {
-        withCredentials: true,
-      });
+      await axios.post(`${API_URL}/plan`, tripData, { withCredentials: true });
       console.log("Trip saved successfully!");
+      setShowTravelPlanner(false);
+      setUserTripsUpdate(prev => prev + 1); // Triggers re-render of UserTrips
+      userTripsRef.current?.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
       console.error("Error saving trip:", error.response ? error.response.data : error);
     }
@@ -170,7 +175,9 @@ function Plan() {
         />
 
         {/* User Trips */}
-        <UserTrips />
+        <div ref={userTripsRef}>
+          <UserTrips key={userTripsUpdate} />
+        </div>
 
         {/* Only shows if form filled or view trip clicked */}
         {hasTripDetails ?
