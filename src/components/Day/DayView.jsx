@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
+import { to24HourFormat } from '../../utils/convertHourUtils';
 
 // recoil state
 import { useRecoilState } from "recoil";
-import { dayViewModalState } from "../../state/modalState";
 import { tripInfoState } from "../../state/tripState";
 import { viewTripState } from "../../state/viewTripState";
 
@@ -17,8 +17,23 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
+// Helper Function to sort events by time
+const sortEventsByTime = (events) => {
+  return events.sort((a, b) => {
+    const timeA = to24HourFormat(a.event_time);
+    const timeB = to24HourFormat(b.event_time);
+    return timeA.localeCompare(timeB);
+  });
+};
+
 function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
-  const [events, setEvents] = useState(eventsProp);
+  // Initialize events state sorted by time
+  const [events, setEvents] = useState(sortEventsByTime(eventsProp.map(event => ({
+    ...event,
+    tempDescription: event.event_description, // Temporary description
+    tempTime: event.event_time // Temporary time
+  }))));
+
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
@@ -29,15 +44,19 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
   // This function adds an event to the day's events
   const addEventToDay = (eventData) => {
+    const tempId = `${Date.now()}-${Math.random().toString(16).slice(2)}`; // Unique temporary ID to be filtered by the PUT request
     const newEvent = {
-      date: date,
-      event_time: eventData.time || "00:00",
-      event_type: eventData.type,
-      event_description: eventData.title
+        tempId,
+        date: date,
+        event_time: eventData.time || "00:00",
+        event_type: eventData.type,
+        event_description: eventData.title,
+        tempDescription: eventData.title, // Temporary description
+        tempTime: "00:00" // Temporary time
     };
 
     // Update local state
-    setEvents(prevEvents => [...prevEvents, newEvent]);
+    setEvents(prevEvents => sortEventsByTime([...prevEvents, newEvent]));
 
     // Update global state
     setViewTripDetails(prevTripDetails => {
@@ -56,21 +75,37 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     addEventToDay({ title, type });
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  // Function to handle description input change
+  const handleInputChange = (e, index) => {
+    const updatedEvents = events.map((event, idx) => 
+      idx === index ? { ...event, tempDescription: e.target.value } : event
+    );
+    setEvents(updatedEvents);
   };
-
-  const handleTimeChange = (e) => {
-    setInputTime(e.target.value);
+  
+  // Function to handle time input change
+  const handleTimeChange = (e, index) => {
+    const updatedEvents = events.map((event, idx) => 
+      idx === index ? { ...event, tempTime: e.target.value } : event
+    );
+    setEvents(updatedEvents);
   };
 
   const handleEnterEvent = (e, index) => {
     if (e.key === "Enter") {
-      const updatedEvents = [...events];
-      updatedEvents[index].event_description = inputValue;
-      setEvents(updatedEvents);
-      setInputIndex(null);
-      setInputValue("");
+        const updatedEvent = {
+          ...events[index],
+          event_description: e.target.value
+        };
+    
+        const updatedEvents = [
+          ...events.slice(0, index),
+          updatedEvent,
+          ...events.slice(index + 1)
+        ];
+    
+        setEvents(updatedEvents);
+        setInputIndex(null); // You might also consider resetting the input fields here
     }
   };
 
@@ -87,10 +122,10 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   const handleUpdateEventAndTime = (index) => {
     const updatedEvent = {
         ...events[index],
-        event_description: inputValue,
-        event_time: to12HourFormat(inputTime),
+        event_description: events[index].tempDescription,
+        event_time: to12HourFormat(events[index].tempTime),
     };
-    console.log("updatedEvent:", updatedEvent);
+    console.log("handleUpdateEventAndTime:", updatedEvent);
 
     const updatedDayEvents = [
       ...events.slice(0, index),
@@ -101,21 +136,24 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     setEvents(updatedDayEvents);
 
     setViewTripDetails(prevDetails => {
-        const updatedAllEvents = prevDetails.events.map(event => {
-            if(event.date === date && event.event_id === updatedEvent.event_id) {
-                return updatedEvent;
-            }
-            return event;
-        });
+      const updatedGlobalEvents = prevDetails.events.map(event => {
+        // Update the event if it's the same one being edited
+        if ((event.tempId && event.tempId === updatedEvent.tempId) || 
+            (event.event_id && event.event_id === updatedEvent.event_id)) {
+          return updatedEvent;
+        }
+        return event;
+      });
 
-        return {
-          ...prevDetails,
-          events: updatedAllEvents,
-        };
+      return {
+        ...prevDetails,
+        events: updatedGlobalEvents,
+      };
     });
 
     setInputIndex(null);
     setInputValue("");
+    // setInputTime("");
   };
 
   const handleDeleteClick = (index) => {
@@ -162,15 +200,15 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
               <div>
                 <input
                   type="text"
-                  value={inputValue}
-                  onChange={handleInputChange}
+                  value={events[index].tempDescription}
+                  onChange={(e) => handleInputChange(e, index)}
                   onKeyDown={(e) => handleEnterEvent(e, index)}
                   autoFocus
                 />
                 <input
                   type="time"
-                  value={inputTime}
-                  onChange={handleTimeChange}
+                  value={events[index].tempTime}
+                  onChange={(e) => handleTimeChange(e, index)}
                   onKeyDown={(e) => handleEnterTime(e, index)}
                 />
                 <img
@@ -223,3 +261,4 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 }
 
 export default DayView;
+  
