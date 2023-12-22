@@ -33,6 +33,7 @@ function Plan() {
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
 
   const [userTripsUpdate, setUserTripsUpdate] = useState(0); // To trigger re-render of UserTrips
+  const [viewTripClicked, setViewTripClicked] = useState(false); // Used for scroll behaviour
 
   // This handles the form submit on the hero form
   const handleFormSubmit = () => {
@@ -152,7 +153,7 @@ function Plan() {
     } else if (viewTripDetails && travelPlannerViewRef.current) {
       travelPlannerViewRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [showTravelPlanner, viewTripDetails, travelPlannerRef, travelPlannerViewRef]);
+  }, [showTravelPlanner, viewTripClicked, travelPlannerRef, travelPlannerViewRef]);
 
   // Check if viewTripDetails is valid
   const hasTripDetails = viewTripDetails && Array.isArray(viewTripDetails.events) && viewTripDetails.events.length > 0;
@@ -176,7 +177,7 @@ function Plan() {
 
         {/* User Trips */}
         <div ref={userTripsRef}>
-          <UserTrips key={userTripsUpdate} />
+          <UserTrips key={userTripsUpdate} setViewTripClicked={setViewTripClicked} />
         </div>
 
         {/* Only shows if form filled or view trip clicked */}

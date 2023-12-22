@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
+import { to24HourFormat } from '../../utils/convertHourUtils';
 
 // recoil state
 import { useRecoilState } from "recoil";
@@ -16,12 +17,23 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
+// Helper Function to sort events by time
+const sortEventsByTime = (events) => {
+  return events.sort((a, b) => {
+    const timeA = to24HourFormat(a.event_time);
+    const timeB = to24HourFormat(b.event_time);
+    return timeA.localeCompare(timeB);
+  });
+};
+
 function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
-  const [events, setEvents] = useState(eventsProp.map(event => ({
+  // Initialize events state sorted by time
+  const [events, setEvents] = useState(sortEventsByTime(eventsProp.map(event => ({
     ...event,
     tempDescription: event.event_description, // Temporary description
     tempTime: event.event_time // Temporary time
-  })));
+  }))));
+
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
@@ -44,7 +56,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     };
 
     // Update local state
-    setEvents(prevEvents => [...prevEvents, newEvent]);
+    setEvents(prevEvents => sortEventsByTime([...prevEvents, newEvent]));
 
     // Update global state
     setViewTripDetails(prevTripDetails => {
@@ -124,19 +136,24 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     setEvents(updatedDayEvents);
 
     setViewTripDetails(prevDetails => {
-        const updatedAllEvents = prevDetails.events.map(event => 
-          (event.tempId && event.tempId === updatedEvent.tempId) ? updatedEvent : event
-        );
+      const updatedGlobalEvents = prevDetails.events.map(event => {
+        // Update the event if it's the same one being edited
+        if ((event.tempId && event.tempId === updatedEvent.tempId) || 
+            (event.event_id && event.event_id === updatedEvent.event_id)) {
+          return updatedEvent;
+        }
+        return event;
+      });
 
-        return {
-          ...prevDetails,
-          events: updatedAllEvents,
-        };
+      return {
+        ...prevDetails,
+        events: updatedGlobalEvents,
+      };
     });
 
     setInputIndex(null);
     setInputValue("");
-    setInputTime("");
+    // setInputTime("");
   };
 
   const handleDeleteClick = (index) => {

@@ -14,12 +14,11 @@ import Modal from "../Modal/Modal";
 // .env variables
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-function UserTrips() {
+function UserTrips({ setViewTripClicked }) {
   const [trips, setTrips] = useState([]);
   const [isModalOpen, setModalOpen] = useRecoilState(userTripsModalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const setViewTrip = useSetRecoilState(viewTripState);
-
 
   // GET All Trips from db
   useEffect(() => {
@@ -69,6 +68,7 @@ function UserTrips() {
 
       // Sets trip data to recoil state
       setViewTrip(response.data);
+      setViewTripClicked(true); // Used for the scroll behaviour
     } catch (error) {
       console.error("Error getting trip details:", error);
     }
