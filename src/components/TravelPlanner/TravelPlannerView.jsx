@@ -67,15 +67,15 @@ function TravelPlannerView({ onUpdate }) {
     setEventToDelete(null);
   };
 
-    // Helper function to remove an event from the state
-    const removeEventFromState = (identifier) => {
-        const updatedEvents = viewTrip.events.filter(event =>
-            event.event_id !== identifier && event.tempId !== identifier
-        );
+  // Helper function to remove an event from the state
+  const removeEventFromState = (identifier) => {
+      const updatedEvents = viewTrip.events.filter(event =>
+          event.event_id !== identifier && event.tempId !== identifier
+      );
 
-        // Update viewTrip state with the new events array
-        setViewTrip({ ...viewTrip, events: updatedEvents });
-    };
+      // Update viewTrip state with the new events array
+      setViewTrip({ ...viewTrip, events: updatedEvents });
+  };
 
   const handleCloseModal = () => {
     setModalOpen(false);
