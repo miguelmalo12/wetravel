@@ -14,8 +14,3 @@ export const userTripsModalState = atom({
   key: 'userTripsModalState',
   default: false,
 });
-
-export const modalState = atom({
-  key: 'modalState',
-  default: false,
-});
