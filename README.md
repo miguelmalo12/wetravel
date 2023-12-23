@@ -1,11 +1,11 @@
 # WeTravel
-[ Deployed Link ]
+https://app-wetravel.netlify.app/
 
 #### Server repository:
 https://github.com/Unknown-0perator/wetravel-server
 
 #### Created by:
-Miguel Malo - https://github.com/miguelmalo12/
+Miguel Malo - https://github.com/miguelmalo12/  
 Ahmad Akhtar - https://github.com/Unknown-0perator
 
 ## Introduction
