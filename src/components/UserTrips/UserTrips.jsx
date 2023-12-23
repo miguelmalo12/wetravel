@@ -4,7 +4,7 @@ import axios from "axios";
 
 // recoil state
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { modalState } from "../../state/modalState";
+import { userTripsModalState } from "../../state/modalState";
 import { viewTripState } from "../../state/viewTripState";
 
 // components
@@ -14,14 +14,13 @@ import Modal from "../Modal/Modal";
 // .env variables
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-function UserTrips() {
+function UserTrips({ setViewTripClicked }) {
   const [trips, setTrips] = useState([]);
-  const [isModalOpen, setModalOpen] = useRecoilState(modalState);
+  const [isModalOpen, setModalOpen] = useRecoilState(userTripsModalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const setViewTrip = useSetRecoilState(viewTripState);
 
-
-  // GET Trips from db
+  // GET All Trips from db
   useEffect(() => {
     const getTrips = async () => {
       try {
@@ -66,9 +65,10 @@ function UserTrips() {
       const response = await axios.get(`${API_URL}/plan/${tripId}`, {
         withCredentials: true,
       });
-      
+
       // Sets trip data to recoil state
       setViewTrip(response.data);
+      setViewTripClicked(true); // Used for the scroll behaviour
     } catch (error) {
       console.error("Error getting trip details:", error);
     }
@@ -82,7 +82,7 @@ function UserTrips() {
 
   return (
     <div className="trips">
-      <h2>Your Trips</h2>
+      {trips.length > 0 && <h2>Your Trips</h2>} {/* Render header only if there are trips */}
       {trips.map((trip) => (
         <UserTripCard
           key={trip.trip_id}

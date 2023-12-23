@@ -1,10 +1,7 @@
 import './Hero.scss';
 import heroImage from '../../assets/vector-illustrations/illustration_main-hero.png'
-import heroBgArrow from '../../assets/bg-arrow.png';
-import heroBgDot from '../../assets/bg-dot.png';
-import heroBgLocation from '../../assets/bg-location.png';
-import heroBgLocationSmall from '../../assets/bg-location.png';
 import { ButtonPrimary } from '../Button/Button';
+import HeroBgIcons from '../HeroBgIcons/HeroBgIcons';
 
 
 const Hero = () => {
@@ -20,10 +17,7 @@ const Hero = () => {
                 <img className='hero__image' src={heroImage} alt="travel illustration" />
             </div>
             <div className="hero__map"></div>
-            <img className="hero__bgicon bg-arrow" src={heroBgArrow} alt="arrow icon" />
-            <img className="hero__bgicon bg-dot" src={heroBgDot} alt="dot icon" />
-            <img className="hero__bgicon bg-location" src={heroBgLocation} alt="location icon" />
-            <img className="hero__bgicon bg-location-small" src={heroBgLocationSmall} alt="smaller location icon" />
+            <HeroBgIcons />
         </section>
     )
 }

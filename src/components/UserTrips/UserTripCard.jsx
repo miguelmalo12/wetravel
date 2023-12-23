@@ -12,8 +12,10 @@ function UserTripCard({ trip, onDeleteClick, onViewClick }) {
 
   // Formats data from db to display in the card
   function formatDate(dateString) {
+    const [year, month, day] = dateString.split('-').map(part => parseInt(part, 10));
+    const date = new Date(year, month - 1, day);
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-GB', options);
+    return date.toLocaleDateString('en-GB', options);
   }
 
   return (

@@ -5,9 +5,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // recoil state
 import { useSetRecoilState } from 'recoil';
 import { userState } from './state/userState';
+import { loginState } from './state/loginState';
 
 import Home from './pages/Home';
-import Recommend from './pages/Recommend/Recommend';
+import RecommendPage from './pages/RecommendPage/RecommendPage';
 import Plan from './pages/Plan/Plan';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
@@ -18,35 +19,34 @@ function App() {
 
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   const setUser = useSetRecoilState(userState);
-  const [isLoggedIn, setLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState({});
-
+  const setLoggedIn = useSetRecoilState(loginState)
   // check if user is logged in every time the app renders
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
     if (storedUser) {
-        setUser(JSON.parse(storedUser));
-        setLoggedIn(true);
+      setUser(JSON.parse(storedUser));
+      setLoggedIn(true);
     }
-  }, [setUser]);
+
+  }, [setUser, setLoggedIn]);
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Header isLoggedIn={isLoggedIn} />
+        <Header
+          API_URL={API_URL} />
         <Routes>
 
           <Route path='/' element={<Home />} />
           <Route
             path='recommend'
-            element={<Recommend
-              isLoggedIn={isLoggedIn}
+            element={<RecommendPage
               profileData={profileData}
             />} />
           <Route
             path='plan'
             element={<Plan
-              isLoggedIn={isLoggedIn}
               profileData={profileData}
             />} />
           <Route path='*' element={<StatusPage title=' Oops! Page Not Found' text='The page you are looking for was moved, removed, renamed or never existed.' />} />
@@ -54,8 +54,6 @@ function App() {
             path='login'
             element={<SignIn
               API_URL={API_URL}
-              isLoggedIn={isLoggedIn}
-              setLoggedIn={setLoggedIn}
               setProfileData={setProfileData}
             />}
           />

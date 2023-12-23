@@ -27,10 +27,15 @@ function Plan() {
   const [showTravelPlanner, setShowTravelPlanner] = useState(false);
   const travelPlannerRef = useRef(null);
   const travelPlannerViewRef = useRef(null);
+  const userTripsRef = useRef(null);
 
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
 
+  const [userTripsUpdate, setUserTripsUpdate] = useState(0); // To trigger re-render of UserTrips
+  const [viewTripClicked, setViewTripClicked] = useState(false); // Used for scroll behaviour
+
+  // This handles the form submit on the hero form
   const handleFormSubmit = () => {
     setShowTravelPlanner(true);
     setViewTripDetails(null);
@@ -48,9 +53,8 @@ function Plan() {
     }
   }, [tripInfo.startDate, tripInfo.endDate]);
 
-  // This handles the save click on the trip planner and creates a new trip on db
+  // POST This handles the save click on the trip planner and creates a new trip on db
   const handleSaveTrip = async () => { 
-    console.log('tripInfo', tripInfo);
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
@@ -69,21 +73,37 @@ function Plan() {
       return;
     }
 
+    const year = new Date(tripInfo.startDate).getFullYear(); // Extract the year from startDate
+
     Object.entries(events).forEach(([key, dayEvents]) => {
+      const [dayOfWeek, dateStr] = key.split(', ');
+      if (!dateStr) {
+        console.error("dateStr is undefined in handleSaveTrip");
+        return;
+      }
+      const [day, monthName] = dateStr.split(' ');
+
+      // Convert month name to month number
+      const monthNumber = new Date(`${monthName} 1`).getMonth() + 1;
+
+      // Construct the full date string with the correct year
+      const eventDateISO = `${year}-${monthNumber.toString().padStart(2, '0')}-${day.padStart(2, '0')}`;
+
       dayEvents.forEach((event) => {
-        if (!isValid(new Date(key))) {
-          console.error("Invalid event date", key);
+        if (!isValid(new Date(eventDateISO))) {
+          console.error("Invalid event date", eventDateISO);
           return;
         }
+    
         formattedEvents.push({
-          date: key,
+          date: eventDateISO,
           event_time: event.time,
           event_type: event.type,
           event_description: event.title,
         });
       });
     });
-    console.log("formattedEvents", formattedEvents);
+
     const tripData = {
       user_id: userId,
       destination: location,
@@ -91,14 +111,38 @@ function Plan() {
       end_date: format(toDate, "yyyy-MM-dd"),
       events: formattedEvents,
     };
-    console.log("tripData", tripData);
+    console.log("tripData on save trip function", tripData);
     try {
-      await axios.post(`${API_URL}/plan`, tripData, {
-        withCredentials: true,
-      });
+      await axios.post(`${API_URL}/plan`, tripData, { withCredentials: true });
       console.log("Trip saved successfully!");
+      setShowTravelPlanner(false);
+      setUserTripsUpdate(prev => prev + 1); // Triggers re-render of UserTrips
+      userTripsRef.current?.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
       console.error("Error saving trip:", error.response ? error.response.data : error);
+    }
+  };
+
+  // PUT This handles the update click on the trip planner and updates the trip on db
+  const handleUpdateTrip = async () => {  
+    // Only filter out events that have been deleted (those without event_id and tempId)
+    const filteredEvents = viewTripDetails.events.filter(event => event.event_id || event.tempId);
+
+    const updatedTripDetails = {
+      ...viewTripDetails,
+      events: filteredEvents.map(event => {
+        const { tempId, ...eventData } = event;
+        return eventData;
+      })
+    };
+
+    console.log('filtered viewTripDetails for PUT request',updatedTripDetails)
+
+    try {
+      const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, updatedTripDetails);
+      console.log("Trip updated successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating trip:", error);
     }
   };
 
@@ -109,7 +153,17 @@ function Plan() {
     } else if (viewTripDetails && travelPlannerViewRef.current) {
       travelPlannerViewRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [showTravelPlanner, viewTripDetails, travelPlannerRef, travelPlannerViewRef]);
+  }, [showTravelPlanner, viewTripClicked, travelPlannerRef, travelPlannerViewRef]);
+
+  // Check if viewTripDetails is valid
+  const hasTripDetails = viewTripDetails && Array.isArray(viewTripDetails.events) && viewTripDetails.events.length > 0;
+
+  // Helper function to adjust time zone
+  function adjustDateForTimezone(dateStr) {
+    const date = new Date(dateStr);
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() + userTimezoneOffset);
+  }
 
   return (
     <div>
@@ -121,15 +175,16 @@ function Plan() {
           onFormSubmit={handleFormSubmit}
         />
 
-        {/* User Trips - Work In Progress */}
-        <UserTrips />
+        {/* User Trips */}
+        <div ref={userTripsRef}>
+          <UserTrips key={userTripsUpdate} setViewTripClicked={setViewTripClicked} />
+        </div>
 
         {/* Only shows if form filled or view trip clicked */}
-        {viewTripDetails ?
+        {hasTripDetails ?
           <div ref={travelPlannerViewRef}>
             <TravelPlannerView
-            tripDetails={viewTripDetails}
-            // other props
+            onUpdate={handleUpdateTrip}
           />
           </div>
         :
@@ -138,7 +193,7 @@ function Plan() {
               <TravelPlanner
                 location={tripInfo.location}
                 dayCount={dayCount}
-                startDate={new Date(tripInfo.startDate)}
+                startDate={adjustDateForTimezone(tripInfo.startDate)}
                 onSave={handleSaveTrip}
               />
             </div>
