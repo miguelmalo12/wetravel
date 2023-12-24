@@ -14,6 +14,8 @@ import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Header from './components/Header/Header';
 import StatusPage from './pages/StatusPage/StatusPage';
+import { useRecoilState } from 'recoil';
+import { signUpStatusState } from './state/signUpStatusState';
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
   const setUser = useSetRecoilState(userState);
   const [profileData, setProfileData] = useState({});
   const setLoggedIn = useSetRecoilState(loginState)
+  const [signUpStatusPage, setSignUpStatusPage] = useRecoilState(signUpStatusState)
   // check if user is logged in every time the app renders
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
@@ -59,7 +62,7 @@ function App() {
           />
           <Route
             path='sign-up'
-            element={<SignUp
+            element={signUpStatusPage ? <StatusPage title='Thanks for registering' text='Your perfect destination, one click away.' /> : < SignUp
               API_URL={API_URL}
             />} />
         </Routes>
