@@ -28,7 +28,8 @@ export const FormGroupSelect = ({ label, optionArray, name, defaultOption }) => 
     )
 }
 
-export const FormGroupCheckbox = ({ label, optionArray, name, type }) => {
+export const FormGroupCheckbox = ({ label, optionArray, name, type, setSelectedArray, selectedArray }) => {
+
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
@@ -37,8 +38,20 @@ export const FormGroupCheckbox = ({ label, optionArray, name, type }) => {
                     optionArray.map(option => {
                         return (
                             <div className="authentication-form__group--checkbox" key={option}>
-                                <label htmlFor="" className="authentication-form__label--checkbox">{option}</label>
-                                <input type={type} className="authentication-form__input--checkbox" value={option} name={name} />
+                                <label htmlFor={name} className="authentication-form__label--checkbox">{option}</label>
+                                <input
+                                    onChange={e => {
+                                        if (e.target.checked) {
+                                            setSelectedArray([...selectedArray, e.target.value]);
+                                        } else {
+                                            setSelectedArray(selectedArray.filter(item => item !== e.target.value));
+                                        }
+                                        console.log(selectedArray)
+                                    }}
+                                    type={type}
+                                    className="authentication-form__input--checkbox"
+                                    value={option}
+                                    name={name} />
                             </div>
                         )
                     })

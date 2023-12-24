@@ -5,7 +5,7 @@ import { ButtonGoogle, ButtonPrimary, ButtonSecondary } from '../../components/B
 import { FormGroupInput, FormGroupSelect, FormGroupCheckbox } from '../../components/AuthFormComponents/AuthFormComponents';
 import QuestionnaireLogo from '../../assets/Questionnaire.png';
 import { country_list } from '../../utilities';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
 
 
@@ -70,7 +70,17 @@ const SignUp = ({ API_URL }) => {
     const hobbies = ['Wine tasting', 'History', 'Relaxation', 'Winter activities', 'Summer activities', 'Gastronomy', 'Music', 'Art', 'Photography', 'Wildlife', 'City Exploring', 'Partying', 'Architecture', 'Outdoor Activities', 'None']
     const cultureImmerse = ['Very important', 'Somewhat important', 'Not very important', 'Not important at all']
 
+    const [travelerTypeSelect, setTravelerTypeSelect] = useState([])
+    const [foodTypeSelect, setFoodTypeSelect] = useState([])
+    const [importanceLevelSelect, setImportanceLevelSelect] = useState([])
+    const [activitiesSelect, setActivitiesSelect] = useState([])
+    const [climateTypeSelect, setClimateTypeSelect] = useState([])
+    const [hobbiesSelect, setHobbiesSelect] = useState([])
+    const [cultureImmerseSelect, setCultureImmerseSelect] = useState([])
 
+    const arrayToString = (arrayInput) => {
+        return arrayInput.join(', ')
+    }
 
     return (
         <div className="sign-up-page">
@@ -98,13 +108,13 @@ const SignUp = ({ API_URL }) => {
                         </div>
                         <div className="questionnaire__content">
                             <FormGroupSelect label='Which country are you are you currently residing in?' optionArray={country_list} defaultOption='Select Country' name='country' />
-                            <FormGroupCheckbox type='checkbox' label='What type of traveler best describes you? Select all that apply' optionArray={travelerType} />
-                            <FormGroupCheckbox type='checkbox' label='Which type of food do you prefer? Select all that apply' optionArray={foodType} />
-                            <FormGroupCheckbox type='radio' label='How important is food and gastronomy to you when you travel?' optionArray={importanceLevels} name='importanceLevels' />
-                            <FormGroupCheckbox type='checkbox' label='What activities do you enjoy when traveling? Select all that apply' optionArray={activities} />
-                            <FormGroupCheckbox type='radio' label='What is your preferred climate when traveling?' optionArray={climateType} name='climateType' />
-                            <FormGroupCheckbox type='checkbox' label='What are your specific travel interests or hobbies? Select all that apply' optionArray={hobbies} />
-                            <FormGroupCheckbox type='radio' label='How important is it for you to immerse yourself in local culture when traveling?' optionArray={cultureImmerse} name='cultureImmerse' />
+                            <FormGroupCheckbox selectedArray={travelerTypeSelect} setSelectedArray={setTravelerTypeSelect} type='checkbox' label='What type of traveler best describes you? Select all that apply' optionArray={travelerType} />
+                            <FormGroupCheckbox selectedArray={foodTypeSelect} setSelectedArray={setFoodTypeSelect} type='checkbox' label='Which type of food do you prefer? Select all that apply' optionArray={foodType} />
+                            <FormGroupCheckbox selectedArray={importanceLevelSelect} setSelectedArray={setImportanceLevelSelect} type='radio' label='How important is food and gastronomy to you when you travel?' optionArray={importanceLevels} name='importanceLevels' />
+                            <FormGroupCheckbox selectedArray={activitiesSelect} setSelectedArray={setActivitiesSelect} type='checkbox' label='What activities do you enjoy when traveling? Select all that apply' optionArray={activities} />
+                            <FormGroupCheckbox selectedArray={climateTypeSelect} setSelectedArray={setClimateTypeSelect} type='radio' label='What is your preferred climate when traveling?' optionArray={climateType} name='climateType' />
+                            <FormGroupCheckbox selectedArray={hobbiesSelect} setSelectedArray={setHobbiesSelect} type='checkbox' label='What are your specific travel interests or hobbies? Select all that apply' optionArray={hobbies} />
+                            <FormGroupCheckbox selectedArray={cultureImmerseSelect} setSelectedArray={setCultureImmerseSelect} type='radio' label='How important is it for you to immerse yourself in local culture when traveling?' optionArray={cultureImmerse} name='cultureImmerse' />
                         </div>
 
                         <div className="term-condition">
