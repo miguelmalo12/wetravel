@@ -12,12 +12,14 @@ export const FormGroupInput = ({ label, type, name, onChange, customRef, handleE
     )
 }
 
-export const FormGroupSelect = ({ label, optionArray, name, defaultOption }) => {
+export const FormGroupSelect = ({ label, optionArray, name, defaultOption, setSelectedValue }) => {
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
-            <select id={name} name={name} className="authentication-form__input">
-                <option className='authentication-form__input--option' value="" disabled defaultValue>{defaultOption}</option>
+            <select onChange={e => {
+                setSelectedValue(e.target.value)
+            }} id={name} name={name} className="authentication-form__input">
+                <option className='authentication-form__input--option' value="" defaultValue>{defaultOption}</option>
                 {optionArray.map(option => {
                     return (
                         <option key={option} className='authentication-form__input--option' value={option} >{option}</option>
