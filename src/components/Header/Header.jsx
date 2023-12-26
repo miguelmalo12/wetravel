@@ -7,8 +7,9 @@ import Modal from '../Modal/Modal';
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { modalState } from "../../state/modalState";
 import { loginState } from '../../state/loginState';
+import { useRef } from 'react';
 
-const NavbarList = ({ isLoggedIn, setModalOpen }) => {
+const NavbarList = ({ isLoggedIn, setModalOpen, closeMenu }) => {
 
   const linkClass = ({ isActive }) => (
     `navbar-list__link ${isActive ? 'navbar-list__link--active' : ""}`
@@ -19,28 +20,29 @@ const NavbarList = ({ isLoggedIn, setModalOpen }) => {
     (!isLoggedIn) ? (
       <ul className="navbar-list" >
         <li className="navbar-list__item">
-          <NavLink to='/#' className={linkClass}>Home</NavLink>
+          <NavLink onClick={closeMenu} to='/#' className={linkClass}>Home</NavLink>
         </li>
         <li className="navbar-list__item">
-          <NavLink to='/login' className="navbar-list__link navbar-list__link--button-primary">Login</NavLink>
+          <NavLink onClick={closeMenu} to='/login' className="navbar-list__link navbar-list__link--button-primary">Login</NavLink>
         </li>
         <li className="navbar-list__item">
-          <NavLink to='/sign-up' className="navbar-list__link navbar-list__link--button-secondary">Signup</NavLink>
+          <NavLink onClick={closeMenu} to='/sign-up' className="navbar-list__link navbar-list__link--button-secondary">Sign Up</NavLink>
         </li>
       </ul >
     ) : (
       <ul className="navbar-list">
         <li className="navbar-list__item">
-          <NavLink to='/#' className={linkClass}>Home</NavLink>
+          <NavLink onClick={closeMenu} to='/#' className={linkClass}>Home</NavLink>
         </li>
         <li className="navbar-list__item">
-          <NavLink to='/recommend' className={linkClass}>Recommend</NavLink>
+          <NavLink onClick={closeMenu} to='/recommend' className={linkClass}>Recommend</NavLink>
         </li>
         <li className="navbar-list__item">
-          <NavLink to='/plan' className={linkClass}>Plan</NavLink>
+          <NavLink onClick={closeMenu} to='/plan' className={linkClass}>Plan</NavLink>
         </li>
         <li className="navbar-list__item">
           <NavLink className="navbar-list__link navbar-list__link--button-primary" onClick={(e) => {
+            closeMenu()
             e.preventDefault()
             setModalOpen(true)
           }}>Logout</NavLink>
@@ -71,6 +73,14 @@ const Header = () => {
     })
   }
 
+  const menuRef = useRef(null)
+
+  const closeMenu = () => {
+    if (menuRef.current) {
+      menuRef.current.checked = false;
+    }
+  };
+
 
   return (
     <header className="header">
@@ -78,13 +88,13 @@ const Header = () => {
         <img src={WeTravelLogo} alt="WeTravel Logo" className="header__logo" />
       </NavLink>
       <div className="navbar-hamburger">
-        <input type="checkbox" className="navbar-hamburger__checkbox" id="navi-toggle" />
+        <input ref={menuRef} type="checkbox" className="navbar-hamburger__checkbox" id="navi-toggle" />
         <label htmlFor="navi-toggle" className="navbar-hamburger__button">
           <span className="navbar-hamburger__icon">&nbsp;</span>
         </label>
         <div className="navbar-hamburger__background">&nbsp;</div>
         <nav className="navbar-hamburger__nav">
-          <NavbarList isLoggedIn={isLoggedIn} setModalOpen={setModalOpen} />
+          <NavbarList isLoggedIn={isLoggedIn} setModalOpen={setModalOpen} closeMenu={closeMenu} />
         </nav>
       </div>
       <nav className="navbar">
