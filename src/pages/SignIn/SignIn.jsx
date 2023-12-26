@@ -75,7 +75,7 @@ const SignIn = ({ API_URL }) => {
 
                     </form>
                     <p className="authentication-form-container__heading">Don’t have an account?</p>
-                    <ButtonSecondary text='Sign Up' />
+                    <ButtonSecondary to='/sign-up' text='Sign Up' />
                 </div>
             ) : (
                 <div className="empty-page">

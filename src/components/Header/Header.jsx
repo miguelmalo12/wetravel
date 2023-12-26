@@ -1,5 +1,5 @@
 import './Header.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import WeTravelLogo from '../../assets/wetravel-logo-red.png';
 import axios from 'axios';
 import { userState } from '../../state/userState';
@@ -9,39 +9,41 @@ import { modalState } from "../../state/modalState";
 import { loginState } from '../../state/loginState';
 
 const NavbarList = ({ isLoggedIn, setModalOpen }) => {
+
+  const linkClass = ({ isActive }) => (
+    `navbar-list__link ${isActive ? 'navbar-list__link--active' : ""}`
+  )
+
   return (
 
     (!isLoggedIn) ? (
       <ul className="navbar-list" >
         <li className="navbar-list__item">
-          <Link to='/#' className="navbar-list__link navbar-list__link--active">Home</Link>
+          <NavLink to='/#' className={linkClass}>Home</NavLink>
         </li>
         <li className="navbar-list__item">
-          <Link to='/login' className="navbar-list__link navbar-list__link--button-primary">Login</Link>
+          <NavLink to='/login' className="navbar-list__link navbar-list__link--button-primary">Login</NavLink>
         </li>
         <li className="navbar-list__item">
-          <Link to='/sign-up' className="navbar-list__link navbar-list__link--button-secondary">Signup</Link>
+          <NavLink to='/sign-up' className="navbar-list__link navbar-list__link--button-secondary">Signup</NavLink>
         </li>
       </ul >
     ) : (
       <ul className="navbar-list">
         <li className="navbar-list__item">
-          <Link to='/#' className="navbar-list__link navbar-list__link--active">Home</Link>
+          <NavLink to='/#' className={linkClass}>Home</NavLink>
         </li>
         <li className="navbar-list__item">
-          <Link to='/recommend' className="navbar-list__link">Recommend</Link>
+          <NavLink to='/recommend' className={linkClass}>Recommend</NavLink>
         </li>
         <li className="navbar-list__item">
-          <Link to='/plan' className="navbar-list__link">Plan</Link>
+          <NavLink to='/plan' className={linkClass}>Plan</NavLink>
         </li>
         <li className="navbar-list__item">
-          <Link to='/profile' className="navbar-list__link navbar-list__link--button-primary">Profile</Link>
-        </li>
-        <li className="navbar-list__item">
-          <Link className="navbar-list__link navbar-list__link--button-secondary" onClick={(e) => {
+          <NavLink className="navbar-list__link navbar-list__link--button-primary" onClick={(e) => {
             e.preventDefault()
             setModalOpen(true)
-          }}>Logout</Link>
+          }}>Logout</NavLink>
         </li>
       </ul>
     )
@@ -72,9 +74,9 @@ const Header = () => {
 
   return (
     <header className="header">
-      <Link to='/#' className="header__logo-container">
+      <NavLink to='/#' className="header__logo-container">
         <img src={WeTravelLogo} alt="WeTravel Logo" className="header__logo" />
-      </Link>
+      </NavLink>
       <div className="navbar-hamburger">
         <input type="checkbox" className="navbar-hamburger__checkbox" id="navi-toggle" />
         <label htmlFor="navi-toggle" className="navbar-hamburger__button">
