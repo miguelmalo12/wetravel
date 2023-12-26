@@ -42,9 +42,12 @@ const NavbarList = ({ isLoggedIn, setModalOpen, closeMenu }) => {
         </li>
         <li className="navbar-list__item">
           <NavLink className="navbar-list__link navbar-list__link--button-primary" onClick={(e) => {
-            closeMenu()
             e.preventDefault()
             setModalOpen(true)
+            if (closeMenu) {
+              closeMenu()
+            }
+
           }}>Logout</NavLink>
         </li>
       </ul>
@@ -105,7 +108,7 @@ const Header = () => {
           textContent={`Are you sure you want to logout?`}
           buttonText="Logout"
           onButtonClick={handleLogout}
-          onCloseClick={() => setModalOpen(false)} />
+          onCloseClick={() => { setModalOpen(false) }} />
       )}
     </header>
   )
