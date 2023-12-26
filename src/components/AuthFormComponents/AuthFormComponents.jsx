@@ -1,10 +1,10 @@
 import './AuthFormComponents.scss';
 
-export const FormGroupInput = ({ label, type, name, onChange, customRef, handleEmailValidation }) => {
+export const FormGroupInput = ({ label, type, name, onChange, customRef, handleEmailValidation, required }) => {
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
-            <input type={type} onChange={(handleEmailValidation) ? (event) => {
+            <input required={required} type={type} onChange={(handleEmailValidation) ? (event) => {
                 onChange(event)
                 handleEmailValidation(event)
             } : (onChange)} id={name} name={name} ref={customRef} className="authentication-form__input" />
@@ -12,11 +12,11 @@ export const FormGroupInput = ({ label, type, name, onChange, customRef, handleE
     )
 }
 
-export const FormGroupSelect = ({ label, optionArray, name, defaultOption, setSelectedValue }) => {
+export const FormGroupSelect = ({ label, optionArray, name, defaultOption, setSelectedValue, required }) => {
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
-            <select onChange={e => {
+            <select required={required} onChange={e => {
                 setSelectedValue(e.target.value)
             }} id={name} name={name} className="authentication-form__input">
                 <option className='authentication-form__input--option' value="" defaultValue>{defaultOption}</option>
@@ -30,7 +30,7 @@ export const FormGroupSelect = ({ label, optionArray, name, defaultOption, setSe
     )
 }
 
-export const FormGroupCheckbox = ({ label, optionArray, name, type, setSelectedArray, selectedArray }) => {
+export const FormGroupCheckbox = ({ label, optionArray, name, type, setSelectedArray, selectedArray, required }) => {
 
     return (
         <div className="authentication-form__group">
@@ -48,12 +48,12 @@ export const FormGroupCheckbox = ({ label, optionArray, name, type, setSelectedA
                                         } else {
                                             setSelectedArray(selectedArray.filter(item => item !== e.target.value));
                                         }
-                                        console.log(selectedArray)
                                     }}
                                     type={type}
                                     className="authentication-form__input--checkbox"
                                     value={option}
-                                    name={name} />
+                                    name={name}
+                                    required={required} />
                             </div>
                         )
                     })
