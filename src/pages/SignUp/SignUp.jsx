@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ButtonGoogle, ButtonPrimary, ButtonSecondary } from '../../components/Button/Button';
 import { FormGroupInput, FormGroupSelect, FormGroupCheckbox } from '../../components/AuthFormComponents/AuthFormComponents';
 import QuestionnaireLogo from '../../assets/Questionnaire.png';
-import { country_list } from '../../utilities';
+import { country_list } from '../../utils/countryListUtils';
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { signUpStatusState } from '../../state/signUpStatusState';

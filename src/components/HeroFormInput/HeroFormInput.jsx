@@ -1,6 +1,6 @@
 import './HeroFormInput.scss';
 import { ButtonHeroFormSubmit } from '../Button/Button';
-import { useFocusHandlers } from '../../formUtils';
+import { useFocusHandlers } from '../../utils/formUtils';
 
 export const SingleHeroFormSelect = ({ icon, label, options, name, onChange }) => {
     const { isFocused, handleFocus, handleBlur } = useFocusHandlers();
