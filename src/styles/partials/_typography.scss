@@ -68,4 +68,8 @@
     color: $primary-color;
     margin-top: -16px;
     margin-bottom: -16px;
+
+    @include tablet {
+        font-size: 14px;
+    }
 }
