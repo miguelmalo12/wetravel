@@ -25,86 +25,6 @@ const SignUp = ({ API_URL }) => {
     const setLoggedIn = useSetRecoilState(loginState)
     const setUser = useSetRecoilState(userState);
 
-    const [signUpCredentials, setSignUpCredentials] = useState({
-        user_name: '',
-        email: '',
-        password: ''
-    })
-    const arrayToString = (arrayInput) => {
-        return arrayInput.join(', ')
-    }
-
-    const handleEmailValidation = (event) => {
-        const { name, value } = event.target;
-
-        if ((name === 'email' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) ||
-            (name === 'c-email' || value !== signUpCredentials.email)) {
-            setError(true);
-
-            if (name === 'c-email' || value !== signUpCredentials.email) {
-                setErrorMessage('Email addresses do not match.');
-            } else {
-                setErrorMessage('Invalid email address. Please enter a valid email.');
-            }
-        } else {
-            setError(false);
-            setErrorMessage('');
-        }
-    };
-
-
-
-    const handleInputChange = (event) => {
-        setSignUpCredentials({
-            ...signUpCredentials, [event.target.name]: event.target.value
-        });
-    }
-
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-
-        if (!signUpCredentials || !country || !travelerTypeSelect || !foodTypeSelect || !importanceLevelSelect || !activitiesSelect || !climateTypeSelect || !hobbiesSelect || !cultureImmerseSelect) {
-            setError(true)
-            setErrorMessage('Please make sure fill up all the inputs')
-            return;
-        }
-
-        axios.post(`${API_URL}/user/sign-up`, {
-            user_name: signUpCredentials.user_name,
-            email: signUpCredentials.email,
-            password: signUpCredentials.password,
-            country: country,
-            traveler_type: arrayToString(travelerTypeSelect),
-            food_type: arrayToString(foodTypeSelect),
-            food_rate: arrayToString(importanceLevelSelect),
-            activity_type: arrayToString(activitiesSelect),
-            climate_type: arrayToString(climateTypeSelect),
-            hobby_type: arrayToString(hobbiesSelect),
-            culture_rate: arrayToString(cultureImmerseSelect)
-        }).then((response) => {
-            const { user } = response.data;
-            localStorage.setItem("userData", JSON.stringify(user));
-            setUser(user);
-            setLoggedIn(true);
-        }).then(() => {
-            setSignUpCredentials({})
-            setCountry('')
-            setTravelerTypeSelect([])
-            setFoodTypeSelect([])
-            setImportanceLevelSelect([])
-            setActivitiesSelect([])
-            setClimateTypeSelect([])
-            setHobbiesSelect([])
-            setCultureImmerseSelect([])
-        }).then(() => {
-            formRef.current.reset()
-            setSignUpStatusPage(true)
-        })
-
-
-    }
-
-
     const travelerType = ['Adventurous', 'Relaxed', 'Cultural', 'Beach-lover', 'Nature-lover', 'Romantic',
         'Family-friendly', 'Luxury', 'Backpacker', 'Road tripper', 'Eco-tourist', 'Volunteer']
     const foodType = ['Street food', 'Local Cuisine', 'High-end cuisine', 'Fast Food']
@@ -125,16 +45,109 @@ const SignUp = ({ API_URL }) => {
 
 
 
+
+    const [signUpCredentials, setSignUpCredentials] = useState({
+        user_name: '',
+        email: '',
+        password: ''
+    })
+    const arrayToString = (arrayInput) => {
+        return arrayInput.join(', ')
+    }
+
+    const handleInputChange = (event) => {
+        setSignUpCredentials({
+            ...signUpCredentials, [event.target.name]: event.target.value
+        });
+    }
+
+    const isEmpty = Object.values(signUpCredentials).some((value) => value === '');
+    const isSelectEmpty =
+        !country ||
+        !travelerTypeSelect.length ||
+        !foodTypeSelect.length ||
+        !importanceLevelSelect.length ||
+        !activitiesSelect.length ||
+        !climateTypeSelect.length ||
+        !hobbiesSelect.length ||
+        !cultureImmerseSelect.length;
+
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+
+        if (isEmpty || isSelectEmpty) {
+            setError(true);
+            setErrorMessage('Please ensure all required fields are filled out before proceeding.');
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            return;
+        }
+        if (signUpCredentials.email !== confirmEmailRef.current.value) {
+            setError(true);
+            setErrorMessage("Email addresses do not match. Please make sure your email entries match.");
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            return;
+        }
+        try {
+
+            const response = await axios.post(`${API_URL}/user/sign-up`, {
+                user_name: signUpCredentials.user_name,
+                email: signUpCredentials.email,
+                password: signUpCredentials.password,
+                country: country,
+                traveler_type: arrayToString(travelerTypeSelect),
+                food_type: arrayToString(foodTypeSelect),
+                food_rate: arrayToString(importanceLevelSelect),
+                activity_type: arrayToString(activitiesSelect),
+                climate_type: arrayToString(climateTypeSelect),
+                hobby_type: arrayToString(hobbiesSelect),
+                culture_rate: arrayToString(cultureImmerseSelect)
+            });
+
+            const { user } = response.data;
+            localStorage.setItem("userData", JSON.stringify(user));
+            setUser(user);
+            setLoggedIn(true);
+
+            setSignUpCredentials({});
+            setCountry('');
+            setTravelerTypeSelect([]);
+            setFoodTypeSelect([]);
+            setImportanceLevelSelect([]);
+            setActivitiesSelect([]);
+            setClimateTypeSelect([]);
+            setHobbiesSelect([]);
+            setCultureImmerseSelect([]);
+
+            formRef.current.reset();
+            setSignUpStatusPage(true);
+        } catch (error) {
+            if (error.response.status === 400) {
+                setError(true)
+                setErrorMessage('The email is already associated with an account.')
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+            } else {
+                setError(true)
+                setErrorMessage('An error occurred. Please try again.')
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+
+        }
+    }
+
+
+
     return (
         <div className="sign-up-page">
             <div className="authentication-form-container">
                 <p className="authentication-form-container__heading">Register for free and start planning</p>
                 <ButtonGoogle />
                 <p className="divider-or">or</p>
+                {(error) ? (
+                    <p className="error-message">{errorMessage}</p>
+                ) : <></>}
                 <form ref={formRef} onSubmit={handleFormSubmit} className="authentication-form">
-                    <FormGroupInput label='What is your email?' required={true} type='email' onChange={handleInputChange} name='email' customRef={emailRef} handleEmailValidation={handleEmailValidation} />
-                    <FormGroupInput label='Confirm your email' required={true} type='email' onChange={handleInputChange} name='c-email' customRef={confirmEmailRef} handleEmailValidation={handleEmailValidation} />
-                    {(error) ? (<p className='error-message'>{errorMessage}</p>) : (<></>)}
+                    <FormGroupInput label='What is your email?' required={true} type='email' onChange={handleInputChange} name='email' customRef={emailRef} />
+                    <FormGroupInput label='Confirm your email' required={true} type='email' onChange={handleInputChange} name='c-email' customRef={confirmEmailRef} />
                     <FormGroupInput label='Create a password' required={true} type='password' onChange={handleInputChange} name='password' />
                     <FormGroupInput label='How do you want us to call you?' required={true} onChange={handleInputChange} type='text' name='user_name' />
 
