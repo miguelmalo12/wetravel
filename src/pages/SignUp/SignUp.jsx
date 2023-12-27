@@ -37,11 +37,11 @@ const SignUp = ({ API_URL }) => {
     const handleEmailValidation = (event) => {
         const { name, value } = event.target;
 
-        if ((name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) ||
-            (name === 'c-email' && value !== signUpCredentials.email)) {
+        if ((name === 'email' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) ||
+            (name === 'c-email' || value !== signUpCredentials.email)) {
             setError(true);
 
-            if (name === 'c-email' && value !== signUpCredentials.email) {
+            if (name === 'c-email' || value !== signUpCredentials.email) {
                 setErrorMessage('Email addresses do not match.');
             } else {
                 setErrorMessage('Invalid email address. Please enter a valid email.');
@@ -62,6 +62,12 @@ const SignUp = ({ API_URL }) => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+
+        if (!signUpCredentials || !country || !travelerTypeSelect || !foodTypeSelect || !importanceLevelSelect || !activitiesSelect || !climateTypeSelect || !hobbiesSelect || !cultureImmerseSelect) {
+            setError(true)
+            setErrorMessage('Please make sure fill up all the inputs')
+            return;
+        }
 
         axios.post(`${API_URL}/user/sign-up`, {
             user_name: signUpCredentials.user_name,
