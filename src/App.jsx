@@ -45,7 +45,7 @@ function App() {
           <Route
             path='recommend'
             element={<RecommendPage
-              profileData={profileData}
+              API_URL={API_URL}
             />} />
           <Route
             path='plan'

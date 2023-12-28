@@ -22,7 +22,7 @@ export const SingleHeroFormSelect = ({ icon, label, options, name, onChange }) =
     )
 }
 
-export const SingleHeroFormSelectSubmit = ({ icon, label, options, name, onChange }) => {
+export const SingleHeroFormSelectSubmit = ({ icon, label, options, name, onChange, onSubmit }) => {
     const { isFocused, handleFocus, handleBlur } = useFocusHandlers();
     return (
         <div className={`hero-form-input__group-container hero-form-input__group-container--submit-button ${isFocused ? 'focused' : ''}`}>
@@ -37,7 +37,7 @@ export const SingleHeroFormSelectSubmit = ({ icon, label, options, name, onChang
                     })}
                 </select>
             </div>
-            <ButtonHeroFormSubmit className='hero-form-input__button' />
+            <ButtonHeroFormSubmit onSubmit={onSubmit} className='hero-form-input__button' />
         </div>
     )
 }
@@ -81,7 +81,7 @@ export const DoubleHeroFormSelect = ({ icon1, icon2, label1, label2, name1, name
 }
 
 
-export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1, name2, options1, options2, onChange }) => {
+export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1, name2, options1, options2, onChange, onSubmit }) => {
     const { isFocused: isFocused1, handleFocus: handleFocus1, handleBlur: handleBlur1 } = useFocusHandlers();
     const { isFocused: isFocused2, handleFocus: handleFocus2, handleBlur: handleBlur2 } = useFocusHandlers();
 
@@ -113,7 +113,7 @@ export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1
                         })}
                     </select>
                 </div>
-                <ButtonHeroFormSubmit className='hero-form-input__button' />
+                <ButtonHeroFormSubmit onSubmit={onSubmit} className='hero-form-input__button' />
             </div>
         </div>
     )
