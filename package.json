@@ -9,6 +9,7 @@
     "axios": "^1.6.2",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "ldrs": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",

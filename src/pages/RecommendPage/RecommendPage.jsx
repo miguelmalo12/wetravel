@@ -14,6 +14,8 @@ import RecommendCard from '../../components/RecommendCard/RecommendCard';
 import axios from 'axios';
 import { userState } from '../../state/userState';
 import { useRecoilState } from 'recoil';
+import { ring } from 'ldrs';
+ring.register()
 
 function RecommendPage({ API_URL }) {
 
@@ -39,10 +41,14 @@ function RecommendPage({ API_URL }) {
 
   const [dropDown, setDropDown] = useState(false)
   const [user, setUser] = useRecoilState(userState);
-  const [recommendation, setRecommendation] = useState([])
+  const [recommendationList, setRecommendationList] = useState([])
+  const [recommendation, setRecommendation] = useState({})
+  const [loaderTrigger, setLoaderTrigger] = useState(false)
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    sessionStorage.removeItem('recommendationList', JSON.stringify(recommendationList))
+    setLoaderTrigger(true)
     try {
       const response = await axios.post(`${API_URL}/recommend`, {
         user_id: user.user_id,
@@ -53,8 +59,12 @@ function RecommendPage({ API_URL }) {
         travel_month: recommendInput.travel_month
       });
       setTimeout(() => {
-        setRecommendation(response.data);
-        console.log(recommendation)
+        setRecommendationList(response.data);
+        if (response.data.length !== 0) {
+          setRecommendation(response.data[0])
+          sessionStorage.setItem('recommendationList', JSON.stringify(response.data))
+        }
+
       }, 5000)
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -92,9 +102,14 @@ function RecommendPage({ API_URL }) {
 
         </section>
         {
-          (recommendation.length !== 0 ? (
-            <RecommendCard cityName={recommendation[0].city} countryName={recommendation[0].country} imageURL={recommendation[0].photo_url} imageALT={recommendation[0].photo_description} />
-          ) : <>Loading</>)
+          (loaderTrigger) ? (Object.keys(recommendation).length ? (
+            <RecommendCard cityName={recommendation.city} countryName={recommendation.country} imageURL={recommendation.photo_url} imageALT={recommendation.photo_description} />
+          ) : (<div className="loader-container">
+            <l-ring color='#FD5056' size='100'></l-ring>
+          </div>)
+          ) : (<></>)
+
+
         }
 
         <section className="dropdown">
