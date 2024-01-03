@@ -26,7 +26,7 @@ function Day({ dayNumber, date }) {
   const [inputTime, setInputTime] = useState("");
   const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
-  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
+  const [, setTripInfo] = useRecoilState(tripInfoState);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);

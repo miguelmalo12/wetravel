@@ -2,7 +2,7 @@ import "./TravelPlanner.scss";
 import { useState } from 'react';
 import axios from 'axios';
 
-import { addDays, differenceInCalendarDays, parseISO, format, set } from 'date-fns';
+import { addDays, differenceInCalendarDays, parseISO, format } from 'date-fns';
 
 // recoil state
 import { useRecoilState } from "recoil";
@@ -40,7 +40,6 @@ function TravelPlannerView({ onUpdate }) {
   };
 
   const handleDeleteConfirm = async () => {
-    console.log('Deleting event:', eventToDelete);
     if (!eventToDelete) {
         console.error("Event not found");
         return;
