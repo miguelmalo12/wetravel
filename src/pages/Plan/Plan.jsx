@@ -34,6 +34,7 @@ function Plan() {
 
   const [userTripsUpdate, setUserTripsUpdate] = useState(0); // To trigger re-render of UserTrips
   const [viewTripClicked, setViewTripClicked] = useState(false); // Used for scroll behaviour
+  const [updateFeedback, setUpdateFeedback] = useState({ message: '', type: '' });
 
   // This handles the form submit on the hero form
   const handleFormSubmit = () => {
@@ -139,8 +140,10 @@ function Plan() {
     try {
       const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, updatedTripDetails);
       console.log("Trip updated successfully:", response.data);
+      setUpdateFeedback({ message: 'Trip updated!', type: 'success' });
     } catch (error) {
       console.error("Error updating trip:", error);
+      setUpdateFeedback({ message: 'Error updating trip.', type: 'error' });
     }
   };
 
@@ -164,6 +167,17 @@ function Plan() {
     return new Date(date.getTime() + userTimezoneOffset);
   }
 
+  // Resets feedback message after 3 seconds
+  useEffect(() => {
+    if (updateFeedback.message) {
+      const timer = setTimeout(() => {
+        setUpdateFeedback({ message: '', type: '' });
+      }, 3000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [updateFeedback]);
+
   return (
     <div>
       <main>
@@ -184,6 +198,7 @@ function Plan() {
           <div ref={travelPlannerViewRef}>
             <TravelPlannerView
             onUpdate={handleUpdateTrip}
+            updateFeedback={updateFeedback}
           />
           </div>
         :

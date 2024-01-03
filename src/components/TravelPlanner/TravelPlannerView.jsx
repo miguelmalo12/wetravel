@@ -20,7 +20,7 @@ import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-function TravelPlannerView({ onUpdate }) {
+function TravelPlannerView({ onUpdate, updateFeedback }) {
     
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState); 
 
@@ -162,6 +162,11 @@ function TravelPlannerView({ onUpdate }) {
             <button className="primary-button" onClick={onUpdate}>
               Update
             </button>
+            {updateFeedback.message && (
+              <div className={`feedback-message ${updateFeedback.type}`}>
+                {updateFeedback.message}
+              </div>
+            )}
           </div>
         </div>
       </div>
