@@ -192,7 +192,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
           {inputIndex === index ? (
             <div className="day--entry--container">
               <div>
-                <p className="day--entry--container__event">{event.event_description}</p>
+                <p className="day--entry--container__event" data-event-type={event.event_type}>{event.event_description}</p>
                 <p className="day--entry--container__time">
                   {event.event_time && to12HourFormat(event.event_time)}
                 </p>
@@ -221,7 +221,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
             </div>
           ) : (
             <div className="day--entry--container">
-              <p className="day--entry--container__event">{event.event_description}</p>
+              <p className="day--entry--container__event" data-event-type={event.event_type}>{event.event_description}</p>
               <p className="day--entry--container__time">
                 {event.event_time && to12HourFormat(event.event_time)}
               </p>

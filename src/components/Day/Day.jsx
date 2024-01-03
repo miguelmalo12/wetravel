@@ -118,7 +118,7 @@ function Day({ dayNumber, date }) {
           {inputIndex === index ? (
             <div className="day--entry--container">
               <div>
-                <p className="day--entry--container__event">{event.title}</p>
+                <p className="day--entry--container__event" data-event-type={event.type}>{event.title}</p>
                 <p className="day--entry--container__time">
                   {event.time}
                 </p>
@@ -147,7 +147,7 @@ function Day({ dayNumber, date }) {
             </div>
           ) : (
             <div className="day--entry--container">
-              <p className="day--entry--container__event">{event.title}</p>
+              <p className="day--entry--container__event" data-event-type={event.type}>{event.title}</p>
               <p className="day--entry--container__time">
                 {event.time}
               </p>
