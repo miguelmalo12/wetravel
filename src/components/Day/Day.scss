@@ -59,7 +59,7 @@
 
         @include tablet {
             margin-left: 10rem;
-            padding-bottom: 24px;
+            padding-bottom: 32px;
         }
 
         &--container {
@@ -78,19 +78,39 @@
                 &::before {
                     content: "";
                     display: inline-block;
-                    width: 25px;
-                    height: 25px;
-                    background-color: variables.$secondary-color;
+                    width: 40px;
+                    height: 40px;
+                    background-color: variables.$white;
                     border-radius: 50%;
                     position: absolute;
                     left: 25px;
                     z-index: 10;
-                    margin-top: 2px;
-                    border: 4px solid variables.$white;
+                    margin-top: -5px;
+                    border: 2px solid variables.$secondary-color;
+                    // box-shadow: 0 0 0 4px variables.$white;
+                    background-size: 60%;
+                    background-repeat: no-repeat;
+                    background-position: center;
 
                     @include tablet {
-                        left: 46px;
+                        left: 39px;
                     }
+                }
+
+                &[data-event-type="transportation"]::before {
+                    background-image: url('../../assets/icons/TransportationIcon.png');
+                }
+            
+                &[data-event-type="accommodation"]::before {
+                    background-image: url('../../assets/icons/AccommodationIcon.png');
+                }
+            
+                &[data-event-type="activity"]::before {
+                    background-image: url('../../assets/icons/ActivityIcon.png');
+                }
+            
+                &[data-event-type="restaurant"]::before {
+                    background-image: url('../../assets/icons/RestaurantIcon.png');
                 }
             }
 

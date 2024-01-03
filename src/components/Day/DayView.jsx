@@ -6,7 +6,7 @@ import { to12HourFormat } from '../../utils/convertHourUtils';
 import { to24HourFormat } from '../../utils/convertHourUtils';
 
 // recoil state
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { tripInfoState } from "../../state/tripState";
 import { viewTripState } from "../../state/viewTripState";
 
@@ -35,12 +35,12 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
   }))));
 
   const [inputIndex, setInputIndex] = useState(null);
-  const [inputValue, setInputValue] = useState("");
+  const [, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 
   // Global Recoil state for the trip
-  const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
+  const setViewTripDetails = useSetRecoilState(viewTripState);
 
   // This function adds an event to the day's events
   const addEventToDay = (eventData) => {
@@ -70,8 +70,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     e.preventDefault();
     const data = e.dataTransfer.getData("text/plain");
     const [title, type] = data.split(",");
-    console.log("title:", title, "type:", type);
-    console.log("data:", data)
+    
     addEventToDay({ title, type });
   };
 
@@ -125,7 +124,6 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
         event_description: events[index].tempDescription,
         event_time: to12HourFormat(events[index].tempTime),
     };
-    console.log("handleUpdateEventAndTime:", updatedEvent);
 
     const updatedDayEvents = [
       ...events.slice(0, index),
@@ -158,7 +156,6 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
   const handleDeleteClick = (index) => {
     const eventToBeDeleted = events[index];
-    console.log("Event to be deleted:", eventToBeDeleted);
     onDeleteEvent(eventToBeDeleted);
   };
 
@@ -192,7 +189,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
           {inputIndex === index ? (
             <div className="day--entry--container">
               <div>
-                <p className="day--entry--container__event">{event.event_description}</p>
+                <p className="day--entry--container__event" data-event-type={event.event_type}>{event.event_description}</p>
                 <p className="day--entry--container__time">
                   {event.event_time && to12HourFormat(event.event_time)}
                 </p>
@@ -221,7 +218,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
             </div>
           ) : (
             <div className="day--entry--container">
-              <p className="day--entry--container__event">{event.event_description}</p>
+              <p className="day--entry--container__event" data-event-type={event.event_type}>{event.event_description}</p>
               <p className="day--entry--container__time">
                 {event.event_time && to12HourFormat(event.event_time)}
               </p>
