@@ -204,7 +204,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
                 />
                 <input
                   type="time"
-                  value={events[index].tempTime}
+                  value={inputTime}
                   onChange={(e) => handleTimeChange(e, index)}
                   onKeyDown={(e) => handleEnterTime(e, index)}
                 />
@@ -228,7 +228,8 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
                 onClick={() => {
                   setInputIndex(index);
                   setInputValue(events[index].event_description);
-                  setInputTime(to12HourFormat(events[index].event_time));
+                  const formatted24HourTime = to24HourFormat(events[index].event_time);
+                  setInputTime(formatted24HourTime);
                 }}
                 alt="Edit icon"
               />
