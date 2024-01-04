@@ -126,6 +126,7 @@
                 padding-right: 12px;
                 font-size: 18px;
                 text-align: left;
+                min-width: 93px;
             }
 
             &__icon {
@@ -161,8 +162,8 @@
         margin-bottom: 49px;
 
         @include tablet {
-            width: 402px;
-            height: 117px;
+            width: 360px;
+            height: 100px;
             margin-left: 10rem;
         }
 

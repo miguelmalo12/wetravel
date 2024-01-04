@@ -1,5 +1,6 @@
 import "./Day.scss";
 import { useState, useEffect } from "react";
+import { format, parseISO } from 'date-fns';
 
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
@@ -33,7 +34,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     tempDescription: event.event_description, // Temporary description
     tempTime: event.event_time // Temporary time
   }))));
-
+  const formattedDate = format(parseISO(date), 'EEE, dd MMM');
   const [inputIndex, setInputIndex] = useState(null);
   const [, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
@@ -151,7 +152,6 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
     setInputIndex(null);
     setInputValue("");
-    // setInputTime("");
   };
 
   const handleDeleteClick = (index) => {
@@ -181,7 +181,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
         </div>
         <div className="day--card__text">
           <h5>Day {dayNumber}</h5>
-          <p>{date}</p>
+          <p>{formattedDate}</p>
         </div>
       </div>
       {events.map((event, index) => (
@@ -246,7 +246,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
       <div
         className="day--area"
         onDragOver={(e) => {
-          e.preventDefault(); // This is necessary to allow a drop
+          e.preventDefault();
         }}
         onDrop={onDrop}>
         <p>Drag Here</p>

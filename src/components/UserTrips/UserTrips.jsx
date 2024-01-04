@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // recoil state
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { userTripsModalState } from "../../state/modalState";
 import { viewTripState } from "../../state/viewTripState";
 
@@ -18,7 +18,7 @@ function UserTrips({ setViewTripClicked }) {
   const [trips, setTrips] = useState([]);
   const [isModalOpen, setModalOpen] = useRecoilState(userTripsModalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
-  const setViewTrip = useSetRecoilState(viewTripState);
+  const [viewTrip, setViewTrip] = useRecoilState(viewTripState);
 
   // GET All Trips from db
   useEffect(() => {
@@ -53,6 +53,11 @@ function UserTrips({ setViewTripClicked }) {
       });
       setTrips(trips.filter(trip => trip.trip_id !== selectedTripId));
       console.log("Trip deleted successfully!");
+
+      if (viewTrip && viewTrip.trip_id === selectedTripId) {
+        setViewTrip(null); // Reset viewTripState
+        setViewTripClicked(false); // Close TravelPlannerView
+      }
     } catch (error) {
       console.error("Error deleting trip:", error);
     }
