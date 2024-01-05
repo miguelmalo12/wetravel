@@ -57,6 +57,10 @@
         margin-left: 5.5rem;
         padding-bottom: 18px;
 
+        @media (min-width: 500px) {
+            padding-bottom: 26px;
+        }
+
         @include tablet {
             margin-left: 10rem;
             padding-bottom: 32px;
@@ -64,7 +68,7 @@
 
         &--container {
 
-            @include tablet {
+            @media (min-width: 500px) {
                 display: flex;
             }
 
@@ -180,9 +184,13 @@
         margin-bottom: 49px;
 
         @include tablet {
-            width: 360px;
+            width: 238px;
             height: 100px;
             margin-left: 10rem;
+        }
+
+        @media (min-width: 900px) {
+            width: 360px;
         }
 
     }
