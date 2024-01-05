@@ -27,7 +27,7 @@ const sortEventsByTime = (events) => {
   });
 };
 
-function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
+function DayView({ dayNumber, date, eventsProp, onDeleteEvent, draggedData, setDraggedData }) {
   // Initialize events state sorted by time
   const [events, setEvents] = useState(sortEventsByTime(eventsProp.map(event => ({
     ...event,
@@ -42,6 +42,13 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
 
   // Global Recoil state for the trip
   const setViewTripDetails = useSetRecoilState(viewTripState);
+
+  const handleDrop = (title, type) => {
+    if (draggedData) {
+      addEventToDay({ title: draggedData.title, type: draggedData.type });
+      setDraggedData(null); // Reset after drop
+    }
+  };
 
   // This function adds an event to the day's events
   const addEventToDay = (eventData) => {
@@ -71,7 +78,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
     e.preventDefault();
     const data = e.dataTransfer.getData("text/plain");
     const [title, type] = data.split(",");
-    
+    handleDrop(title, type);
     addEventToDay({ title, type });
   };
 
@@ -245,9 +252,8 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent }) {
       ))}
       <div
         className="day--area"
-        onDragOver={(e) => {
-          e.preventDefault();
-        }}
+        onTouchEnd={(e) => handleDrop(e)}
+        onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}>
         <p>Drag Here</p>
       </div>
