@@ -125,4 +125,26 @@
             }
         }
     }
+
+    &--notes {
+        padding-top: 8rem;
+
+        @include tablet {
+            padding-top: 11rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid variables.$light-text;
+            border-radius: 5px;
+            resize: none;
+
+            &:focus {
+                border: 2px solid variables.$secondary-color;
+                outline: none;
+            }
+        }
+    }
 }
