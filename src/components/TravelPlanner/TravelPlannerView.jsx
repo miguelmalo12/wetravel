@@ -1,5 +1,5 @@
 import "./TravelPlanner.scss";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { addDays, differenceInCalendarDays, parseISO, format } from 'date-fns';
@@ -23,6 +23,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 function TravelPlannerView({ onUpdate, updateFeedback }) {
     
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState); 
+  const [notes, setNotes] = useState(viewTrip.notes || 'Enter any trip comments, notes, links, etc.');
 
   // Generate an array of dates from start_date to end_date
   const startDate = parseISO(viewTrip.start_date);
@@ -33,6 +34,38 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
   // Needed for deleting event flow
   const [isModalOpen, setModalOpen] = useState(false);
   const [eventToDelete, setEventToDelete] = useState(null);
+
+  // Variable for mobile drag and drop
+  const [draggedData, setDraggedData] = useState(null);
+
+  // Used for mobile drag and drop
+  const handleDragStart = (data) => {
+    setDraggedData(data);
+  };
+
+  const handleTouchMove = (e) => {
+    const touchLocation = e.touches[0];
+    const target = document.elementFromPoint(
+      touchLocation.clientX,
+      touchLocation.clientY
+    );
+  };
+
+  // Update viewTrip state when notes change
+  useEffect(() => {
+    if (viewTrip.notes !== notes) {
+      setViewTrip({ ...viewTrip, notes: notes });
+    }
+  }, [notes, viewTrip, setViewTrip]);
+
+  // Logic for notes textarea
+  useEffect(() => {
+    setNotes(viewTrip.notes || 'Enter any trip comments, notes, links, etc.');
+  }, [viewTrip.notes]);
+
+  const handleNotesChange = (e) => {
+    setNotes(e.target.value);
+  };
 
   const handleDeleteEvent = (event) => {
     setEventToDelete(event);
@@ -100,6 +133,8 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
                     date={date}
                     eventsProp={getEventsForDate(date)}
                     onDeleteEvent={handleDeleteEvent}
+                    draggedData={draggedData}
+                    setDraggedData={setDraggedData}
                 />
             ))}
         </div>
@@ -110,6 +145,8 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             </div>
             <div
               className="planner--plan__events--items--item"
+              onTouchStart={() => handleDragStart({ title: "Add Transportation", type: "transportation" })}
+              onTouchMove={handleTouchMove}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -119,10 +156,15 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               }}
             >
               <img src={transportationIcon} alt="" />
-              <h5>Add Transportation</h5>
+              <h5>
+                <span className="desktop-text">Add Transportation</span>
+                <span className="mobile-text">Transport</span>
+              </h5>
             </div>
             <div
               className="planner--plan__events--items--item"
+              onTouchStart={() => handleDragStart({ title: "Add Accommodation", type: "accommodation" })}
+              onTouchMove={handleTouchMove}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -132,20 +174,30 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               }}
             >
               <img src={accommodationIcon} alt="" />
-              <h5>Add Accommodation</h5>
+              <h5>
+                <span className="desktop-text">Add Accommodation</span>
+                <span className="mobile-text">Accomm.</span>
+              </h5>
             </div>
             <div
               className="planner--plan__events--items--item"
+              onTouchStart={() => handleDragStart({ title: "Add Activity", type: "activity" })}
+              onTouchMove={handleTouchMove}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("text/plain", "Add Activity,activity");
               }}
             >
               <img src={activityIcon} alt="" />
-              <h5>Add Activity</h5>
+              <h5>
+                <span className="desktop-text">Add Activity</span>
+                <span className="mobile-text">Activity</span>
+              </h5>
             </div>
             <div
               className="planner--plan__events--items--item"
+              onTouchStart={() => handleDragStart({ title: "Add Restaurant", type: "restaurant" })}
+              onTouchMove={handleTouchMove}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -155,7 +207,10 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               }}
             >
               <img src={restaurantIcon} alt="" />
-              <h5>Add Restaurant</h5>
+              <h5>
+                <span className="desktop-text">Add Restaurant</span>
+                <span className="mobile-text">Restaurant</span>
+              </h5>
             </div>
           </div>
           <div className="planner--plan__events--button">
@@ -169,6 +224,15 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             )}
           </div>
         </div>
+      </div>
+      <div className="planner--notes">
+          <h3>Trip Notes:</h3>
+          <textarea
+            name="trip-notes" id="trip-notes" cols="30" rows="6"
+            value={notes}
+            onChange={handleNotesChange}
+          >
+          </textarea>
       </div>
       {isModalOpen && (
         <Modal

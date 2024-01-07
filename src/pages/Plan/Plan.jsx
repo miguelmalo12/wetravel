@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { parseISO, format, isValid } from 'date-fns';
 
 // recoil state
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { tripInfoState } from '../../state/tripState';
 import { viewTripState } from "../../state/viewTripState";
 
@@ -29,7 +29,7 @@ function Plan() {
   const travelPlannerViewRef = useRef(null);
   const userTripsRef = useRef(null);
 
-  const tripInfo = useRecoilValue(tripInfoState);
+  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
 
   const [userTripsUpdate, setUserTripsUpdate] = useState(0); // To trigger re-render of UserTrips
@@ -40,6 +40,14 @@ function Plan() {
   const handleFormSubmit = () => {
     setShowTravelPlanner(true);
     setViewTripDetails(null);
+    setTripInfo(prevState => ({
+      ...prevState,
+      notes: null
+    }));
+  };
+
+  const handleNotesUpdate = (newNotes) => {
+    setTripInfo(prevState => ({ ...prevState, notes: newNotes }));
   };
 
   // Calculates the number of days between the start and end date for TravelPlanner
@@ -59,7 +67,7 @@ function Plan() {
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
-    const { location, events } = tripInfo;
+    const { location, notes, events } = tripInfo;
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
     const formattedEvents = [];
@@ -110,6 +118,7 @@ function Plan() {
       destination: location,
       start_date: format(fromDate, "yyyy-MM-dd"),
       end_date: format(toDate, "yyyy-MM-dd"),
+      notes: notes,
       events: formattedEvents,
     };
 
@@ -134,7 +143,8 @@ function Plan() {
       events: filteredEvents.map(event => {
         const { tempId, ...eventData } = event;
         return eventData;
-      })
+      }),
+      notes: viewTripDetails.notes,
     };
 
     try {
@@ -208,6 +218,8 @@ function Plan() {
                 location={tripInfo.location}
                 dayCount={dayCount}
                 startDate={adjustDateForTimezone(tripInfo.startDate)}
+                notes={tripInfo.notes}
+                onNotesChange={handleNotesUpdate}
                 onSave={handleSaveTrip}
               />
             </div>
