@@ -143,7 +143,8 @@ function Plan() {
       events: filteredEvents.map(event => {
         const { tempId, ...eventData } = event;
         return eventData;
-      })
+      }),
+      notes: viewTripDetails.notes,
     };
 
     try {

@@ -16,6 +16,7 @@ import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onNotesChange, onSave }) {
   const [notes, setNotes] = useState(initialNotes || 'Enter any trip comments, notes, links, etc.');
 
+  //Functions for notes textarea
   useEffect(() => {
     setNotes(initialNotes || 'Enter any trip comments, notes, links, etc.');
   }, [initialNotes]);

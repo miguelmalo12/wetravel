@@ -1,5 +1,5 @@
 import "./TravelPlanner.scss";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { addDays, differenceInCalendarDays, parseISO, format } from 'date-fns';
@@ -23,6 +23,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 function TravelPlannerView({ onUpdate, updateFeedback }) {
     
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState); 
+  const [notes, setNotes] = useState(viewTrip.notes || 'Enter any trip comments, notes, links, etc.');
 
   // Generate an array of dates from start_date to end_date
   const startDate = parseISO(viewTrip.start_date);
@@ -48,6 +49,22 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
       touchLocation.clientX,
       touchLocation.clientY
     );
+  };
+
+  // Update viewTrip state when notes change
+  useEffect(() => {
+    if (viewTrip.notes !== notes) {
+      setViewTrip({ ...viewTrip, notes: notes });
+    }
+  }, [notes, viewTrip, setViewTrip]);
+
+  // Logic for notes textarea
+  useEffect(() => {
+    setNotes(viewTrip.notes || 'Enter any trip comments, notes, links, etc.');
+  }, [viewTrip.notes]);
+
+  const handleNotesChange = (e) => {
+    setNotes(e.target.value);
   };
 
   const handleDeleteEvent = (event) => {
@@ -207,6 +224,15 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             )}
           </div>
         </div>
+      </div>
+      <div className="planner--notes">
+          <h3>Trip Notes:</h3>
+          <textarea
+            name="trip-notes" id="trip-notes" cols="30" rows="6"
+            value={notes}
+            onChange={handleNotesChange}
+          >
+          </textarea>
       </div>
       {isModalOpen && (
         <Modal
