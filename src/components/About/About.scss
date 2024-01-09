@@ -180,6 +180,14 @@
         @include tablet {
             width: 50%;
         }
+
+        .paragraph {
+            text-align: center;
+
+            @include tablet {
+                text-align: left;
+            }
+        }
     }
 }
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // recoil state
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userTripsModalState } from "../../state/modalState";
 import { viewTripState } from "../../state/viewTripState";
 
@@ -73,7 +73,8 @@ function UserTrips({ setViewTripClicked }) {
 
       // Sets trip data to recoil state
       setViewTrip(response.data);
-      setViewTripClicked(true); // Used for the scroll behaviour
+      setViewTripClicked(false);
+      setTimeout(() => setViewTripClicked(true), 10); // Used for the scroll behaviour
     } catch (error) {
       console.error("Error getting trip details:", error);
     }

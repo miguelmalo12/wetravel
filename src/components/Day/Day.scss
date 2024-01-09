@@ -199,7 +199,7 @@
         position: absolute;
         top: 66px;
         left: 23px;
-        height: 94%;
+        height: 100%;
         border: 3px solid #8D8D8D;
         background-color: variables.$medium-text;
         z-index: -1;
@@ -208,10 +208,15 @@
             top: 100px;
             left: 56px;
         }
+    }
+
+    &:last-child .day--line {
+        height: 94%;
 
         @include desktop {
-            height: 80%;
+            height: 82%;
         }
+
     }
 
     &--finish-icon {

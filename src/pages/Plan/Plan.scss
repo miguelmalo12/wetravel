@@ -1,12 +1,4 @@
-*,
-*::before,
-*::after{
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
+.plan-page {
+    position: relative;
+    max-width: 100vw;
 }
-
-body{
-    box-sizing: border-box;
-}
-

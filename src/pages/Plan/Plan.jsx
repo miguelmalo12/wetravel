@@ -158,13 +158,13 @@ function Plan() {
   };
 
   // Scroll to TravelPlanner or TravelPlannerView when become visible
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (showTravelPlanner && travelPlannerRef.current) {
       travelPlannerRef.current.scrollIntoView({ behavior: 'smooth' });
     } else if (viewTripDetails && travelPlannerViewRef.current) {
       travelPlannerViewRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+    // eslint-disable-next-line
   }, [showTravelPlanner, viewTripClicked, travelPlannerRef, travelPlannerViewRef]);
 
   // Check if viewTripDetails is valid
@@ -189,7 +189,7 @@ function Plan() {
   }, [updateFeedback]);
 
   return (
-    <div>
+    <div className="plan-page">
       <main>
         <HeroForm
           subtitle={"Easily Plan Your Next Trip"}
@@ -230,6 +230,7 @@ function Plan() {
           title={"Need A Recommendation?"}
           text={"Your perfect destination, one click away"}
           buttonText={"Recommend Me"}
+          to='/recommend'
         />
       </main>
       <Footer />
