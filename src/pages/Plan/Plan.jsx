@@ -230,6 +230,7 @@ function Plan() {
           title={"Need A Recommendation?"}
           text={"Your perfect destination, one click away"}
           buttonText={"Recommend Me"}
+          to='/recommend'
         />
       </main>
       <Footer />

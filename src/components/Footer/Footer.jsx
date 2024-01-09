@@ -25,15 +25,15 @@ export const Footer = () => {
                     <h5 className='footer__title'>Menu</h5>
                     <ul className='footer__list'>
                         <li className='footer__item'><Link className='footer__link' to="/">Home</Link></li>
-                        <li className='footer__item'><Link className='footer__link' to="recommend">Recommend</Link></li>
-                        <li className='footer__item'><Link className='footer__link' to="plan">Plan</Link></li>
-                        <li className='footer__item'><Link className='footer__link'>Login</Link></li>
+                        <li className='footer__item'><Link className='footer__link' to="/recommend">Recommend</Link></li>
+                        <li className='footer__item'><Link className='footer__link' to="/plan">Plan</Link></li>
+                        <li className='footer__item'><Link className='footer__link' to="/login">Login</Link></li>
                     </ul>
                 </div>
                 <div className="footer__sign-up">
                     <h5 className='footer__title'>Not A Member?</h5>
                     <p className='footer__text'>Don't waste the opportunity to make your future vacations a better experience</p>
-                    <ButtonSecondary to='' text='Sign Up' />
+                    <ButtonSecondary to='/sign-up' text='Sign Up' />
                 </div>
             </div>
 

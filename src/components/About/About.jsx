@@ -78,7 +78,7 @@ function About() {
                     <h6 className='heading--tertiary'>travel planner</h6>
                     <h2 className='heading--primary'>Your Dream Places</h2>
                     <p className='gallery__text'>Already have a destination in mind? Let our Travel Planner be your trusty guide to map out every detail of your next adventure</p>
-                    <ButtonPrimary to='#' text='Travel Planner' />
+                    <ButtonPrimary to='/plan' text='Travel Planner' />
                 </div>
 
                 <div className="gallery__image-container">

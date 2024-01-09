@@ -73,7 +73,8 @@ function UserTrips({ setViewTripClicked }) {
 
       // Sets trip data to recoil state
       setViewTrip(response.data);
-      setViewTripClicked(true); // Used for the scroll behaviour
+      setViewTripClicked(false);
+      setTimeout(() => setViewTripClicked(true), 10); // Used for the scroll behaviour
     } catch (error) {
       console.error("Error getting trip details:", error);
     }
