@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // recoil state
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userTripsModalState } from "../../state/modalState";
 import { viewTripState } from "../../state/viewTripState";
 

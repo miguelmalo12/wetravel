@@ -49,6 +49,10 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
       touchLocation.clientX,
       touchLocation.clientY
     );
+
+    if (draggedData && target) {
+      // Logic for mobile drag and drop
+    }
   };
 
   // Update viewTrip state when notes change

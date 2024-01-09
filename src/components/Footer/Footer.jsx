@@ -18,7 +18,7 @@ export const Footer = () => {
 
             <div className="footer__intro-container">
                 <img className='footer__logo' src={logo} alt="wetravel logo" />
-                <p className='footer__text footer__text--long'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dictum rhoncus vulputate.</p>
+                <p className='footer__text footer__text--long'>With WeTravel, finding and planning your entire trip is just a few clicks away.</p>
             </div>
             <div className="footer__wrapper">
                 <div className="footer__link-container">

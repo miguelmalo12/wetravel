@@ -21,18 +21,18 @@ function About() {
                 <div className="process__text-container">
                     <h6 className='heading--tertiary'>3 steps for the perfect match</h6>
                     <h2 className='heading--primary'>Find Travel Perfection</h2>
-                    <p className='process__text'>Discover your ideal vacation with just a few clicks.</p>
+                    <p className='process__text'>Discover your ideal vacation and start planning your trip.</p>
                 </div>
                 <div className="process__step-container">
                     <div className="step">
                         <img className='step__icon' src={vectorIcon1} alt="vector icon 1" />
                         <h5 className='step__heading'>Take The Questionnaire</h5>
-                        <p className='step__text'>After a few questions about your travel preferences, we'll recommend cities or countries that match your preferences.</p>
+                        <p className='step__text'>Signup for free and, after a few questions about your travel preferences, we'll recommend destinations that match your preferences.</p>
                     </div>
                     <div className="step">
                         <img className='step__icon' src={vectorIcon2} alt="vector icon 2" />
                         <h5 className='step__heading'>Find Your Destination</h5>
-                        <p className='step__text'>Use our filters to narrow down destination options by location, type of trip, activities, and more. Swipe through tailored recommendations.</p>
+                        <p className='step__text'>Use our filters to narrow down destination options by location, time and length of trip, travel companions, and more. Find your AI-tailored recommendation.</p>
                     </div>
                     <div className="step">
                         <img className='step__icon' src={vectorIcon3} alt="vector icon 3" />

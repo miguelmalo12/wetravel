@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // recoil state
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { userState } from './state/userState';
 import { loginState } from './state/loginState';
+import { signUpStatusState } from './state/signUpStatusState';
 
 import Home from './pages/Home';
 import RecommendPage from './pages/RecommendPage/RecommendPage';
@@ -14,8 +15,6 @@ import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Header from './components/Header/Header';
 import StatusPage from './pages/StatusPage/StatusPage';
-import { useRecoilState } from 'recoil';
-import { signUpStatusState } from './state/signUpStatusState';
 
 function App() {
 
@@ -23,7 +22,7 @@ function App() {
   const setUser = useSetRecoilState(userState);
   const [profileData, setProfileData] = useState({});
   const setLoggedIn = useSetRecoilState(loginState)
-  const [signUpStatusPage, setSignUpStatusPage] = useRecoilState(signUpStatusState)
+  const signUpStatusPage = useRecoilValue(signUpStatusState)
   // check if user is logged in every time the app renders
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
