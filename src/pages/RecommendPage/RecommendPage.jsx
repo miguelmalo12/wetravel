@@ -19,14 +19,13 @@ ring.register()
 
 function RecommendPage({ API_URL }) {
 
-  const destinationType = ['City', 'Area', 'Region']
   const destinationScope = ['Within Country', 'International']
   const companionPreference = ['Friend', 'Family', 'Partner', 'Solo']
   const lengthOfTrip = Array.from({ length: 30 }, (_, index) => `${index + 1} ${(index + 1 === 1) ? 'day' : 'days'} `);
   const preferredMonth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   const [recommendInput, setRecommendInput] = useState({
-    destination_type: "",
+    destination_type: "city",
     destination_scope: "",
     companionship_preference: "",
     trip_length: "",
@@ -79,7 +78,6 @@ function RecommendPage({ API_URL }) {
             <h6>Get your perfect Destination match</h6>
             <h1>AI Recommends</h1>
             <form onSubmit={handleFormSubmit} className="recommend-form recommend-form--mobile">
-              <SingleHeroFormSelect name='destination_type' onChange={handleInputChange} label='Destination Type' icon={heroLocationIcon} options={destinationType} />
               <SingleHeroFormSelect name='destination_scope' onChange={handleInputChange} label='Destination Scope' icon={heroLocationIcon} options={destinationScope} />
               <SingleHeroFormSelect name='companionship_preference' onChange={handleInputChange} label='Companionship Preference' icon={companionIcon} options={companionPreference} />
               <SingleHeroFormSelect name='trip_length' onChange={handleInputChange} label='Length of Journey' icon={timerIcon} options={lengthOfTrip} />
@@ -88,7 +86,6 @@ function RecommendPage({ API_URL }) {
 
             {/* Tablet Design */}
             <form onSubmit={handleFormSubmit} className="recommend-form recommend-form--tablet">
-              <SingleHeroFormSelect name='destination_type' onChange={handleInputChange} label='Destination Type' icon={heroLocationIcon} options={destinationType} />
               <DoubleHeroFormSelect name1='destination_scope' name2='companionship_preference' onChange={handleInputChange} label1='Destination Scope' icon1={heroLocationIcon} label2='Companionship Preference' icon2={companionIcon} options1={destinationScope} options2={companionPreference} />
               <DoubleHeroFormSelectSubmit onSubmit={handleFormSubmit} name1='trip_length' name2='travel_month' onChange={handleInputChange} label1='Length of Journey' icon1={timerIcon} label2='Preferred Travel Month' icon2={dateIcon} options1={lengthOfTrip} options2={preferredMonth} />
             </form>
