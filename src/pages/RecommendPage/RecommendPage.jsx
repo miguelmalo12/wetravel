@@ -77,7 +77,7 @@ function RecommendPage({ API_URL }) {
 
           <div className="recommend-page__text-container slidein-left">
             <h6>Get your perfect Destination match</h6>
-            <h1>Recommend Me!</h1>
+            <h1>AI Recommends</h1>
             <form onSubmit={handleFormSubmit} className="recommend-form recommend-form--mobile">
               <SingleHeroFormSelect name='destination_type' onChange={handleInputChange} label='Destination Type' icon={heroLocationIcon} options={destinationType} />
               <SingleHeroFormSelect name='destination_scope' onChange={handleInputChange} label='Destination Scope' icon={heroLocationIcon} options={destinationScope} />
