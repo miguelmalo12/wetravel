@@ -112,7 +112,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, draggedData, setD
         ];
     
         setEvents(updatedEvents);
-        setInputIndex(null); // You might also consider resetting the input fields here
+        setInputIndex(null);
     }
   };
 

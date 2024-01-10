@@ -6,12 +6,14 @@
 
 .heroform {
     position: relative;
+    margin-top: 16px;
     margin-bottom: 8%;
 
     @include tablet {
         display: flex;
         align-items: center;
         text-align: left;
+        margin-top: 0;
         margin-bottom: 2%;
     }
 
