@@ -27,14 +27,25 @@ function App() {
   const [profileData, setProfileData] = useState({});
   const [loggedIn, setLoggedIn] = useRecoilState(loginState);
   const signUpStatusPage = useRecoilValue(signUpStatusState)
+
   // check if user is logged in every time the app renders
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const storedUser = localStorage.getItem('userData');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
       setLoggedIn(true);
     }
+    setIsLoading(false);
   }, [setUser, setLoggedIn]);
+  // spinner while checking if user is logged in
+  if (isLoading) {
+    return (
+      <div className="spinner">
+        <div className="spinner-inner"></div>
+      </div>
+    )
+  }
 
   return (
     <div className="App">
