@@ -13,7 +13,7 @@ import { ButtonDropDown } from '../../components/Button/Button';
 import RecommendCard from '../../components/RecommendCard/RecommendCard';
 import axios from 'axios';
 import { userState } from '../../state/userState';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { ring } from 'ldrs';
 ring.register()
 
@@ -40,7 +40,7 @@ function RecommendPage({ API_URL }) {
   }
 
   const [dropDown, setDropDown] = useState(false)
-  const [user, setUser] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const [recommendation, setRecommendation] = useState({})
   const [loaderTrigger, setLoaderTrigger] = useState(false)
 
@@ -62,7 +62,7 @@ function RecommendPage({ API_URL }) {
           localStorage.setItem('recommendationList', JSON.stringify(response.data))
         }
 
-      }, 5000)
+      }, 2000)
     } catch (error) {
       console.error('Error submitting form:', error);
     }
