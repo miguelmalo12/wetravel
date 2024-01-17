@@ -11,12 +11,12 @@
         background-repeat: no-repeat;
         position: absolute;
         width: 100%;
-        height: 600px;
+        height: 500px;
         left: 0px;
         top: 0px;
 
         @include tablet {
-            height: 482px;
+            height: 400px;
         }
     }
 
@@ -39,6 +39,7 @@
         text-align: center;
         padding: 24px 0;
         width: 100%;
+        z-index: 2;
 
         @include tablet {
             width: 60%;
@@ -49,13 +50,13 @@
 
     &__image-container {
         display: none;
-        z-index: -1;
+        z-index: 1;
 
         @include tablet {
             display: flex;
             justify-content: center;
             min-width: 320px;
-            z-index: -1;
+
         }
 
         @include desktop {
@@ -69,6 +70,7 @@
     &__image {
         width: 100%;
         max-width: 600px;
+        z-index: 1;
     }
 
     &__bgicon {
