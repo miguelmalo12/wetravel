@@ -1,4 +1,5 @@
 import "./TravelPlanner.scss";
+import { useState, useEffect } from "react";
 
 // components
 import Day from "../Day/Day";
@@ -12,7 +13,18 @@ import accommodationIcon from "../../assets/icons/AccommodationIcon.png";
 import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
-function TravelPlanner({ location, dayCount, startDate, onSave }) {
+function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onNotesChange, onSave }) {
+  const [notes, setNotes] = useState(initialNotes || 'Enter any trip comments, notes, links, etc.');
+
+  //Functions for notes textarea
+  useEffect(() => {
+    setNotes(initialNotes || 'Enter any trip comments, notes, links, etc.');
+  }, [initialNotes]);
+
+  const handleNotesChange = (e) => {
+    setNotes(e.target.value);
+    onNotesChange(e.target.value);
+  };
 
   return (
     <div className="planner">
@@ -41,7 +53,10 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               }}
             >
               <img src={transportationIcon} alt="" />
-              <h5>Add Transportation</h5>
+              <h5>
+                <span className="desktop-text">Add Transportation</span>
+                <span className="mobile-text">Transport</span>
+              </h5>
             </div>
             <div
               className="planner--plan__events--items--item"
@@ -51,7 +66,10 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               }}
             >
               <img src={accommodationIcon} alt="" />
-              <h5>Add Accommodation</h5>
+              <h5>
+                <span className="desktop-text">Add Accommodation</span>
+                <span className="mobile-text">Accomm.</span>
+              </h5>
             </div>
             <div
               className="planner--plan__events--items--item"
@@ -61,7 +79,10 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               }}
             >
               <img src={activityIcon} alt="" />
-              <h5>Add Activity</h5>
+              <h5>
+                <span className="desktop-text">Add Activity</span>
+                <span className="mobile-text">Activity</span>
+              </h5>
             </div>
             <div
               className="planner--plan__events--items--item"
@@ -71,13 +92,25 @@ function TravelPlanner({ location, dayCount, startDate, onSave }) {
               }}
             >
               <img src={restaurantIcon} alt="" />
-              <h5>Add Restaurant</h5>
+              <h5>
+                <span className="desktop-text">Add Restaurant</span>
+                <span className="mobile-text">Restaurant</span>
+              </h5>
             </div>
           </div>
           <div className="planner--plan__events--button">
             <button className="primary-button" onClick={onSave}>Save</button>
           </div>
         </div>
+      </div>
+      <div className="planner--notes">
+          <h3>Trip Notes:</h3>
+          <textarea
+            name="trip-notes" id="trip-notes" cols="30" rows="6"
+            value={notes}
+            onChange={handleNotesChange}
+          >
+          </textarea>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { parseISO, format, isValid } from 'date-fns';
 
 // recoil state
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { tripInfoState } from '../../state/tripState';
 import { viewTripState } from "../../state/viewTripState";
 
@@ -34,11 +34,20 @@ function Plan() {
 
   const [userTripsUpdate, setUserTripsUpdate] = useState(0); // To trigger re-render of UserTrips
   const [viewTripClicked, setViewTripClicked] = useState(false); // Used for scroll behaviour
+  const [updateFeedback, setUpdateFeedback] = useState({ message: '', type: '' });
 
   // This handles the form submit on the hero form
   const handleFormSubmit = () => {
     setShowTravelPlanner(true);
     setViewTripDetails(null);
+    setTripInfo(prevState => ({
+      ...prevState,
+      notes: null
+    }));
+  };
+
+  const handleNotesUpdate = (newNotes) => {
+    setTripInfo(prevState => ({ ...prevState, notes: newNotes }));
   };
 
   // Calculates the number of days between the start and end date for TravelPlanner
@@ -58,7 +67,7 @@ function Plan() {
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
-    const { location, startDate, endDate, events } = tripInfo;
+    const { location, notes, events } = tripInfo;
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
     const formattedEvents = [];
@@ -74,9 +83,9 @@ function Plan() {
     }
 
     const year = new Date(tripInfo.startDate).getFullYear(); // Extract the year from startDate
-
+    
     Object.entries(events).forEach(([key, dayEvents]) => {
-      const [dayOfWeek, dateStr] = key.split(', ');
+      const [, dateStr] = key.split(', ');
       if (!dateStr) {
         console.error("dateStr is undefined in handleSaveTrip");
         return;
@@ -109,9 +118,10 @@ function Plan() {
       destination: location,
       start_date: format(fromDate, "yyyy-MM-dd"),
       end_date: format(toDate, "yyyy-MM-dd"),
+      notes: notes,
       events: formattedEvents,
     };
-    console.log("tripData on save trip function", tripData);
+
     try {
       await axios.post(`${API_URL}/plan`, tripData, { withCredentials: true });
       console.log("Trip saved successfully!");
@@ -133,16 +143,17 @@ function Plan() {
       events: filteredEvents.map(event => {
         const { tempId, ...eventData } = event;
         return eventData;
-      })
+      }),
+      notes: viewTripDetails.notes,
     };
-
-    console.log('filtered viewTripDetails for PUT request',updatedTripDetails)
 
     try {
       const response = await axios.put(`${API_URL}/plan/${viewTripDetails.trip_id}`, updatedTripDetails);
       console.log("Trip updated successfully:", response.data);
+      setUpdateFeedback({ message: 'Trip updated!', type: 'success' });
     } catch (error) {
       console.error("Error updating trip:", error);
+      setUpdateFeedback({ message: 'Error updating trip.', type: 'error' });
     }
   };
 
@@ -153,6 +164,7 @@ function Plan() {
     } else if (viewTripDetails && travelPlannerViewRef.current) {
       travelPlannerViewRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+    // eslint-disable-next-line
   }, [showTravelPlanner, viewTripClicked, travelPlannerRef, travelPlannerViewRef]);
 
   // Check if viewTripDetails is valid
@@ -165,8 +177,19 @@ function Plan() {
     return new Date(date.getTime() + userTimezoneOffset);
   }
 
+  // Resets feedback message after 3 seconds
+  useEffect(() => {
+    if (updateFeedback.message) {
+      const timer = setTimeout(() => {
+        setUpdateFeedback({ message: '', type: '' });
+      }, 3000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [updateFeedback]);
+
   return (
-    <div>
+    <div className="plan-page">
       <main>
         <HeroForm
           subtitle={"Easily Plan Your Next Trip"}
@@ -185,6 +208,7 @@ function Plan() {
           <div ref={travelPlannerViewRef}>
             <TravelPlannerView
             onUpdate={handleUpdateTrip}
+            updateFeedback={updateFeedback}
           />
           </div>
         :
@@ -194,6 +218,8 @@ function Plan() {
                 location={tripInfo.location}
                 dayCount={dayCount}
                 startDate={adjustDateForTimezone(tripInfo.startDate)}
+                notes={tripInfo.notes}
+                onNotesChange={handleNotesUpdate}
                 onSave={handleSaveTrip}
               />
             </div>
@@ -204,6 +230,7 @@ function Plan() {
           title={"Need A Recommendation?"}
           text={"Your perfect destination, one click away"}
           buttonText={"Recommend Me"}
+          to='/recommend'
         />
       </main>
       <Footer />

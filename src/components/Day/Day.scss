@@ -13,7 +13,7 @@
         background: #FFFFFF;
         box-shadow: 0px 15px 60px rgba(0, 0, 0, 0.1);
         border-radius: 15px;
-        padding: 1rem 1.5rem 1rem;
+        padding: 1rem;
         margin-bottom: 2rem;
 
         @include tablet {
@@ -24,8 +24,8 @@
         }
 
         &__icon {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 15px;
             background: variables.$secondary-color;
             margin-right: 1.2rem;
@@ -37,8 +37,8 @@
             }
 
             & img {
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
 
                 @include tablet {
                     width: 59px;
@@ -57,13 +57,28 @@
         margin-left: 5.5rem;
         padding-bottom: 18px;
 
+        @media (min-width: 500px) {
+            padding-bottom: 26px;
+        }
+
         @include tablet {
             margin-left: 10rem;
-            padding-bottom: 24px;
+            padding-bottom: 32px;
         }
 
         &--container {
-            display: flex;
+
+            @media (min-width: 500px) {
+                display: flex;
+            }
+
+            input[type="text"] {
+              width: 125px;
+
+              @include tablet {
+                width: unset;
+              }
+            }
 
             &__event {
                 padding-right: 10px;
@@ -78,34 +93,62 @@
                 &::before {
                     content: "";
                     display: inline-block;
-                    width: 25px;
-                    height: 25px;
-                    background-color: variables.$secondary-color;
+                    width: 40px;
+                    height: 40px;
+                    background-color: variables.$white;
                     border-radius: 50%;
                     position: absolute;
-                    left: 25px;
+                    left: 6px;
                     z-index: 10;
-                    margin-top: 2px;
-                    border: 4px solid variables.$white;
+                    margin-top: -5px;
+                    border: 2px solid variables.$secondary-color;
+                    // box-shadow: 0 0 0 4px variables.$white;
+                    background-size: 60%;
+                    background-repeat: no-repeat;
+                    background-position: center;
 
                     @include tablet {
-                        left: 46px;
+                        left: 39px;
                     }
+                }
+
+                &[data-event-type="transportation"]::before {
+                    background-image: url('../../assets/icons/TransportationIcon.png');
+                }
+            
+                &[data-event-type="accommodation"]::before {
+                    background-image: url('../../assets/icons/AccommodationIcon.png');
+                }
+            
+                &[data-event-type="activity"]::before {
+                    background-image: url('../../assets/icons/ActivityIcon.png');
+                }
+            
+                &[data-event-type="restaurant"]::before {
+                    background-image: url('../../assets/icons/RestaurantIcon.png');
                 }
             }
 
             input {
-                margin-right: 16px;
                 outline: none;
                 border: 1px solid #1EBBD7;
                 border-radius: 50px;
                 padding-left: 4px;
+
+                @include tablet {
+                    margin-right: 16px;
+                }
             }
 
             &__time {
                 padding-right: 12px;
-                font-size: 18px;
+                font-size: 16px;
                 text-align: left;
+                min-width: 93px;
+
+                @include tablet {
+                    font-size: 18px;
+                }
             }
 
             &__icon {
@@ -132,18 +175,22 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 165px;
+        width: 148px;
         height: 64px;
         background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
         border: 3px dashed #8D8D8D;
         border-radius: 5px;
-        margin-left: 5rem;
+        margin-left: 1rem;
         margin-bottom: 49px;
 
         @include tablet {
-            width: 402px;
-            height: 117px;
+            width: 238px;
+            height: 100px;
             margin-left: 10rem;
+        }
+
+        @media (min-width: 900px) {
+            width: 360px;
         }
 
     }
@@ -151,15 +198,25 @@
     &--line {
         position: absolute;
         top: 66px;
-        left: 34px;
+        left: 23px;
         height: 100%;
         border: 3px solid #8D8D8D;
         background-color: variables.$medium-text;
+        z-index: -1;
 
         @include tablet {
             top: 100px;
             left: 56px;
         }
+    }
+
+    &:last-child .day--line {
+        height: 94%;
+
+        @include desktop {
+            height: 82%;
+        }
+
     }
 
     &--finish-icon {

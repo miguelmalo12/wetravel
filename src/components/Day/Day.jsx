@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
+import { to24HourFormat } from '../../utils/convertHourUtils';
 
 // recoil state
 import { useRecoilState } from "recoil";
@@ -26,7 +27,7 @@ function Day({ dayNumber, date }) {
   const [inputTime, setInputTime] = useState("");
   const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
-  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
+  const [, setTripInfo] = useRecoilState(tripInfoState);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -82,7 +83,7 @@ function Day({ dayNumber, date }) {
   };
 
   const handleDeleteConfirm = () => {
-    const updatedEvents = [...events];
+    const updatedEvents = events.filter((_, index) => index !== deleteEventIndex);
     setEvents(updatedEvents);
     setModalOpen(false);
   };
@@ -118,7 +119,7 @@ function Day({ dayNumber, date }) {
           {inputIndex === index ? (
             <div className="day--entry--container">
               <div>
-                <p className="day--entry--container__event">{event.title}</p>
+                <p className="day--entry--container__event" data-event-type={event.type}>{event.title}</p>
                 <p className="day--entry--container__time">
                   {event.time}
                 </p>
@@ -147,7 +148,7 @@ function Day({ dayNumber, date }) {
             </div>
           ) : (
             <div className="day--entry--container">
-              <p className="day--entry--container__event">{event.title}</p>
+              <p className="day--entry--container__event" data-event-type={event.type}>{event.title}</p>
               <p className="day--entry--container__time">
                 {event.time}
               </p>
@@ -157,7 +158,7 @@ function Day({ dayNumber, date }) {
                 onClick={() => {
                   setInputIndex(index);
                   setInputValue(events[index].title);
-                  const formattedTime = event.time ? to12HourFormat(event.time) : "";
+                  const formattedTime = event.time ? to24HourFormat(event.time) : "";
                   setInputTime(formattedTime);
                 }}
                 alt="Edit icon"
@@ -183,14 +184,13 @@ function Day({ dayNumber, date }) {
       <div
         className="day--area"
         onDragOver={(e) => {
-          e.preventDefault(); // This is necessary to allow a drop
+          e.preventDefault();
         }}
         onDrop={(e) => {
           e.preventDefault();
           const data = e.dataTransfer.getData("text/plain");
           const [eventTitle, eventType] = data.split(",");
-          // const eventTime = "00:00 AM";
-          setEvents([...events, { title: eventTitle, time: "", type: eventType }]);
+          setEvents([...events, { title: eventTitle, time: "00:00", type: eventType }]);
         }}>
         <p>Drag Here</p>
       </div>

@@ -1,23 +1,22 @@
 import './AuthFormComponents.scss';
 
-export const FormGroupInput = ({ label, type, name, onChange, customRef, handleEmailValidation }) => {
+export const FormGroupInput = ({ label, type, name, onChange, customRef, required }) => {
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
-            <input type={type} onChange={(handleEmailValidation) ? (event) => {
-                onChange(event)
-                handleEmailValidation(event)
-            } : (onChange)} id={name} name={name} ref={customRef} className="authentication-form__input" />
+            <input required={required} type={type} onChange={onChange} id={name} name={name} ref={customRef} className="authentication-form__input" />
         </div>
     )
 }
 
-export const FormGroupSelect = ({ label, optionArray, name, defaultOption }) => {
+export const FormGroupSelect = ({ label, optionArray, name, defaultOption, setSelectedValue, required }) => {
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
-            <select id={name} name={name} className="authentication-form__input">
-                <option className='authentication-form__input--option' value="" disabled defaultValue>{defaultOption}</option>
+            <select required={required} onChange={e => {
+                setSelectedValue(e.target.value)
+            }} id={name} name={name} className="authentication-form__input">
+                <option className='authentication-form__input--option' value="" defaultValue>{defaultOption}</option>
                 {optionArray.map(option => {
                     return (
                         <option key={option} className='authentication-form__input--option' value={option} >{option}</option>
@@ -28,7 +27,8 @@ export const FormGroupSelect = ({ label, optionArray, name, defaultOption }) => 
     )
 }
 
-export const FormGroupCheckbox = ({ label, optionArray, name, type }) => {
+export const FormGroupCheckbox = ({ label, optionArray, name, type, setSelectedArray, selectedArray, required }) => {
+
     return (
         <div className="authentication-form__group">
             <label htmlFor={name} className="authentication-form__label">{label}</label>
@@ -37,8 +37,20 @@ export const FormGroupCheckbox = ({ label, optionArray, name, type }) => {
                     optionArray.map(option => {
                         return (
                             <div className="authentication-form__group--checkbox" key={option}>
-                                <label htmlFor="" className="authentication-form__label--checkbox">{option}</label>
-                                <input type={type} className="authentication-form__input--checkbox" value={option} name={name} />
+                                <label htmlFor={name} className="authentication-form__label--checkbox">{option}</label>
+                                <input
+                                    onChange={e => {
+                                        if (e.target.checked) {
+                                            setSelectedArray([...selectedArray, e.target.value]);
+                                        } else {
+                                            setSelectedArray(selectedArray.filter(item => item !== e.target.value));
+                                        }
+                                    }}
+                                    type={type}
+                                    className="authentication-form__input--checkbox"
+                                    value={option}
+                                    name={name}
+                                    required={required} />
                             </div>
                         )
                     })

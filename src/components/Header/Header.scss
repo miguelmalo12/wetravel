@@ -1,9 +1,6 @@
 @use '../../styles/partials/mixins' as *;
 @use '../../styles/partials/variables' as *;
 
-
-
-
 .navbar-list {
     display: flex;
     flex-direction: column;
@@ -67,13 +64,11 @@
 
 }
 
-
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 16px;
-
 
     @include tablet {
         padding: 32px 40px;
@@ -85,7 +80,6 @@
         margin: 0 auto;
     }
 
-
     &__logo-container {
         display: flex;
         justify-content: center;
@@ -93,16 +87,13 @@
     }
 
     &__logo {
-        height: 28px;
+        height: 30px;
     }
-
-
 }
 
 // Navbar Mobile 
 
 .navbar-hamburger {
-
 
     position: relative;
 
@@ -153,7 +144,6 @@
         transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
-
     &__checkbox:checked~&__background {
         transform: scale(90);
         overflow: hidden;
@@ -198,7 +188,6 @@
         }
     }
 
-
     &__checkbox:checked+&__button &__icon {
         background-color: transparent;
     }
@@ -213,10 +202,6 @@
         transform: rotate(-135deg);
     }
 }
-
-
-
-
 
 
 // Navbar Desktop
@@ -243,7 +228,7 @@
         line-height: 30px;
         color: $dark-color;
 
-        &--active {
+        &.active {
             color: $primary-color;
         }
 
@@ -263,7 +248,6 @@
                 background-color: $white;
                 color: $primary-color;
             }
-
         }
 
         &--button-secondary {

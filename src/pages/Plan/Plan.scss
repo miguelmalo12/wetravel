@@ -1,12 +1,9 @@
-*,
-*::before,
-*::after{
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-}
+@use '../../styles/partials/mixins' as *;
 
-body{
-    box-sizing: border-box;
-}
+.plan-page {
+    max-width: 100vw;
 
+    @include tablet {
+        position: relative;
+    }
+}
