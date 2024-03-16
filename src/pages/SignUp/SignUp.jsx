@@ -140,7 +140,7 @@ const SignUp = ({ API_URL }) => {
         <div className="sign-up-page">
             <div className="authentication-form-container">
                 <p className="authentication-form-container__heading">Register for free and start planning</p>
-                <ButtonGoogle />
+                {/* <ButtonGoogle /> */}
                 <p className="divider-or">or</p>
                 {(error) ? (
                     <p className="error-message">{errorMessage}</p>

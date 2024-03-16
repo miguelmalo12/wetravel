@@ -60,7 +60,7 @@ const SignIn = ({ API_URL }) => {
             {!isLoggedIn ? (
                 <div className="authentication-form-container">
                     <p className="authentication-form-container__heading">To continue, sign in to WeTravel</p>
-                    <ButtonGoogle />
+                    {/* <ButtonGoogle /> */}
                     <p className="divider-or">or</p>
                     {(error) ? (
                         <p className="error-message">{errorMessage}</p>
@@ -70,13 +70,13 @@ const SignIn = ({ API_URL }) => {
                         <FormGroupInput onChange={handleInputChange} label='Email' type='email' name='email' />
                         <FormGroupInput onChange={handleInputChange} label='Password' type='password' name='password' />
 
-                        <div className="authentication-form__wrapper">
+                        {/* <div className="authentication-form__wrapper">
                             <Link className="authentication-form__link">Forget you password?</Link>
                             <div className="authentication-form__group--checkbox">
                                 <label htmlFor="remember_me" className="authentication-form__label--checkbox">Remember Me</label>
                                 <input name='remember_me' id='remember_me' type="checkbox" className="authentication-form__input--checkbox" />
                             </div>
-                        </div>
+                        </div> */}
                         <ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' />
 
 
