@@ -1,5 +1,5 @@
 import './SignIn.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ import { userState } from '../../state/userState';
 
 //components
 import { CopyrightFooter } from '../../components/Footer/Footer';
-import { ButtonPrimary, ButtonSecondary, ButtonGoogle } from '../../components/Button/Button';
+import { ButtonPrimary, ButtonSecondary } from '../../components/Button/Button';
 import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComponents';
 import { useRecoilState } from 'recoil';
 import { loginState } from '../../state/loginState';
@@ -61,7 +61,7 @@ const SignIn = ({ API_URL }) => {
                 <div className="authentication-form-container">
                     <p className="authentication-form-container__heading">To continue, sign in to WeTravel</p>
                     {/* <ButtonGoogle /> */}
-                    <p className="divider-or">or</p>
+                    {/* <p className="divider-or"></p> */}
                     {(error) ? (
                         <p className="error-message">{errorMessage}</p>
                     ) : <></>}

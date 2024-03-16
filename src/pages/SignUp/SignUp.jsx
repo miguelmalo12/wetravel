@@ -1,7 +1,7 @@
 import './SignUp.scss';
 import { CopyrightFooter } from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
-import { ButtonGoogle, ButtonPrimary, ButtonSecondary } from '../../components/Button/Button';
+import { ButtonPrimary, ButtonSecondary } from '../../components/Button/Button';
 import { FormGroupInput, FormGroupSelect, FormGroupCheckbox } from '../../components/AuthFormComponents/AuthFormComponents';
 import QuestionnaireLogo from '../../assets/Questionnaire.png';
 import { country_list } from '../../utils/countryListUtils';
@@ -141,7 +141,7 @@ const SignUp = ({ API_URL }) => {
             <div className="authentication-form-container">
                 <p className="authentication-form-container__heading">Register for free and start planning</p>
                 {/* <ButtonGoogle /> */}
-                <p className="divider-or">or</p>
+                {/* <p className="divider-or">or</p> */}
                 {(error) ? (
                     <p className="error-message">{errorMessage}</p>
                 ) : <></>}
