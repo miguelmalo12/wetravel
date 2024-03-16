@@ -31,13 +31,13 @@ export const FormGroupCheckbox = ({ label, optionArray, name, type, setSelectedA
 
     return (
         <div className="authentication-form__group">
-            <label htmlFor={name} className="authentication-form__label">{label}</label>
+            <p className="authentication-form__label">{label}</p>
             <div className={`authentication-form__checkbox-container`}>
                 {
                     optionArray.map(option => {
                         return (
                             <div className="authentication-form__group--checkbox" key={option}>
-                                <label htmlFor={name} className="authentication-form__label--checkbox">{option}</label>
+                                <label htmlFor={(type === 'radio' ? `${name}-${option}` : `${option}-${name}`)} className="authentication-form__label--checkbox">{option}</label>
                                 <input
                                     onChange={e => {
                                         if (e.target.checked) {
@@ -49,7 +49,8 @@ export const FormGroupCheckbox = ({ label, optionArray, name, type, setSelectedA
                                     type={type}
                                     className="authentication-form__input--checkbox"
                                     value={option}
-                                    name={name}
+                                    name={(type === 'radio' ? name : `${option}-${name}`)}
+                                    id={(type === 'radio' ? `${name}-${option}` : `${option}-${name}`)}
                                     required={required} />
                             </div>
                         )
