@@ -60,7 +60,7 @@ const SignIn = ({ API_URL }) => {
             {!isLoggedIn ? (
                 <div className="authentication-form-container">
                     <p className="authentication-form-container__heading">To continue, sign in to WeTravel</p>
-                    <ButtonGoogle />
+                    {/* <ButtonGoogle /> */}
                     <p className="divider-or">or</p>
                     {(error) ? (
                         <p className="error-message">{errorMessage}</p>
