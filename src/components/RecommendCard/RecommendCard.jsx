@@ -29,7 +29,7 @@ const RecommendCard = ({ cityName, countryName, imageURL, imageALT, setRecommend
             </div>
             <div className="recommend-card__image-container">
                 <img src={imageURL} alt={imageALT} className="recommend-card__image" />
-                <ButtonPrimary text='Go to Planner' className='recommend-card__button-primary' />
+                <ButtonPrimary text='Go to Planner' to='/plan' className='recommend-card__button-primary' />
             </div>
         </section>
     )
