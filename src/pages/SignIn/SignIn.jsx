@@ -71,7 +71,7 @@ const SignIn = ({ API_URL }) => {
                         <FormGroupInput onChange={handleInputChange} label='Password' type='password' name='password' />
 
                         {/* <div className="authentication-form__wrapper">
-                            <Link className="authentication-form__link">Forget you password?</Link>
+                            <Link className="authentication-form__link">Forgot Password?</Link>
                             <div className="authentication-form__group--checkbox">
                                 <label htmlFor="remember_me" className="authentication-form__label--checkbox">Remember Me</label>
                                 <input name='remember_me' id='remember_me' type="checkbox" className="authentication-form__input--checkbox" />
