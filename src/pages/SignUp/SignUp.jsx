@@ -181,7 +181,7 @@ const SignUp = ({ API_URL }) => {
                     <ButtonPrimary text='Sign Up' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} />
                 </form>
                 <p className="authentication-form-container__heading">Already have an account?</p>
-                <ButtonSecondary text='Sign In' />
+                <ButtonSecondary text='Sign In' to='/login' />
             </div>
             <CopyrightFooter />
 
