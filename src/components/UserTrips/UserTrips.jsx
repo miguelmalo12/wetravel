@@ -36,7 +36,8 @@ function UserTrips({ setViewTripClicked }) {
         const response = await axios.get(`${API_URL}/plan?user_id=${userId}`, {
           withCredentials: true,
         });
-        setTrips(response.data);
+        const sortedTrips = response.data.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+        setTrips(sortedTrips);
       } catch (error) {
         console.error("Error getting trips:", error);
       }

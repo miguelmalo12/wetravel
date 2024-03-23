@@ -1,5 +1,5 @@
 import './HeroForm.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // recoil state
 import { useRecoilState } from 'recoil';
@@ -16,6 +16,7 @@ function HeroForm({ subtitle, title, image, onFormSubmit }) {
   const [localLocation, setLocalLocation] = useState("");
   const [localStartDate, setLocalStartDate] = useState("");
   const [localEndDate, setLocalEndDate] = useState("");
+  const [minDate, setMinDate] = useState('');
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 
   const validate = () => {
@@ -41,6 +42,23 @@ function HeroForm({ subtitle, title, image, onFormSubmit }) {
       }
     }
   };
+
+  // Gets today's date in correct UTC to use as minDate for date inputs
+  useEffect(() => {
+    const getTodayDateString = () => {
+      const today = new Date();
+      const year = today.getFullYear();
+      let month = today.getMonth() + 1;
+      let day = today.getDate();
+
+      month = month < 10 ? `0${month}` : month;
+      day = day < 10 ? `0${day}` : day;
+
+      return `${year}-${month}-${day}`;
+    };
+
+    setMinDate(getTodayDateString());
+  }, []);
 
   return (
     <>
@@ -84,7 +102,15 @@ function HeroForm({ subtitle, title, image, onFormSubmit }) {
                     (e.currentTarget.type = "text")
                   }
                   value={localStartDate}
-                  onChange={(e) => setLocalStartDate(e.target.value)}
+                  onChange={(e) => {
+                    const newStartDate = e.target.value;
+                    setLocalStartDate(newStartDate);
+                    // Optionally reset the "To" date if it's before the "From" date
+                    if (localEndDate && newStartDate > localEndDate) {
+                      setLocalEndDate('');
+                    }
+                  }}
+                  min={minDate}
                 />
               </div>
             </div>
@@ -106,6 +132,7 @@ function HeroForm({ subtitle, title, image, onFormSubmit }) {
                   }
                   value={localEndDate}
                   onChange={(e) => setLocalEndDate(e.target.value)}
+                  min={localStartDate || minDate}
                 />
               </div>
             </div>
