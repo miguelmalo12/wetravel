@@ -7,6 +7,7 @@
     padding: 24px 0;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 
     @include tablet {
         padding: 32px 0;
