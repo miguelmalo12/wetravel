@@ -163,7 +163,7 @@ const SignUp = ({ API_URL }) => {
                             </div>
                         </div>
                         <div className="questionnaire__content">
-                            <FormGroupSelect required={true} setSelectedValue={setCountry} label='Which country are you are you currently residing in?' optionArray={country_list} defaultOption='Select Country' name='country' />
+                            <FormGroupSelect required={true} setSelectedValue={setCountry} label='Which country are you currently residing in?' optionArray={country_list} defaultOption='Select Country' name='country' />
                             <FormGroupCheckbox required={true} selectedArray={travelerTypeSelect} setSelectedArray={setTravelerTypeSelect} type='checkbox' label='What type of traveler best describes you? Select all that apply' optionArray={travelerType} name='travelType' />
                             <FormGroupCheckbox required={true} selectedArray={foodTypeSelect} setSelectedArray={setFoodTypeSelect} type='checkbox' label='Which type of food do you prefer? Select all that apply' optionArray={foodType} name='foodType' />
                             <FormGroupCheckbox required={true} selectedArray={importanceLevelSelect} setSelectedArray={setImportanceLevelSelect} type='radio' label='How important is food and gastronomy to you when you travel?' optionArray={importanceLevels} name='importanceLevels' />
