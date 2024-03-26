@@ -57,6 +57,12 @@
         color: $medium-text;
         font-weight: 700;
     }
+
+    &--disabled {
+        background: #CCCCCC;
+        color: $white;
+        border: 2px solid #CCCCCC;
+    }
 }
 
 .hero-form-button {
