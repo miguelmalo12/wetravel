@@ -44,6 +44,7 @@ const SignUp = ({ API_URL }) => {
     const [cultureImmerseSelect, setCultureImmerseSelect] = useState([])
 
 
+    const [isTermsConditonsChecked, setIsTermsConditionsChecked] = useState(false)
 
 
     const [signUpCredentials, setSignUpCredentials] = useState({
@@ -174,11 +175,13 @@ const SignUp = ({ API_URL }) => {
                         </div>
 
                         <div className="term-condition">
-                            <input type="checkbox" className="term-condition__input" />
+                            <input type="checkbox" className="term-condition__input" onChange={(e) => {
+                                setIsTermsConditionsChecked(e.target.checked)
+                            }} />
                             <p className="term-condition__text">I accept the <Link className='term-condition__link'>Terms and Conditions</Link></p>
                         </div>
                     </section>
-                    <ButtonPrimary text='Sign Up' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} />
+                    <ButtonPrimary text='Sign Up' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} disabled={!isTermsConditonsChecked} />
                 </form>
                 <p className="authentication-form-container__heading">Already have an account?</p>
                 <ButtonSecondary text='Sign In' to='/login' />
