@@ -35,46 +35,24 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [eventToDelete, setEventToDelete] = useState(null);
 
-  // Variable for mobile drag and drop
-  const [draggedData, setDraggedData] = useState(null);
+  const [showDragArea, setShowDragArea] = useState(false);
 
-  // Used for mobile drag and drop
-  const handleDragStart = (data, event) => {
-    setDraggedData(data);
+  // Variable for mobile touch and drop
+  const [touchedData, setTouchedData] = useState(null);
+
+  // Used for mobile touch and drop
+  const handleTouchStart = (data, event) => {
+    setTouchedData(data);
+    
+    if (window.innerWidth < 810) {
+      setShowDragArea(true);
+    }
 
     if (!event.target) {
       console.error("Invalid event target");
       return;
     }
-
-    const ghostElement = event.target.cloneNode(true);
-    ghostElement.id = "ghost-element";
-    document.body.appendChild(ghostElement);
-    
-    // Styles
-    ghostElement.style.position = "absolute";
-    ghostElement.style.left = `${event.touches[0].clientX}px`;
-    ghostElement.style.top = `${event.touches[0].clientY}px`;
-    ghostElement.style.pointerEvents = "none";
   };
-
-  const handleTouchMove = (e) => {
-    const touchLocation = e.touches[0];
-    const ghostElement = document.getElementById("ghost-element");
-
-    if (ghostElement) {
-      ghostElement.style.left = `${touchLocation.clientX}px`;
-      ghostElement.style.top = `${touchLocation.clientY}px`;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    const ghostElement = document.getElementById("ghost-element");
-    if (ghostElement) {
-      document.body.removeChild(ghostElement);
-    }
-    // Additional logic to handle the drop...
-  }; 
 
   // Update viewTrip state when notes change
   useEffect(() => {
@@ -158,8 +136,10 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
                     date={date}
                     eventsProp={getEventsForDate(date)}
                     onDeleteEvent={handleDeleteEvent}
-                    draggedData={draggedData}
-                    setDraggedData={setDraggedData}
+                    touchedData={touchedData}
+                    setTouchedData={setTouchedData}
+                    showDragArea={showDragArea}
+                    setShowDragArea={setShowDragArea}
                 />
             ))}
         </div>
@@ -170,9 +150,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             </div>
             <div
               className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Transportation", type: "transportation" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Transportation", type: "transportation" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -189,9 +167,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             </div>
             <div
               className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Accommodation", type: "accommodation" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Accommodation", type: "accommodation" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -208,9 +184,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             </div>
             <div
               className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Activity", type: "activity" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Activity", type: "activity" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("text/plain", "Add Activity,activity");
@@ -224,9 +198,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             </div>
             <div
               className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Restaurant", type: "restaurant" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Restaurant", type: "restaurant" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(

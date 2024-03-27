@@ -176,12 +176,12 @@
         align-items: center;
         justify-content: center;
         width: 148px;
-        height: 64px;
+        height: 54px;
         background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
         border: 3px dashed #8D8D8D;
         border-radius: 5px;
         margin-left: 1rem;
-        margin-bottom: 49px;
+        margin-bottom: 24px;
 
         @include tablet {
             width: 238px;
@@ -191,6 +191,7 @@
 
         @media (min-width: 900px) {
             width: 360px;
+            margin-bottom: 49px;
         }
 
     }
@@ -225,5 +226,15 @@
         left: -16px;
         width: 32px;
         height: 32px;
+    }
+}
+
+.hidden-on-phablet {
+    display: none;
+}
+
+@media (min-width: 810px) {
+    .day--area.hidden-on-phablet {
+      display: block;
     }
 }
