@@ -77,9 +77,16 @@
                     align-items: center;
                     margin-bottom: 1rem;
                     cursor: pointer;
+                    padding: 4px;
 
                     @include tablet {
                         margin-bottom: 2.8rem;
+                        padding: 0;
+                    }
+
+                    &.active {
+                        background-color: rgba(variables.$primary-color, 0.2);
+                        border-radius: 5px;
                     }
     
                     img {

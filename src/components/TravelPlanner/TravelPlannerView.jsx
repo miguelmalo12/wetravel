@@ -37,21 +37,26 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
 
   const [showDragArea, setShowDragArea] = useState(false);
 
-  // Variable for mobile touch and drop
+  // Variables for mobile touch and drop
   const [touchedData, setTouchedData] = useState(null);
+  const [activeItem, setActiveItem] = useState(null);
 
   // Used for mobile touch and drop
   const handleTouchStart = (data, event) => {
-    setTouchedData(data);
+    if (activeItem && activeItem.title === data.title) {
+      setActiveItem(null);
+      setShowDragArea(false);
+    } else {
+      setActiveItem(data);
+      setTouchedData(data);
+      if (window.innerWidth < 810) {
+        setShowDragArea(true);
+      }
+    }
     
-    if (window.innerWidth < 810) {
-      setShowDragArea(true);
-    }
+    
 
-    if (!event.target) {
-      console.error("Invalid event target");
-      return;
-    }
+    event.preventDefault();
   };
 
   // Update viewTrip state when notes change
@@ -149,7 +154,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <h3>Events</h3>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Transportation" ? 'active' : ''}`}
               onTouchStart={(e) => handleTouchStart({ title: "Add Transportation", type: "transportation" }, e)}
               draggable="true"
               onDragStart={(e) => {
@@ -166,7 +171,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Accommodation" ? 'active' : ''}`}
               onTouchStart={(e) => handleTouchStart({ title: "Add Accommodation", type: "accommodation" }, e)}
               draggable="true"
               onDragStart={(e) => {
@@ -183,7 +188,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Activity" ? 'active' : ''}`}
               onTouchStart={(e) => handleTouchStart({ title: "Add Activity", type: "activity" }, e)}
               draggable="true"
               onDragStart={(e) => {
@@ -197,7 +202,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Restaurant" ? 'active' : ''}`}
               onTouchStart={(e) => handleTouchStart({ title: "Add Restaurant", type: "restaurant" }, e)}
               draggable="true"
               onDragStart={(e) => {
