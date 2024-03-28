@@ -20,7 +20,9 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
-function Day({ dayNumber, date }) {
+function Day({ dayNumber, date, touchedData, setTouchedData }) {
+  const isPhablet = window.innerWidth < 810;
+
   const [events, setEvents] = useState([]);
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -28,6 +30,20 @@ function Day({ dayNumber, date }) {
   const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
   const [, setTripInfo] = useRecoilState(tripInfoState);
+
+  const addEventToDay = (eventData) => {
+    eventData.time = to12HourFormat(eventData.time || "00:00"); 
+    setEvents(prevEvents => [...prevEvents, eventData]);
+    setTouchedData(null);
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text/plain");
+    const [title, type] = data.split(",");
+    const newEvent = { title, time: "00:00", type, id: Date.now() };
+    addEventToDay(newEvent);
+  };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -183,16 +199,16 @@ function Day({ dayNumber, date }) {
       ))}
       <div
         className="day--area"
-        onDragOver={(e) => {
-          e.preventDefault();
+        onTouchEnd={() => {
+          if (touchedData) {
+            addEventToDay({ ...touchedData, id: Date.now() });
+            setTouchedData(null);
+          }
         }}
-        onDrop={(e) => {
-          e.preventDefault();
-          const data = e.dataTransfer.getData("text/plain");
-          const [eventTitle, eventType] = data.split(",");
-          setEvents([...events, { title: eventTitle, time: "00:00", type: eventType }]);
-        }}>
-        <p>Drag Here</p>
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={onDrop}
+      >
+        <p>{isPhablet ? "Tap Icon, Then Here" : "Drag Here"}</p>
       </div>
       <div className="day--line">
         <img src={finishIcon} alt="Icon description" className="day--finish-icon" />
