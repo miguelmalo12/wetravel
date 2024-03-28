@@ -14,6 +14,7 @@ import { FormGroupInput } from '../../components/AuthFormComponents/AuthFormComp
 import { useRecoilState } from 'recoil';
 import { loginState } from '../../state/loginState';
 import Modal from '../../components/Modal/Modal';
+import { ButtonLoading } from '../../components/Button/Button';
 
 
 const SignIn = ({ API_URL }) => {
@@ -21,6 +22,7 @@ const SignIn = ({ API_URL }) => {
     const setUser = useSetRecoilState(userState);
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const [loading, setLoading] = useState(false);
 
     const [signInCredentials, setSignInCredentials] = useState({
         email: '',
@@ -36,22 +38,28 @@ const SignIn = ({ API_URL }) => {
     }
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        axios
-            .post(`${API_URL}/auth/login`, {
-                email: signInCredentials.email,
-                password: signInCredentials.password,
-            })
-            .then((response) => {
-                const { user } = response.data;
-                localStorage.setItem("userData", JSON.stringify(user));
-                setUser(user);
-                setLoggedIn(true);
-                navigate('/')
-            })
-            .catch(() => {
-                setError(true)
-                setErrorMessage('Email or password is invalid. Please try again.')
-            });
+        setLoading(true)
+        setTimeout(() => {
+            axios
+                .post(`${API_URL}/auth/login`, {
+                    email: signInCredentials.email,
+                    password: signInCredentials.password,
+                })
+                .then((response) => {
+                    const { user } = response.data;
+                    localStorage.setItem("userData", JSON.stringify(user));
+                    setUser(user);
+                    setLoggedIn(true);
+                    navigate('/')
+                    setLoading(false)
+                })
+                .catch(() => {
+                    setLoading(false)
+                    setError(true)
+                    setErrorMessage('Email or password is invalid. Please try again.')
+                });
+        }, 1500)
+
     };
 
     return (
@@ -77,7 +85,10 @@ const SignIn = ({ API_URL }) => {
                                 <input name='remember_me' id='remember_me' type="checkbox" className="authentication-form__input--checkbox" />
                             </div>
                         </div> */}
-                        <ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' />
+                        {
+                            !loading ? (<ButtonPrimary text='Sign In' className='authentication-form__button--primary' type='submit' />) : (<ButtonLoading />)
+                        }
+
 
 
                     </form>

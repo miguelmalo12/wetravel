@@ -51,3 +51,12 @@ export const ButtonDropDown = ({ className, dropDown, setDropDown }) => {
         </button>
     )
 }
+
+export const ButtonLoading = () => {
+    return (
+        <button className={`button button--loading`}>
+            <l-ring color='#FFFFFF' size='20'></l-ring>
+            Loading
+        </button>
+    )
+}
