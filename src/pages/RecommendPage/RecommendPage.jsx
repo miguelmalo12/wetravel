@@ -38,7 +38,7 @@ function RecommendPage({ API_URL }) {
     })
   }
 
-  const [dropDown, setDropDown] = useState(false)
+  const [dropDown, setDropDown] = useState(true)
   const user = useRecoilValue(userState);
   const [recommendation, setRecommendation] = useState({})
   const [loaderTrigger, setLoaderTrigger] = useState(false)
@@ -127,7 +127,7 @@ function RecommendPage({ API_URL }) {
                 Using the inputs above, you will be able to specify your mutable likings each time you seek recommendations. This flexibility allows us to tailor your recommendations for every new journey, making each trip recommendation unique.
               </p>
               <p className="dropdown__text">
-                With both your immutable and mutable preferences at hand, we turn to our AI system and generate the perfect match for you. This way, we combine your personal likes and current desires with our AI's expertise to suggest destinations that promise to align with your ideal vacation.
+                <strong>With both your immutable and mutable preferences at hand, we turn to our AI system and generate the perfect match for you.</strong> This way, we combine your personal likes and current desires with our AI's expertise to suggest destinations that promise to align with your ideal vacation.
               </p>
               <p className="dropdown__text">
                 Your perfect travel spot is now just a click away!
