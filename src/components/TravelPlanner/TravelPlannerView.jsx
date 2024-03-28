@@ -35,8 +35,6 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [eventToDelete, setEventToDelete] = useState(null);
 
-  const [showDragArea, setShowDragArea] = useState(false);
-
   // Variables for mobile touch and drop
   const [touchedData, setTouchedData] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
@@ -45,17 +43,11 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
   const handleTouchStart = (data, event) => {
     if (activeItem && activeItem.title === data.title) {
       setActiveItem(null);
-      setShowDragArea(false);
     } else {
       setActiveItem(data);
       setTouchedData(data);
-      if (window.innerWidth < 810) {
-        setShowDragArea(true);
-      }
     }
     
-    
-
     event.preventDefault();
   };
 
@@ -143,8 +135,6 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
                     onDeleteEvent={handleDeleteEvent}
                     touchedData={touchedData}
                     setTouchedData={setTouchedData}
-                    showDragArea={showDragArea}
-                    setShowDragArea={setShowDragArea}
                 />
             ))}
         </div>

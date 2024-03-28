@@ -233,13 +233,3 @@
         height: 32px;
     }
 }
-
-.hidden-on-phablet {
-    display: none;
-}
-
-@media (min-width: 810px) {
-    .day--area.hidden-on-phablet {
-      display: block;
-    }
-}

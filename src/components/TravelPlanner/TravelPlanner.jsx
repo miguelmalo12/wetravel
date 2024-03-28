@@ -16,6 +16,22 @@ import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onNotesChange, onSave }) {
   const [notes, setNotes] = useState(initialNotes || 'Enter any trip comments, notes, links, etc.');
 
+  // Variables for mobile touch and drop
+  const [touchedData, setTouchedData] = useState(null);
+  const [activeItem, setActiveItem] = useState(null);
+
+  // Used for mobile touch and drop
+  const handleTouchStart = (data, event) => {
+    if (activeItem && activeItem.title === data.title) {
+      setActiveItem(null);
+    } else {
+      setActiveItem(data);
+      setTouchedData(data);
+    }
+    
+    event.preventDefault();
+  };
+
   //Functions for notes textarea
   useEffect(() => {
     setNotes(initialNotes || 'Enter any trip comments, notes, links, etc.');
@@ -37,7 +53,13 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
             const dateUTC = addDays(startDate, i);
             const zonedDate = utcToZonedTime(dateUTC, Intl.DateTimeFormat().resolvedOptions().timeZone);
             const formattedDate = format(zonedDate, "E, dd MMM");
-            return <Day key={i} dayNumber={i + 1} date={formattedDate} />;
+            return <Day 
+                      key={i}
+                      dayNumber={i + 1}
+                      date={formattedDate} 
+                      touchedData={touchedData}
+                      setTouchedData={setTouchedData}
+                    />;
           })}
         </div>
         <div className="planner--plan__events">
@@ -46,7 +68,8 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
               <h3>Events</h3>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Transportation" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Transportation", type: "transportation" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("text/plain", "Add Transportation,transportation");
@@ -55,11 +78,11 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
               <img src={transportationIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Transportation</span>
-                <span className="mobile-text">Transport</span>
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Accommodation" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Accommodation", type: "accommodation" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("text/plain", "Add Accommodation,accommodation");
@@ -68,11 +91,11 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
               <img src={accommodationIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Accommodation</span>
-                <span className="mobile-text">Accomm.</span>
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Activity" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Activity", type: "activity" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("text/plain", "Add Activity,activity");
@@ -81,11 +104,11 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
               <img src={activityIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Activity</span>
-                <span className="mobile-text">Activity</span>
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Restaurant" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Restaurant", type: "restaurant" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("text/plain", "Add Restaurant,restaurant");
@@ -94,7 +117,6 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
               <img src={restaurantIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Restaurant</span>
-                <span className="mobile-text">Restaurant</span>
               </h5>
             </div>
           </div>

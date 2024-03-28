@@ -27,7 +27,7 @@ const sortEventsByTime = (events) => {
   });
 };
 
-function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setTouchedData, showDragArea, setShowDragArea }) {
+function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setTouchedData }) {
   const isPhablet = window.innerWidth < 810;
   // Initialize events state sorted by time
   const [events, setEvents] = useState(sortEventsByTime(eventsProp.map(event => ({
@@ -47,7 +47,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setT
   const handleDrop = (title, type) => {
     if (touchedData) {
       addEventToDay({ title: touchedData.title, type: touchedData.type });
-      setTouchedData(null); // Reset after drop
+      setTouchedData(null);
     }
   };
 
@@ -252,21 +252,17 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setT
         </div>
       ))}
       <div
-        className={`day--area ${!showDragArea && isPhablet ? 'hidden-on-phablet' : ''}`}
+        className="day--area"
         onTouchEnd={(e) => {
-          if (!isPhablet) {
-            handleDrop(e);
-          }
           if (touchedData) {
-            addEventToDay(touchedData); // Handle the event addition
-            setTouchedData(null); // Reset touchedData
-            setShowDragArea(false); // Hide the "Drag Here" area, if needed
+            addEventToDay(touchedData);
+            setTouchedData(null);
           }
         }}
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
       >
-        <p>{isPhablet ? "Tap Here" : "Drag Here"}</p>
+        <p>{isPhablet ? "Tap Icon, Then Here" : "Drag Here"}</p>
       </div>
       <div className="day--line">
         <img src={finishIcon} alt="Icon description" className="day--finish-icon" />
