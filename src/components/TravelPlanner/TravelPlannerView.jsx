@@ -167,7 +167,6 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={transportationIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Transportation</span>
-                <span className="mobile-text">Transport</span>
               </h5>
             </div>
             <div
@@ -184,7 +183,6 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={accommodationIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Accommodation</span>
-                <span className="mobile-text">Accomm.</span>
               </h5>
             </div>
             <div
@@ -198,7 +196,6 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={activityIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Activity</span>
-                <span className="mobile-text">Activity</span>
               </h5>
             </div>
             <div
@@ -215,7 +212,6 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={restaurantIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Restaurant</span>
-                <span className="mobile-text">Restaurant</span>
               </h5>
             </div>
           </div>
