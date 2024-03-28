@@ -35,46 +35,29 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [eventToDelete, setEventToDelete] = useState(null);
 
-  // Variable for mobile drag and drop
-  const [draggedData, setDraggedData] = useState(null);
+  const [showDragArea, setShowDragArea] = useState(false);
 
-  // Used for mobile drag and drop
-  const handleDragStart = (data, event) => {
-    setDraggedData(data);
+  // Variables for mobile touch and drop
+  const [touchedData, setTouchedData] = useState(null);
+  const [activeItem, setActiveItem] = useState(null);
 
-    if (!event.target) {
-      console.error("Invalid event target");
-      return;
+  // Used for mobile touch and drop
+  const handleTouchStart = (data, event) => {
+    if (activeItem && activeItem.title === data.title) {
+      setActiveItem(null);
+      setShowDragArea(false);
+    } else {
+      setActiveItem(data);
+      setTouchedData(data);
+      if (window.innerWidth < 810) {
+        setShowDragArea(true);
+      }
     }
-
-    const ghostElement = event.target.cloneNode(true);
-    ghostElement.id = "ghost-element";
-    document.body.appendChild(ghostElement);
     
-    // Styles
-    ghostElement.style.position = "absolute";
-    ghostElement.style.left = `${event.touches[0].clientX}px`;
-    ghostElement.style.top = `${event.touches[0].clientY}px`;
-    ghostElement.style.pointerEvents = "none";
+    
+
+    event.preventDefault();
   };
-
-  const handleTouchMove = (e) => {
-    const touchLocation = e.touches[0];
-    const ghostElement = document.getElementById("ghost-element");
-
-    if (ghostElement) {
-      ghostElement.style.left = `${touchLocation.clientX}px`;
-      ghostElement.style.top = `${touchLocation.clientY}px`;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    const ghostElement = document.getElementById("ghost-element");
-    if (ghostElement) {
-      document.body.removeChild(ghostElement);
-    }
-    // Additional logic to handle the drop...
-  }; 
 
   // Update viewTrip state when notes change
   useEffect(() => {
@@ -158,8 +141,10 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
                     date={date}
                     eventsProp={getEventsForDate(date)}
                     onDeleteEvent={handleDeleteEvent}
-                    draggedData={draggedData}
-                    setDraggedData={setDraggedData}
+                    touchedData={touchedData}
+                    setTouchedData={setTouchedData}
+                    showDragArea={showDragArea}
+                    setShowDragArea={setShowDragArea}
                 />
             ))}
         </div>
@@ -169,10 +154,8 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <h3>Events</h3>
             </div>
             <div
-              className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Transportation", type: "transportation" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Transportation" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Transportation", type: "transportation" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -184,14 +167,11 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={transportationIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Transportation</span>
-                <span className="mobile-text">Transport</span>
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Accommodation", type: "accommodation" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Accommodation" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Accommodation", type: "accommodation" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -203,14 +183,11 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={accommodationIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Accommodation</span>
-                <span className="mobile-text">Accomm.</span>
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Activity", type: "activity" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Activity" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Activity", type: "activity" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("text/plain", "Add Activity,activity");
@@ -219,14 +196,11 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={activityIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Activity</span>
-                <span className="mobile-text">Activity</span>
               </h5>
             </div>
             <div
-              className="planner--plan__events--items--item"
-              onTouchStart={(e) => handleDragStart({ title: "Add Restaurant", type: "restaurant" }, e)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              className={`planner--plan__events--items--item ${activeItem && activeItem.title === "Add Restaurant" ? 'active' : ''}`}
+              onTouchStart={(e) => handleTouchStart({ title: "Add Restaurant", type: "restaurant" }, e)}
               draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData(
@@ -238,7 +212,6 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
               <img src={restaurantIcon} alt="" />
               <h5>
                 <span className="desktop-text">Add Restaurant</span>
-                <span className="mobile-text">Restaurant</span>
               </h5>
             </div>
           </div>

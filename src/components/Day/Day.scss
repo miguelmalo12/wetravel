@@ -68,7 +68,7 @@
 
         &--container {
 
-            @media (min-width: 500px) {
+            @include desktop {
                 display: flex;
             }
 
@@ -145,9 +145,14 @@
                 font-size: 16px;
                 text-align: left;
                 min-width: 93px;
+                display: inline-block;
 
                 @include tablet {
                     font-size: 18px;
+                }
+
+                @include desktop {
+                    display: block;
                 }
             }
 
@@ -175,13 +180,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 148px;
-        height: 64px;
+        width: 165px;
+        height: 48px;
         background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
         border: 3px dashed #8D8D8D;
         border-radius: 5px;
         margin-left: 1rem;
-        margin-bottom: 49px;
+        margin-bottom: 24px;
 
         @include tablet {
             width: 238px;
@@ -191,6 +196,7 @@
 
         @media (min-width: 900px) {
             width: 360px;
+            margin-bottom: 49px;
         }
 
     }
@@ -225,5 +231,15 @@
         left: -16px;
         width: 32px;
         height: 32px;
+    }
+}
+
+.hidden-on-phablet {
+    display: none;
+}
+
+@media (min-width: 810px) {
+    .day--area.hidden-on-phablet {
+      display: block;
     }
 }

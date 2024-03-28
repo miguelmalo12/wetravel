@@ -44,6 +44,8 @@
         border: 1px solid $light-text;
         border-radius: 5px;
         outline: none;
+        font-family: 'Nunito Sans';
+        background-color: white;
 
         &:focus {
             border: 1px solid $primary-color;
