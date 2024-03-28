@@ -53,6 +53,10 @@
                 max-width: unset;
             }
 
+            @include desktop {
+                height: 522px;
+            }
+
             &--button {
                 text-align: center;
 
