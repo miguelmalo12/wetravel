@@ -14,6 +14,7 @@ import RecommendCard from '../../components/RecommendCard/RecommendCard';
 import axios from 'axios';
 import { userState } from '../../state/userState';
 import { useRecoilValue } from 'recoil';
+import Modal from '../../components/Modal/Modal';
 import { ring } from 'ldrs';
 ring.register()
 
@@ -42,8 +43,10 @@ function RecommendPage({ API_URL }) {
   const user = useRecoilValue(userState);
   const [recommendation, setRecommendation] = useState({})
   const [loaderTrigger, setLoaderTrigger] = useState(false)
+  const [isApiFailed, setIsApiFailed] = useState(true)
 
   const handleFormSubmit = async (event) => {
+    setRecommendation({})
     event.preventDefault();
     setLoaderTrigger(true)
     try {
@@ -63,7 +66,8 @@ function RecommendPage({ API_URL }) {
 
       }, 2000)
     } catch (error) {
-      console.error('Error submitting form:', error);
+      setIsApiFailed(true)
+      setLoaderTrigger(false)
     }
   };
 
@@ -97,7 +101,7 @@ function RecommendPage({ API_URL }) {
         </section>
         {
           (loaderTrigger) ? (Object.keys(recommendation).length ? (
-            <RecommendCard cityName={recommendation.city} setRecommendation={setRecommendation} countryName={recommendation.country} imageURL={recommendation.photo_url} imageALT={recommendation.photo_description} />
+            <RecommendCard handleFormSubmit={handleFormSubmit} cityName={recommendation.city} setRecommendation={setRecommendation} countryName={recommendation.country} imageURL={recommendation.photo_url} imageALT={recommendation.photo_description} />
           ) : (<div className="loader-container">
             <l-ring color='#FD5056' size='100'></l-ring>
           </div>)
@@ -141,8 +145,15 @@ function RecommendPage({ API_URL }) {
       </div>
       <Footer />
       <CopyrightFooter />
-
+      {isApiFailed && (
+        <Modal
+          textContent={`Oops! Something went wrong. Please try again later.`}
+          buttonText="Close"
+          onButtonClick={() => { setIsApiFailed(false) }}
+          onCloseClick={() => { setIsApiFailed(false) }} />
+      )}
     </div>
+
   )
 }
 
