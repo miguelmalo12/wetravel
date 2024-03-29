@@ -43,7 +43,7 @@ function RecommendPage({ API_URL }) {
   const user = useRecoilValue(userState);
   const [recommendation, setRecommendation] = useState({})
   const [loaderTrigger, setLoaderTrigger] = useState(false)
-  const [isApiFailed, setIsApiFailed] = useState(true)
+  const [isApiFailed, setIsApiFailed] = useState(false)
 
   const handleFormSubmit = async (event) => {
     setRecommendation({})
