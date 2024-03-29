@@ -1,7 +1,7 @@
 import './SignUp.scss';
 import { CopyrightFooter } from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
-import { ButtonPrimary, ButtonSecondary } from '../../components/Button/Button';
+import { ButtonPrimary, ButtonSecondary, ButtonLoading } from '../../components/Button/Button';
 import { FormGroupInput, FormGroupSelect, FormGroupCheckbox } from '../../components/AuthFormComponents/AuthFormComponents';
 import QuestionnaireLogo from '../../assets/Questionnaire.png';
 import { country_list } from '../../utils/countryListUtils';
@@ -44,8 +44,8 @@ const SignUp = ({ API_URL }) => {
     const [cultureImmerseSelect, setCultureImmerseSelect] = useState([])
 
 
-    const [isTermsConditonsChecked, setIsTermsConditionsChecked] = useState(false)
-
+    const [isTermsConditionsChecked, setIsTermsConditionsChecked] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const [signUpCredentials, setSignUpCredentials] = useState({
         user_name: '',
@@ -75,7 +75,7 @@ const SignUp = ({ API_URL }) => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
+        setLoading(true)
         if (isEmpty || isSelectEmpty) {
             setError(true);
             setErrorMessage('Please ensure all required fields are filled out before proceeding.');
@@ -88,51 +88,51 @@ const SignUp = ({ API_URL }) => {
             window.scrollTo({ top: 0, behavior: 'smooth' })
             return;
         }
-        try {
+        setTimeout(async () => {
+            try {
+                const response = await axios.post(`${API_URL}/user/sign-up`, {
+                    user_name: signUpCredentials.user_name,
+                    email: signUpCredentials.email,
+                    password: signUpCredentials.password,
+                    country: country,
+                    traveler_type: arrayToString(travelerTypeSelect),
+                    food_type: arrayToString(foodTypeSelect),
+                    food_rate: arrayToString(importanceLevelSelect),
+                    activity_type: arrayToString(activitiesSelect),
+                    climate_type: arrayToString(climateTypeSelect),
+                    hobby_type: arrayToString(hobbiesSelect),
+                    culture_rate: arrayToString(cultureImmerseSelect)
+                });
 
-            const response = await axios.post(`${API_URL}/user/sign-up`, {
-                user_name: signUpCredentials.user_name,
-                email: signUpCredentials.email,
-                password: signUpCredentials.password,
-                country: country,
-                traveler_type: arrayToString(travelerTypeSelect),
-                food_type: arrayToString(foodTypeSelect),
-                food_rate: arrayToString(importanceLevelSelect),
-                activity_type: arrayToString(activitiesSelect),
-                climate_type: arrayToString(climateTypeSelect),
-                hobby_type: arrayToString(hobbiesSelect),
-                culture_rate: arrayToString(cultureImmerseSelect)
-            });
-
-            const { user } = response.data;
-            localStorage.setItem("userData", JSON.stringify(user));
-            setUser(user);
-            setLoggedIn(true);
-
-            setSignUpCredentials({});
-            setCountry('');
-            setTravelerTypeSelect([]);
-            setFoodTypeSelect([]);
-            setImportanceLevelSelect([]);
-            setActivitiesSelect([]);
-            setClimateTypeSelect([]);
-            setHobbiesSelect([]);
-            setCultureImmerseSelect([]);
-
-            formRef.current.reset();
-            setSignUpStatusPage(true);
-        } catch (error) {
-            if (error.response.status === 400) {
-                setError(true)
-                setErrorMessage('The email is already associated with an account.')
-                window.scrollTo({ top: 0, behavior: 'smooth' })
-            } else {
-                setError(true)
-                setErrorMessage('An error occurred. Please try again.')
-                window.scrollTo({ top: 0, behavior: 'smooth' })
+                const { user } = response.data;
+                localStorage.setItem("userData", JSON.stringify(user));
+                setUser(user);
+                setLoggedIn(true);
+                setSignUpCredentials({});
+                setCountry('');
+                setTravelerTypeSelect([]);
+                setFoodTypeSelect([]);
+                setImportanceLevelSelect([]);
+                setActivitiesSelect([]);
+                setClimateTypeSelect([]);
+                setHobbiesSelect([]);
+                setCultureImmerseSelect([]);
+                formRef.current.reset();
+                setSignUpStatusPage(true);
+                setLoading(false)
+            } catch (error) {
+                if (error.response.status === 400) {
+                    setError(true)
+                    setErrorMessage('The email is already associated with an account.')
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                } else {
+                    setError(true)
+                    setErrorMessage('An error occurred. Please try again.')
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                }
+                setLoading(false)
             }
-
-        }
+        }, 1500)
     }
 
 
@@ -181,7 +181,10 @@ const SignUp = ({ API_URL }) => {
                             <p className="term-condition__text">I accept the <Link className='term-condition__link'>Terms and Conditions</Link></p>
                         </div>
                     </section>
-                    <ButtonPrimary text='Sign Up' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} disabled={!isTermsConditonsChecked} />
+                    {
+                        !loading ? (<ButtonPrimary text='Sign Up' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} disabled={!isTermsConditionsChecked} />) : (<ButtonLoading />)
+                    }
+
                 </form>
                 <p className="authentication-form-container__heading">Already have an account?</p>
                 <ButtonSecondary text='Sign In' to='/login' />
