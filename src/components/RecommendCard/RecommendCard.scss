@@ -54,6 +54,12 @@
             line-height: 30px;
             gap: 16px;
         }
+
+        &--loader {
+            @include tablet {
+                gap: 10px;
+            }
+        }
     }
 
     &__icon {

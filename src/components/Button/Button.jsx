@@ -55,7 +55,7 @@ export const ButtonDropDown = ({ className, dropDown, setDropDown }) => {
 export const ButtonLoading = () => {
     return (
         <button className={`button button--loading`}>
-            <l-ring color='#FFFFFF' size='20'></l-ring>
+            <l-ring color='#FFFFFF' size='20' stroke='2.5'></l-ring>
             Loading
         </button>
     )
