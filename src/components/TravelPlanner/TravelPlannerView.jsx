@@ -133,6 +133,7 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
                     date={date}
                     eventsProp={getEventsForDate(date)}
                     onDeleteEvent={handleDeleteEvent}
+                    setActiveItem={setActiveItem}
                     touchedData={touchedData}
                     setTouchedData={setTouchedData}
                 />

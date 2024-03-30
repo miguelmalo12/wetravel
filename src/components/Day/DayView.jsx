@@ -27,7 +27,7 @@ const sortEventsByTime = (events) => {
   });
 };
 
-function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setTouchedData }) {
+function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, touchedData, setTouchedData }) {
   const isPhablet = window.innerWidth < 810;
   // Initialize events state sorted by time
   const [events, setEvents] = useState(sortEventsByTime(eventsProp.map(event => ({
@@ -72,7 +72,8 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setT
         const existingEvents = Array.isArray(prevTripDetails.events) ? prevTripDetails.events : [];
         const updatedEvents = [...existingEvents, newEvent];
         return { ...prevTripDetails, events: updatedEvents };
-      });
+    });
+    setActiveItem(null);
   };
 
   const onDrop = (e) => {

@@ -57,6 +57,7 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
                       key={i}
                       dayNumber={i + 1}
                       date={formattedDate} 
+                      setActiveItem={setActiveItem}
                       touchedData={touchedData}
                       setTouchedData={setTouchedData}
                     />;

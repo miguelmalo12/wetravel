@@ -20,7 +20,7 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
-function Day({ dayNumber, date, touchedData, setTouchedData }) {
+function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
   const isPhablet = window.innerWidth < 810;
 
   const [events, setEvents] = useState([]);
@@ -34,6 +34,7 @@ function Day({ dayNumber, date, touchedData, setTouchedData }) {
   const addEventToDay = (eventData) => {
     eventData.time = to12HourFormat(eventData.time || "00:00"); 
     setEvents(prevEvents => [...prevEvents, eventData]);
+    setActiveItem(null);
     setTouchedData(null);
   };
 
