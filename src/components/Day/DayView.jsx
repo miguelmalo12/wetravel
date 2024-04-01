@@ -135,16 +135,17 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, to
         event_time: to12HourFormat(events[index].tempTime),
     };
 
-    const updatedDayEvents = [
+    let updatedEvents = [
       ...events.slice(0, index),
       updatedEvent,
       ...events.slice(index + 1),
     ];
-
-    setEvents(updatedDayEvents);
+    
+    updatedEvents = sortEventsByTime(updatedEvents);
+    setEvents(updatedEvents);
 
     setViewTripDetails(prevDetails => {
-      const updatedGlobalEvents = prevDetails.events.map(event => {
+      let updatedGlobalEvents = prevDetails.events.map(event => {
         // Update the event if it's the same one being edited
         if ((event.tempId && event.tempId === updatedEvent.tempId) || 
             (event.event_id && event.event_id === updatedEvent.event_id)) {
@@ -153,6 +154,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, to
         return event;
       });
 
+      updatedGlobalEvents = sortEventsByTime(updatedGlobalEvents);
       return {
         ...prevDetails,
         events: updatedGlobalEvents,
