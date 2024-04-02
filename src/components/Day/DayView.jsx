@@ -27,7 +27,7 @@ const sortEventsByTime = (events) => {
   });
 };
 
-function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setTouchedData }) {
+function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, touchedData, setTouchedData }) {
   const isPhablet = window.innerWidth < 810;
   // Initialize events state sorted by time
   const [events, setEvents] = useState(sortEventsByTime(eventsProp.map(event => ({
@@ -72,7 +72,8 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setT
         const existingEvents = Array.isArray(prevTripDetails.events) ? prevTripDetails.events : [];
         const updatedEvents = [...existingEvents, newEvent];
         return { ...prevTripDetails, events: updatedEvents };
-      });
+    });
+    setActiveItem(null);
   };
 
   const onDrop = (e) => {
@@ -134,16 +135,17 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setT
         event_time: to12HourFormat(events[index].tempTime),
     };
 
-    const updatedDayEvents = [
+    let updatedEvents = [
       ...events.slice(0, index),
       updatedEvent,
       ...events.slice(index + 1),
     ];
-
-    setEvents(updatedDayEvents);
+    
+    updatedEvents = sortEventsByTime(updatedEvents);
+    setEvents(updatedEvents);
 
     setViewTripDetails(prevDetails => {
-      const updatedGlobalEvents = prevDetails.events.map(event => {
+      let updatedGlobalEvents = prevDetails.events.map(event => {
         // Update the event if it's the same one being edited
         if ((event.tempId && event.tempId === updatedEvent.tempId) || 
             (event.event_id && event.event_id === updatedEvent.event_id)) {
@@ -152,6 +154,7 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, touchedData, setT
         return event;
       });
 
+      updatedGlobalEvents = sortEventsByTime(updatedGlobalEvents);
       return {
         ...prevDetails,
         events: updatedGlobalEvents,

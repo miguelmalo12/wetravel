@@ -20,7 +20,16 @@ import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
-function Day({ dayNumber, date, touchedData, setTouchedData }) {
+// Helper Function to sort events by time
+const sortEventsByTime = (events) => {
+  return events.sort((a, b) => {
+    const timeA = to24HourFormat(a.time);
+    const timeB = to24HourFormat(b.time);
+    return timeA.localeCompare(timeB);
+  });
+};
+
+function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
   const isPhablet = window.innerWidth < 810;
 
   const [events, setEvents] = useState([]);
@@ -33,7 +42,8 @@ function Day({ dayNumber, date, touchedData, setTouchedData }) {
 
   const addEventToDay = (eventData) => {
     eventData.time = to12HourFormat(eventData.time || "00:00"); 
-    setEvents(prevEvents => [...prevEvents, eventData]);
+    setEvents(prevEvents => sortEventsByTime([...prevEvents, eventData]));
+    setActiveItem(null);
     setTouchedData(null);
   };
 
@@ -81,12 +91,13 @@ function Day({ dayNumber, date, touchedData, setTouchedData }) {
       time: formattedTime,
     };
 
-    const updatedEvents = [
+    let updatedEvents = [
       ...events.slice(0, index),
       updatedEvent,
       ...events.slice(index + 1),
     ];
 
+    updatedEvents = sortEventsByTime(updatedEvents);
     setEvents(updatedEvents);
     setInputIndex(null);
     setInputValue("");
