@@ -53,10 +53,6 @@
                 max-width: unset;
             }
 
-            @include desktop {
-                height: 522px;
-            }
-
             &--button {
                 text-align: center;
 
@@ -93,54 +89,6 @@
                         font-size: 20px;
                         @include tablet {
                             font-size: 36px;
-                        }
-                    }
-                }
-    
-                &--item {
-                    display: flex;
-                    align-items: center;
-                    cursor: pointer;
-                    padding: 6px;
-
-                    @include tablet {
-                        margin-bottom: 2.8rem;
-                        padding: 0;
-                    }
-
-                    &.active {
-                        background-color: rgba(variables.$primary-color, 0.2);
-                        border-radius: 5px;
-                    }
-    
-                    img {
-                        height: 30px;
-                        width: 28px;
-
-                        @media (min-width: 600px) {
-                            margin-right: 0.8rem;
-                        }
-
-                        @include tablet {
-                            margin-right: 2.7rem;
-                            height: unset;
-                            width: unset;
-                        }
-                    }
-
-                    .desktop-text {
-                        display: none;
-
-                        @media (min-width: 600px) {
-                            display: block;
-                        }
-                    }
-
-                    .mobile-text {
-                        font-size: 15px;
-                        
-                        @media (min-width: 600px) {
-                            display: none;
                         }
                     }
                 }
