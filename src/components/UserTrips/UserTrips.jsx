@@ -11,11 +11,15 @@ import { viewTripState } from "../../state/viewTripState";
 import UserTripCard from "./UserTripCard";
 import Modal from "../Modal/Modal";
 
+import { ring } from 'ldrs';
+ring.register();
+
 // .env variables
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 function UserTrips({ setViewTripClicked }) {
   const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(localStorage.getItem("hasTrips") === "true");
   const [isModalOpen, setModalOpen] = useRecoilState(userTripsModalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState);
@@ -24,23 +28,31 @@ function UserTrips({ setViewTripClicked }) {
   useEffect(() => {
     const getTrips = async () => {
       try {
-        const storedUserData = localStorage.getItem('userData');
+        const storedUserData = localStorage.getItem("userData");
         const userData = storedUserData ? JSON.parse(storedUserData) : null;
         const userId = userData ? userData.user_id : null;
 
         if (!userId) {
           console.error("User ID is missing");
+          setLoading(false);
           return;
         }
-        
+
         const response = await axios.get(`${API_URL}/plan?user_id=${userId}`, {
           withCredentials: true,
         });
-        const sortedTrips = response.data.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+        const sortedTrips = response.data.sort(
+          (a, b) => new Date(a.start_date) - new Date(b.start_date)
+        );
+
+        // Update localStorage to know if there are trips, used for loader logic
+        localStorage.setItem("hasTrips", sortedTrips.length > 0 ? "true" : "false");
+
         setTrips(sortedTrips);
       } catch (error) {
         console.error("Error getting trips:", error);
       }
+      setLoading(false);
     };
 
     getTrips();
@@ -52,7 +64,7 @@ function UserTrips({ setViewTripClicked }) {
       await axios.delete(`${API_URL}/plan/${selectedTripId}`, {
         withCredentials: true,
       });
-      setTrips(trips.filter(trip => trip.trip_id !== selectedTripId));
+      setTrips(trips.filter((trip) => trip.trip_id !== selectedTripId));
       console.log("Trip deleted successfully!");
 
       if (viewTrip && viewTrip.trip_id === selectedTripId) {
@@ -89,15 +101,23 @@ function UserTrips({ setViewTripClicked }) {
 
   return (
     <div className="trips">
-      {trips.length > 0 && <h2>Your Trips</h2>} {/* Render header only if there are trips */}
-      {trips.map((trip) => (
-        <UserTripCard
-          key={trip.trip_id}
-          trip={trip}
-          onDeleteClick={() => handleDeleteClick(trip.trip_id)}
-          onViewClick={handleViewClick}
-        />
-      ))}
+      {loading ? (
+        <div className="trips__loader">
+            <l-ring color='#FD5056' size='100'></l-ring>
+        </div>
+      ) : (
+        <>
+          {trips.length > 0 && <h2>Your Trips</h2>} {/* Render header only if there are trips */}
+          {trips.map((trip) => (
+            <UserTripCard
+              key={trip.trip_id}
+              trip={trip}
+              onDeleteClick={() => handleDeleteClick(trip.trip_id)}
+              onViewClick={handleViewClick}
+            />
+          ))}
+        </>
+      )}
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}

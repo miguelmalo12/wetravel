@@ -125,6 +125,7 @@ function Plan() {
     try {
       await axios.post(`${API_URL}/plan`, tripData, { withCredentials: true });
       console.log("Trip saved successfully!");
+      localStorage.setItem('hasTrips', 'true');
       setShowTravelPlanner(false);
       setUserTripsUpdate(prev => prev + 1); // Triggers re-render of UserTrips
       userTripsRef.current?.scrollIntoView({ behavior: 'smooth' });
