@@ -57,13 +57,13 @@ function App() {
           <Route
             path="/recommend"
             element={
-              loggedIn ? <RecommendPage API_URL={API_URL} /> : <Navigate to="/sign-up" />
+              loggedIn ? <RecommendPage API_URL={API_URL} /> : <Navigate to="/login" />
             }
           />
           <Route
             path="/plan"
             element={
-              loggedIn ? <Plan profileData={profileData} /> : <Navigate to="/sign-up" />
+              loggedIn ? <Plan profileData={profileData} /> : <Navigate to="/login" />
             }
           />
           <Route
