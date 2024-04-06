@@ -48,7 +48,6 @@ const SignUp = ({ API_URL }) => {
     const [loading, setLoading] = useState(false);
 
     const [signUpCredentials, setSignUpCredentials] = useState({
-        user_name: '',
         email: '',
         password: ''
     })
@@ -91,7 +90,6 @@ const SignUp = ({ API_URL }) => {
         setTimeout(async () => {
             try {
                 const response = await axios.post(`${API_URL}/user/sign-up`, {
-                    user_name: signUpCredentials.user_name,
                     email: signUpCredentials.email,
                     password: signUpCredentials.password,
                     country: country,
@@ -150,7 +148,6 @@ const SignUp = ({ API_URL }) => {
                     <FormGroupInput label='What is your email?' required={true} type='email' onChange={handleInputChange} name='email' customRef={emailRef} />
                     <FormGroupInput label='Confirm your email' required={true} type='email' onChange={handleInputChange} name='c-email' customRef={confirmEmailRef} />
                     <FormGroupInput label='Create a password' required={true} type='password' onChange={handleInputChange} name='password' />
-                    <FormGroupInput label='How do you want us to call you?' required={true} onChange={handleInputChange} type='text' name='user_name' />
 
                     <section className="questionnaire">
                         <div className="questionnaire__header-container">
