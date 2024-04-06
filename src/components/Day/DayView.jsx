@@ -5,6 +5,7 @@ import { format, parseISO } from 'date-fns';
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
 import { to24HourFormat } from '../../utils/convertHourUtils';
+import { sortEventsByTime } from '../../utils/sortEventsUtils';
 
 // recoil state
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -17,15 +18,6 @@ import editIcon from "../../assets/icons/edit.svg";
 import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
-
-// Helper Function to sort events by time
-const sortEventsByTime = (events) => {
-  return events.sort((a, b) => {
-    const timeA = to24HourFormat(a.event_time);
-    const timeB = to24HourFormat(b.event_time);
-    return timeA.localeCompare(timeB);
-  });
-};
 
 function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, touchedData, setTouchedData }) {
   const isPhablet = window.innerWidth < 810;

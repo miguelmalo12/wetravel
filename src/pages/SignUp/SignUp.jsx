@@ -1,6 +1,6 @@
 import './SignUp.scss';
 import { CopyrightFooter } from '../../components/Footer/Footer';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { ButtonPrimary, ButtonSecondary, ButtonLoading } from '../../components/Button/Button';
 import { FormGroupInput, FormGroupSelect, FormGroupCheckbox } from '../../components/AuthFormComponents/AuthFormComponents';
 import QuestionnaireLogo from '../../assets/Questionnaire.png';
@@ -11,9 +11,6 @@ import { signUpStatusState } from '../../state/signUpStatusState';
 import { loginState } from '../../state/loginState';
 import { userState } from '../../state/userState';
 import { useSetRecoilState } from 'recoil';
-
-
-
 
 const SignUp = ({ API_URL }) => {
     const [error, setError] = useState(false);
@@ -43,12 +40,10 @@ const SignUp = ({ API_URL }) => {
     const [hobbiesSelect, setHobbiesSelect] = useState([])
     const [cultureImmerseSelect, setCultureImmerseSelect] = useState([])
 
-
-    const [isTermsConditionsChecked, setIsTermsConditionsChecked] = useState(false)
+    // const [isTermsConditionsChecked, setIsTermsConditionsChecked] = useState(false)
     const [loading, setLoading] = useState(false);
 
     const [signUpCredentials, setSignUpCredentials] = useState({
-        user_name: '',
         email: '',
         password: ''
     })
@@ -91,7 +86,6 @@ const SignUp = ({ API_URL }) => {
         setTimeout(async () => {
             try {
                 const response = await axios.post(`${API_URL}/user/sign-up`, {
-                    user_name: signUpCredentials.user_name,
                     email: signUpCredentials.email,
                     password: signUpCredentials.password,
                     country: country,
@@ -135,8 +129,6 @@ const SignUp = ({ API_URL }) => {
         }, 1500)
     }
 
-
-
     return (
         <div className="sign-up-page">
             <div className="authentication-form-container">
@@ -150,7 +142,6 @@ const SignUp = ({ API_URL }) => {
                     <FormGroupInput label='What is your email?' required={true} type='email' onChange={handleInputChange} name='email' customRef={emailRef} />
                     <FormGroupInput label='Confirm your email' required={true} type='email' onChange={handleInputChange} name='c-email' customRef={confirmEmailRef} />
                     <FormGroupInput label='Create a password' required={true} type='password' onChange={handleInputChange} name='password' />
-                    <FormGroupInput label='How do you want us to call you?' required={true} onChange={handleInputChange} type='text' name='user_name' />
 
                     <section className="questionnaire">
                         <div className="questionnaire__header-container">
@@ -159,7 +150,7 @@ const SignUp = ({ API_URL }) => {
                                 <h4 className="questionnaire__heading">Questionnaire</h4>
                                 <p className="questionnaire__text">
                                     We'll use your answers to create tailored recommendations that match your travel preferences.
-                                    Find your perfect match with our personalized approach. Let's begin!
+                                    Let's find your perfect match!
                                 </p>
                             </div>
                         </div>
@@ -174,15 +165,15 @@ const SignUp = ({ API_URL }) => {
                             <FormGroupCheckbox required={true} selectedArray={cultureImmerseSelect} setSelectedArray={setCultureImmerseSelect} type='radio' label='How important is it for you to immerse yourself in local culture when traveling?' optionArray={cultureImmerse} name='cultureImmerse' />
                         </div>
 
-                        <div className="term-condition">
+                        {/* <div className="term-condition">
                             <input type="checkbox" className="term-condition__input" onChange={(e) => {
                                 setIsTermsConditionsChecked(e.target.checked)
                             }} />
                             <p className="term-condition__text">I accept the <Link className='term-condition__link'>Terms and Conditions</Link></p>
-                        </div>
+                        </div> */}
                     </section>
                     {
-                        !loading ? (<ButtonPrimary text='Sign Up' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} disabled={!isTermsConditionsChecked} />) : (<ButtonLoading />)
+                        !loading ? (<ButtonPrimary text='Sign Up' className='authentication-form__button--primary' type='submit' onClick={handleFormSubmit} />) : (<ButtonLoading />)
                     }
 
                 </form>
