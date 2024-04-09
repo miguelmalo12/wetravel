@@ -7,6 +7,7 @@ import Modal from '../Modal/Modal';
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { modalState } from "../../state/modalState";
 import { loginState } from '../../state/loginState';
+import { signUpStatusState } from '../../state/signUpStatusState';
 import { useRef } from 'react';
 
 const NavbarList = ({ isLoggedIn, setModalOpen, closeMenu }) => {
@@ -57,6 +58,7 @@ const NavbarList = ({ isLoggedIn, setModalOpen, closeMenu }) => {
 
 
 const Header = () => {
+  const setSignUpStatusPage = useSetRecoilState(signUpStatusState)
   const setUser = useSetRecoilState(userState);
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   const [isModalOpen, setModalOpen] = useRecoilState(modalState);
@@ -70,6 +72,7 @@ const Header = () => {
         setUser(null)
       }
     }).then(() => {
+      setSignUpStatusPage(false)
       setIsLoggedIn(false)
       setModalOpen(false)
       navigate('/')
