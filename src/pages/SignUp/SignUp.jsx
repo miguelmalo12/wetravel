@@ -83,50 +83,48 @@ const SignUp = ({ API_URL }) => {
             window.scrollTo({ top: 0, behavior: 'smooth' })
             return;
         }
-        setTimeout(async () => {
-            try {
-                const response = await axios.post(`${API_URL}/user/sign-up`, {
-                    email: signUpCredentials.email,
-                    password: signUpCredentials.password,
-                    country: country,
-                    traveler_type: arrayToString(travelerTypeSelect),
-                    food_type: arrayToString(foodTypeSelect),
-                    food_rate: arrayToString(importanceLevelSelect),
-                    activity_type: arrayToString(activitiesSelect),
-                    climate_type: arrayToString(climateTypeSelect),
-                    hobby_type: arrayToString(hobbiesSelect),
-                    culture_rate: arrayToString(cultureImmerseSelect)
-                });
+        try {
+            const response = await axios.post(`${API_URL}/user/sign-up`, {
+                email: signUpCredentials.email,
+                password: signUpCredentials.password,
+                country: country,
+                traveler_type: arrayToString(travelerTypeSelect),
+                food_type: arrayToString(foodTypeSelect),
+                food_rate: arrayToString(importanceLevelSelect),
+                activity_type: arrayToString(activitiesSelect),
+                climate_type: arrayToString(climateTypeSelect),
+                hobby_type: arrayToString(hobbiesSelect),
+                culture_rate: arrayToString(cultureImmerseSelect)
+            });
 
-                const { user } = response.data;
-                localStorage.setItem("userData", JSON.stringify(user));
-                setUser(user);
-                setLoggedIn(true);
-                setSignUpCredentials({});
-                setCountry('');
-                setTravelerTypeSelect([]);
-                setFoodTypeSelect([]);
-                setImportanceLevelSelect([]);
-                setActivitiesSelect([]);
-                setClimateTypeSelect([]);
-                setHobbiesSelect([]);
-                setCultureImmerseSelect([]);
-                formRef.current.reset();
-                setSignUpStatusPage(true);
-                setLoading(false)
-            } catch (error) {
-                if (error.response.status === 400) {
-                    setError(true)
-                    setErrorMessage('The email is already associated with an account.')
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                } else {
-                    setError(true)
-                    setErrorMessage('An error occurred. Please try again.')
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                }
-                setLoading(false)
+            const { user } = response.data;
+            localStorage.setItem("userData", JSON.stringify(user));
+            setUser(user);
+            setLoggedIn(true);
+            setSignUpCredentials({});
+            setCountry('');
+            setTravelerTypeSelect([]);
+            setFoodTypeSelect([]);
+            setImportanceLevelSelect([]);
+            setActivitiesSelect([]);
+            setClimateTypeSelect([]);
+            setHobbiesSelect([]);
+            setCultureImmerseSelect([]);
+            formRef.current.reset();
+            setSignUpStatusPage(true);
+            setLoading(false)
+        } catch (error) {
+            if (error.response.status === 400) {
+                setError(true)
+                setErrorMessage('The email is already associated with an account.')
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+            } else {
+                setError(true)
+                setErrorMessage('An error occurred. Please try again.')
+                window.scrollTo({ top: 0, behavior: 'smooth' })
             }
-        }, 1500)
+            setLoading(false)
+        }
     }
 
     return (

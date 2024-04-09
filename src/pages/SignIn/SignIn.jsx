@@ -39,26 +39,25 @@ const SignIn = ({ API_URL }) => {
     const handleFormSubmit = (event) => {
         event.preventDefault();
         setLoading(true)
-        setTimeout(() => {
-            axios
-                .post(`${API_URL}/auth/login`, {
-                    email: signInCredentials.email,
-                    password: signInCredentials.password,
-                })
-                .then((response) => {
-                    const { user } = response.data;
-                    localStorage.setItem("userData", JSON.stringify(user));
-                    setUser(user);
-                    setLoggedIn(true);
-                    navigate('/')
-                    setLoading(false)
-                })
-                .catch(() => {
-                    setLoading(false)
-                    setError(true)
-                    setErrorMessage('Email or password is invalid. Please try again.')
-                });
-        }, 1500)
+        axios
+            .post(`${API_URL}/auth/login`, {
+                email: signInCredentials.email,
+                password: signInCredentials.password,
+            })
+            .then((response) => {
+                const { user } = response.data;
+                localStorage.setItem("userData", JSON.stringify(user));
+                setUser(user);
+                setLoggedIn(true);
+                navigate('/')
+                setLoading(false)
+            })
+            .catch(() => {
+                setLoading(false)
+                setError(true)
+                setErrorMessage('Email or password is invalid. Please try again.')
+            });
+
 
     };
 
