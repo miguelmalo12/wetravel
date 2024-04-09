@@ -27,10 +27,10 @@ function RecommendPage({ API_URL }) {
 
   const [recommendInput, setRecommendInput] = useState({
     destination_type: "city",
-    destination_scope: "",
-    companionship_preference: "",
-    trip_length: "",
-    travel_month: ""
+    destination_scope: destinationScope[0],
+    companionship_preference: companionPreference[0],
+    trip_length: lengthOfTrip[0],
+    travel_month: preferredMonth[0]
   });
 
   const handleInputChange = (event) => {
