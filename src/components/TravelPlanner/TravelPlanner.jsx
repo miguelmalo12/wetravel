@@ -14,7 +14,7 @@ import accommodationIcon from "../../assets/icons/AccommodationIcon.png";
 import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
-function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onNotesChange, onSave }) {
+function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onNotesChange, onSave, isLoading }) {
   const [notes, setNotes] = useState(initialNotes || 'Enter any trip comments, notes, links, etc.');
 
   // Variables for mobile touch and drop
@@ -72,7 +72,16 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
             <EventItem title="Add Restaurant" type="restaurant" activeItem={activeItem} onItemSelect={handleTouchStart} icon={restaurantIcon} />
           </div>
           <div className="planner--plan__events--button">
-            <button className="primary-button" onClick={onSave}>Save</button>
+            <button className={`primary-button ${isLoading ? 'loading' : ''}`} onClick={onSave}>
+              {isLoading ? (
+                <>
+                  <l-ring color='#FD5056' size='20' stroke='2.5'></l-ring>
+                  Loading...
+                </>
+              ) : (
+                "Save"
+              )}
+            </button>
           </div>
         </div>
       </div>

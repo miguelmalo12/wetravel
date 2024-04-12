@@ -54,11 +54,16 @@
             }
 
             &--button {
-                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
 
                 .primary-button {
                     padding: 0.8rem 1.2rem;
                     font-size: 14px;
+                    align-items: center;
+                    display: flex;
+                    gap: 1rem;
 
                     @media (min-width: 600px) {
                         padding: 0.8rem 3.2rem;

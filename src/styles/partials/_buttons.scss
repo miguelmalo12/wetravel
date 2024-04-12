@@ -19,3 +19,8 @@
         color: variables.$primary-color;
     }
 }
+
+.primary-button.loading {
+    background-color: variables.$white;
+    color: variables.$primary-color;
+}

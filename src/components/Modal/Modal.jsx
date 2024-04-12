@@ -3,7 +3,10 @@ import closeIcon from "../../assets/icons/cross.svg";
 
 import { ButtonPrimary } from "../Button/Button";
 
-const Modal = ({ textContent, buttonText, onButtonClick, onCloseClick }) => {
+import { ring } from 'ldrs';
+ring.register();
+
+const Modal = ({ textContent, buttonText, onButtonClick, onCloseClick, isDeleting }) => {
   return (
     <div className="modal">
       <div className="modal-content">
@@ -14,7 +17,10 @@ const Modal = ({ textContent, buttonText, onButtonClick, onCloseClick }) => {
           onClick={onCloseClick}
         />
         <p>{textContent}</p>
-        <ButtonPrimary text={buttonText} onClick={onButtonClick} />
+        <ButtonPrimary 
+          text={isDeleting ? "Deleting..." : buttonText} 
+          onClick={onButtonClick} 
+        />
       </div>
     </div>
   );
