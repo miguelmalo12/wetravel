@@ -20,6 +20,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 function UserTrips({ setViewTripClicked }) {
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(localStorage.getItem("hasTrips") === "true");
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isModalOpen, setModalOpen] = useRecoilState(userTripsModalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState);
@@ -60,6 +61,8 @@ function UserTrips({ setViewTripClicked }) {
 
   // DELETE Trip from db
   const handleDeleteConfirm = async () => {
+    setIsDeleting(true);
+
     try {
       await axios.delete(`${API_URL}/plan/${selectedTripId}`, {
         withCredentials: true,
@@ -73,8 +76,10 @@ function UserTrips({ setViewTripClicked }) {
       }
     } catch (error) {
       console.error("Error deleting trip:", error);
+    } finally {
+      setIsDeleting(false);
+      setModalOpen(false);
     }
-    setModalOpen(false);
   };
 
   // GET Specific Trip from db when clicking View Trip
@@ -125,6 +130,7 @@ function UserTrips({ setViewTripClicked }) {
           buttonText="Delete"
           onButtonClick={handleDeleteConfirm}
           onCloseClick={() => setModalOpen(false)}
+          isDeleting={isDeleting}
         />
       )}
     </div>

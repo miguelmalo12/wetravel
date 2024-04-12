@@ -36,6 +36,8 @@ function Plan() {
   const [viewTripClicked, setViewTripClicked] = useState(false); // Used for scroll behaviour
   const [updateFeedback, setUpdateFeedback] = useState({ message: '', type: '' });
 
+  const [isLoading, setIsLoading] = useState();
+
   // This handles the form submit on the hero form
   const handleFormSubmit = () => {
     setShowTravelPlanner(true);
@@ -64,6 +66,7 @@ function Plan() {
 
   // POST This handles the save click on the trip planner and creates a new trip on db
   const handleSaveTrip = async () => { 
+    setIsLoading(true);
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
@@ -131,11 +134,14 @@ function Plan() {
       userTripsRef.current?.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
       console.error("Error saving trip:", error.response ? error.response.data : error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // PUT This handles the update click on the trip planner and updates the trip on db
   const handleUpdateTrip = async () => {  
+    setIsLoading(true);
     // Only filter out events that have been deleted (those without event_id and tempId)
     const filteredEvents = viewTripDetails.events.filter(event => event.event_id || event.tempId);
 
@@ -155,6 +161,8 @@ function Plan() {
     } catch (error) {
       console.error("Error updating trip:", error);
       setUpdateFeedback({ message: 'Error updating trip.', type: 'error' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -210,6 +218,7 @@ function Plan() {
             <TravelPlannerView
             onUpdate={handleUpdateTrip}
             updateFeedback={updateFeedback}
+            isLoading={isLoading}
           />
           </div>
         :
@@ -222,6 +231,7 @@ function Plan() {
                 notes={tripInfo.notes}
                 onNotesChange={handleNotesUpdate}
                 onSave={handleSaveTrip}
+                isLoading={isLoading}
               />
             </div>
           ))

@@ -21,7 +21,7 @@ import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-function TravelPlannerView({ onUpdate, updateFeedback }) {
+function TravelPlannerView({ onUpdate, updateFeedback, isLoading }) {
     
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState); 
   const [notes, setNotes] = useState(viewTrip.notes || 'Enter any trip comments, notes, links, etc.');
@@ -148,8 +148,15 @@ function TravelPlannerView({ onUpdate, updateFeedback }) {
             <EventItem title="Add Restaurant" type="restaurant" activeItem={activeItem} onItemSelect={handleTouchStart} icon={restaurantIcon} />
           </div>
           <div className="planner--plan__events--button">
-            <button className="primary-button" onClick={onUpdate}>
-              Update
+            <button className={`primary-button ${isLoading ? 'loading' : ''}`} onClick={onUpdate}>
+              {isLoading ? (
+                <>
+                  <l-ring color='#FD5056' size='20' stroke='2.5'></l-ring>
+                  Loading...
+                </>
+              ) : (
+                "Update"
+              )}
             </button>
             {updateFeedback.message && (
               <div className={`feedback-message ${updateFeedback.type}`}>
