@@ -75,12 +75,14 @@ const SignUp = ({ API_URL }) => {
             setError(true);
             setErrorMessage('Please ensure all required fields are filled out before proceeding.');
             window.scrollTo({ top: 0, behavior: 'smooth' })
+            setLoading(false)
             return;
         }
         if (signUpCredentials.email !== confirmEmailRef.current.value) {
             setError(true);
             setErrorMessage("Email addresses do not match. Please make sure your email entries match.");
             window.scrollTo({ top: 0, behavior: 'smooth' })
+            setLoading(false)
             return;
         }
         try {
