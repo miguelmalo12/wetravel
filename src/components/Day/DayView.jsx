@@ -17,9 +17,10 @@ import dayIcon from "../../assets/icons/day-icon.svg";
 import editIcon from "../../assets/icons/edit.svg";
 import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
+import moveIcon from "../../assets/icons/move.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
-function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, touchedData, setTouchedData }) {
+function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, touchedData, setTouchedData, onMoveEvent, availableDates }) {
   const isPhablet = window.innerWidth < 810;
   // Initialize events state sorted by time
   const [events, setEvents] = useState(sortEventsByTime(eventsProp.map(event => ({
@@ -35,6 +36,9 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, to
 
   // Global Recoil state for the trip
   const setViewTripDetails = useSetRecoilState(viewTripState);
+
+  const [showMoveDropdown, setShowMoveDropdown] = useState(-1);
+  const [selectedNewDay, setSelectedNewDay] = useState("");
 
   const handleDrop = (title, type) => {
     if (touchedData) {
@@ -162,6 +166,16 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, to
     onDeleteEvent(eventToBeDeleted);
   };
 
+  // Function to move event to a different Day
+  const handleSelectNewDay = (newDate, eventIndex) => {
+    if (newDate) {
+      const eventData = events[eventIndex];
+      onMoveEvent(eventData, newDate);
+      setShowMoveDropdown(-1);
+      setSelectedNewDay("");
+    }
+  };
+
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
     // Only update tripInfo if the events for this date have changed
@@ -242,6 +256,26 @@ function DayView({ dayNumber, date, eventsProp, onDeleteEvent, setActiveItem, to
                 onClick={() => handleDeleteClick(index)}
                 alt="Delete icon"
               />
+              <img
+                className="day--entry--container__icon"
+                src={moveIcon}
+                alt="Move icon"
+                onClick={() => setShowMoveDropdown(index === showMoveDropdown ? -1 : index)}
+              />
+              {showMoveDropdown === index && (
+                <select
+                  value={selectedNewDay}
+                  onChange={(e) => handleSelectNewDay(e.target.value, index)}
+                  onBlur={() => setShowMoveDropdown(-1)}
+                >
+                  <option value="">Move event to:</option>
+                  {availableDates.filter(d => d !== date).map(d => (
+                    <option key={d} value={d}>
+                      {format(parseISO(d), 'EEE, dd MMM')}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           )}
         </div>
