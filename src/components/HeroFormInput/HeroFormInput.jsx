@@ -113,8 +113,8 @@ export const DoubleHeroFormSelectSubmit = ({ icon1, icon2, label1, label2, name1
                         })}
                     </select>
                 </div>
-                <ButtonHeroFormSubmit onSubmit={onSubmit} className='hero-form-input__button' />
             </div>
+            <ButtonHeroFormSubmit onSubmit={onSubmit} className='hero-form-input__button' />
         </div>
     )
 }
