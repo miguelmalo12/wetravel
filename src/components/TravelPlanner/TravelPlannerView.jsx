@@ -40,6 +40,8 @@ function TravelPlannerView({ onUpdate, updateFeedback, isLoading }) {
   const [touchedData, setTouchedData] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
 
+  const [updateCounter, setUpdateCounter] = useState(0); // Used to trigger render on move event
+
   // Used for mobile touch and drop
   const handleTouchStart = (data, event) => {
     if (activeItem && activeItem.title === data.title) {
@@ -108,6 +110,7 @@ function TravelPlannerView({ onUpdate, updateFeedback, isLoading }) {
 
       // Update viewTrip state with the new events array
       setViewTrip({ ...viewTrip, events: updatedEvents });
+      setUpdateCounter(prev => prev + 1);
   };
 
   const handleCloseModal = () => {
@@ -120,6 +123,20 @@ function TravelPlannerView({ onUpdate, updateFeedback, isLoading }) {
     return viewTrip.events.filter(event => event.date === date);
   };
 
+  const handleMoveEvent = (eventData, newDate) => {
+    setViewTrip(prevState => {
+      const filteredEvents = prevState.events.filter(event => event.event_id !== eventData.event_id);
+      const movedEvent = { ...eventData, date: newDate };
+      const newEvents = [...filteredEvents, movedEvent];
+      return {
+        ...prevState,
+        events: newEvents
+      };
+    });
+    setUpdateCounter(prev => prev + 1);
+  };
+  
+
   return (
     <div className="planner">
       <div className="planner--title">
@@ -129,7 +146,7 @@ function TravelPlannerView({ onUpdate, updateFeedback, isLoading }) {
         <div className="planner--plan__days">
             {dates.map((date, index) => (
                 <DayView
-                    key={`${date}-${viewTrip.events.length}`}
+                    key={`${date}-${updateCounter}`}
                     dayNumber={index + 1}
                     date={date}
                     eventsProp={getEventsForDate(date)}
@@ -137,6 +154,8 @@ function TravelPlannerView({ onUpdate, updateFeedback, isLoading }) {
                     setActiveItem={setActiveItem}
                     touchedData={touchedData}
                     setTouchedData={setTouchedData}
+                    onMoveEvent={handleMoveEvent}
+                    availableDates={dates}
                 />
             ))}
         </div>
