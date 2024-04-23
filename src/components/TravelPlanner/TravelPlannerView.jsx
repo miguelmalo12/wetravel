@@ -110,6 +110,7 @@ function TravelPlannerView({ onUpdate, updateFeedback, isLoading }) {
 
       // Update viewTrip state with the new events array
       setViewTrip({ ...viewTrip, events: updatedEvents });
+      setUpdateCounter(prev => prev + 1);
   };
 
   const handleCloseModal = () => {
