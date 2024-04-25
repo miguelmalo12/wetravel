@@ -1,6 +1,6 @@
 import "./Day.scss";
-import { useState, useEffect } from "react";
-import { parse, format, parseISO, isValid } from 'date-fns';
+import { useState, useEffect, useMemo } from "react";
+import { parse, format, parseISO } from 'date-fns';
 
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
@@ -26,20 +26,15 @@ import finishIcon from "../../assets/icons/finish-icon.svg";
 function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMoveEvent, availableDates }) {
   const isPhablet = window.innerWidth < 810;
 
-  const [events, setEvents] = useState([]);
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
   const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
-  const [, setTripInfo] = useRecoilState(tripInfoState);
-
-  const [showMoveDropdown, setShowMoveDropdown] = useState(null);
-  const [selectedNewDay, setSelectedNewDay] = useState("");
+  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
 
   const parseCustomDate = (dateStr) => {
     const currentYear = new Date().getFullYear();
-    // Assuming dateStr is something like "Thu, 18 Apr", we remove the day of the week.
     const cleanDateStr = dateStr.replace(/^[a-zA-Z]{3}, /, '');
     const fullDateStr = `${cleanDateStr} ${currentYear}`;
     return parse(fullDateStr, 'dd MMM yyyy', new Date());
@@ -47,24 +42,37 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
 
   const parsedDate = parseCustomDate(date);
   const formattedDate = format(parsedDate, 'yyyy-MM-dd');
-
   const filteredAvailableDates = availableDates.filter(d => d !== formattedDate);
+
+  const events = useMemo(() => {
+    return tripInfo.events[formattedDate] || [];
+  }, [tripInfo.events, formattedDate]);
+
+  const [showMoveDropdown, setShowMoveDropdown] = useState(null);
+  const [selectedNewDay, setSelectedNewDay] = useState("");
+
+  // To be used everywhere needed to update recoil state
+  const handleEventChange = (updatedEvents) => {
+    setTripInfo(prevTripInfo => ({
+      ...prevTripInfo,
+      events: {
+        ...prevTripInfo.events,
+        [formattedDate]: updatedEvents,
+      }
+    }));
+  };
+
+  const addOrUpdateEvent = (eventData, index = -1) => {
+    const newEvents = index >= 0 ? 
+      [...events.slice(0, index), eventData, ...events.slice(index + 1)] :
+      [...events, eventData];
+    handleEventChange(sortEventsByTime(newEvents));
+  };
 
   const addEventToDay = (eventData) => {
     eventData.time = to12HourFormat(eventData.time || "00:00");
-    setEvents(prevEvents => {
-      const updatedEvents = sortEventsByTime([...prevEvents, eventData]);
-      // Update Recoil state right after updating local state
-      setTripInfo(prevTripInfo => {
-        const updatedGlobalEvents = { ...prevTripInfo.events };
-        updatedGlobalEvents[formattedDate] = updatedEvents;
-        return {
-          ...prevTripInfo,
-          events: updatedGlobalEvents
-        };
-      });
-      return updatedEvents;
-    });
+    const updatedEvents = sortEventsByTime([...events, eventData]);
+    handleEventChange(updatedEvents);
     setActiveItem(null);
     setTouchedData(null);
   };
@@ -74,7 +82,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
     const data = e.dataTransfer.getData("text/plain");
     const [title, type] = data.split(",");
     const newEvent = { title, time: "00:00", type, id: Date.now() };
-    addEventToDay(newEvent);
+    addOrUpdateEvent(newEvent); 
   };
 
   const handleInputChange = (e) => {
@@ -89,7 +97,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
     if (e.key === "Enter") {
       const updatedEvents = [...events];
       updatedEvents[index].title = inputValue;
-      setEvents(updatedEvents);
+      handleEventChange(updatedEvents);
       setInputIndex(null);
       setInputValue("");
     }
@@ -100,7 +108,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
       const formattedTime = to12HourFormat(inputTime);
       const updatedEvents = [...events];
       updatedEvents[index].time = formattedTime;
-      setEvents(updatedEvents);
+      handleEventChange(updatedEvents);
       setInputIndex(null);
     }
   };
@@ -119,8 +127,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
       ...events.slice(index + 1),
     ];
 
-    updatedEvents = sortEventsByTime(updatedEvents);
-    setEvents(updatedEvents);
+    handleEventChange(sortEventsByTime(updatedEvents));
     setInputIndex(null);
     setInputValue("");
   };
@@ -132,7 +139,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
 
   const handleDeleteConfirm = () => {
     const updatedEvents = events.filter((_, index) => index !== deleteEventIndex);
-    setEvents(updatedEvents);
+    handleEventChange(updatedEvents);
     setModalOpen(false);
   };
 
@@ -143,12 +150,10 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
   const handleSelectNewDay = (newDate, eventIndex) => {
     if (newDate && events[eventIndex]) {
       const eventData = events[eventIndex];
-      // Parse the 'date' from the format 'Tue, 23 Apr' assuming it's for the current year
       const currentDate = parse(date, 'E, dd MMM', new Date(), { awareOfUnicodeTokens: true });
-      const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd'); // Format it to 'YYYY-MM-DD'
+      const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd');
   
-      console.log('eventData', eventData);
-      onMoveEvent(eventData, formattedCurrentDate, newDate);  // Pass the formatted current date
+      onMoveEvent(eventData, formattedCurrentDate, newDate);
       setShowMoveDropdown(-1);
       setSelectedNewDay("");
     } else {
@@ -158,18 +163,27 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
 
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
-    setTripInfo((prevTripInfo) => ({
-      ...prevTripInfo,
-      events: {
-        ...prevTripInfo.events,
-        [date]: events,
-      },
-    }));
-  }, [events, setTripInfo, date]);
-
-  useEffect(() => {
-    console.log(`Events for ${date}:`, events);
-  }, [events, date]);
+    if (!events.length) {
+      console.log("No events to update, skipping setTripInfo");
+      return;
+    }
+  
+    setTripInfo((prevTripInfo) => {
+      const currentEvents = prevTripInfo.events[date] || [];
+      if (JSON.stringify(currentEvents) === JSON.stringify(events)) {
+        console.log("No changes in events, skipping update");
+        return prevTripInfo;
+      }
+  
+      return {
+        ...prevTripInfo,
+        events: {
+          ...prevTripInfo.events,
+          [date]: events,
+        },
+      };
+    });
+  }, [events, date, setTripInfo]);
 
   return (
     <div className="day">

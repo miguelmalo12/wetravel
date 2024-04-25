@@ -1,11 +1,11 @@
 import "./TravelPlanner.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 // components
 import Day from "../Day/Day";
 import EventItem from "../EventItem/EventItem";
 
-import { addDays, format, parseISO } from "date-fns";
+import { addDays, format, parseISO, isValid } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
 // recoil state
@@ -18,18 +18,35 @@ import accommodationIcon from "../../assets/icons/AccommodationIcon.png";
 import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
-function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onNotesChange, onSave, isLoading }) {
+function TravelPlanner({ dayCount, notes: initialNotes, onNotesChange, onSave, isLoading }) {
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState); 
   const [notes, setNotes] = useState(initialNotes || 'Enter any trip comments, notes, links, etc.');
-  const [events, setEvents] = useState({});
 
   // Variables for mobile touch and drop
   const [touchedData, setTouchedData] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
-
   const [updateCounter, setUpdateCounter] = useState(0); // Used to trigger render on move event
-  const dates = Array.from({ length: dayCount }, (_, i) => format(addDays(new Date(startDate), i), "yyyy-MM-dd"));
-  console.log('dates', dates);
+
+  const startDate = tripInfo.startDate;
+  const parsedStartDate = useMemo(() => {
+    const parsed = parseISO(startDate);
+    return isValid(parsed) ? parsed : null;
+  }, [startDate]);
+
+  const dates = useMemo(() => {
+    if (!parsedStartDate) return [];
+    return Array.from({ length: dayCount }, (_, i) => {
+      const dateToAdd = addDays(parsedStartDate, i);
+      return format(dateToAdd, 'yyyy-MM-dd');
+    });
+  }, [parsedStartDate, dayCount]);
+
+  useEffect(() => {
+    if (!parsedStartDate) {
+      console.error("Invalid startDate provided:", startDate);
+    }
+  }, [parsedStartDate, startDate]);
+
   // Used for mobile touch and drop
   const handleTouchStart = (data, event) => {
     if (activeItem && activeItem.title === data.title) {
@@ -38,36 +55,21 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
       setActiveItem(data);
       setTouchedData(data);
     }
-    
     event.preventDefault();
   };
 
   const onMoveEvent = (eventData, oldDate, newDate) => {
     setTripInfo(prevTripInfo => {
       const newEvents = { ...prevTripInfo.events };
-  
-      // Ensure there are arrays to manipulate
-      if (!newEvents[oldDate]) {
-        newEvents[oldDate] = [];
-      }
-      if (!newEvents[newDate]) {
-        newEvents[newDate] = [];
-      }
-  
-      // Remove the event from the old date
-      newEvents[oldDate] = newEvents[oldDate].filter(event => event.id !== eventData.id);
-  
-      // Add the event to the new date, updating the date property
-      const updatedEvent = { ...eventData, date: newDate };
-      newEvents[newDate].push(updatedEvent);
-  
-      // Log to check the updated structure of events
-      console.log('Events after move:', newEvents);
-  
+      const eventsForOldDate = newEvents[oldDate] || [];
+      const eventsForNewDate = newEvents[newDate] || [];
+      newEvents[oldDate] = eventsForOldDate.filter(event => event.id !== eventData.id);
+      newEvents[newDate] = [...eventsForNewDate, { ...eventData, date: newDate }];
       return { ...prevTripInfo, events: newEvents };
     });
+    setUpdateCounter(prev => prev + 1);
   };
-  
+
   //Functions for notes textarea
   useEffect(() => {
     setNotes(initialNotes || 'Enter any trip comments, notes, links, etc.');
@@ -78,34 +80,27 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
     onNotesChange(e.target.value);
   };
 
-  useEffect(() => {
-    // This will log every time 'events' changes, which can help verify that updates are occurring
-    console.log("Events updated", events);
-    console.log("tripInfo updated", tripInfo);
-  }, [events, tripInfo]);
-
   return (
     <div className="planner">
       <div className="planner--title">
-        <h2>Your Trip to {location}</h2>
+        <h2>Your Trip to {tripInfo.location}</h2>
       </div>
       <div className="planner--plan">
         <div className="planner--plan__days">
-        {Array.from({ length: dayCount }, (_, i) => {
-            const dateUTC = addDays(startDate, i);
-            const zonedDate = utcToZonedTime(dateUTC, Intl.DateTimeFormat().resolvedOptions().timeZone);
-            const formattedDate = format(zonedDate, "E, dd MMM");
-            return <Day 
-                      key={`${formattedDate}-${updateCounter}`}
-                      dayNumber={i + 1}
-                      date={formattedDate} 
-                      setActiveItem={setActiveItem}
-                      touchedData={touchedData}
-                      setTouchedData={setTouchedData}
-                      onMoveEvent={onMoveEvent}
-                      availableDates={dates}
-                      events={events[formattedDate] || []}
-                    />;
+        {dates.map((formattedDate, i) => {
+          const dateUTC = addDays(parseISO(startDate), i);
+          const zonedDate = utcToZonedTime(dateUTC, Intl.DateTimeFormat().resolvedOptions().timeZone);
+          const displayDate = format(zonedDate, "E, dd MMM");
+          return <Day  
+                    key={`${formattedDate}-${updateCounter}`}
+                    dayNumber={i + 1}
+                    date={displayDate} 
+                    setActiveItem={setActiveItem}
+                    touchedData={touchedData}
+                    setTouchedData={setTouchedData}
+                    onMoveEvent={onMoveEvent}
+                    availableDates={dates}
+                  />;
           })}
         </div>
         <div className="planner--plan__events">
