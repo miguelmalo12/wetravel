@@ -1,5 +1,6 @@
 import "./Day.scss";
 import { useState, useEffect } from "react";
+import { parse, format, parseISO, isValid } from 'date-fns';
 
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
@@ -19,9 +20,10 @@ import dayIcon from "../../assets/icons/day-icon.svg";
 import editIcon from "../../assets/icons/edit.svg";
 import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
+import moveIcon from "../../assets/icons/move.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
-function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
+function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMoveEvent, availableDates }) {
   const isPhablet = window.innerWidth < 810;
 
   const [events, setEvents] = useState([]);
@@ -32,9 +34,37 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
   const [, setTripInfo] = useRecoilState(tripInfoState);
 
+  const [showMoveDropdown, setShowMoveDropdown] = useState(null);
+  const [selectedNewDay, setSelectedNewDay] = useState("");
+
+  const parseCustomDate = (dateStr) => {
+    const currentYear = new Date().getFullYear();
+    // Assuming dateStr is something like "Thu, 18 Apr", we remove the day of the week.
+    const cleanDateStr = dateStr.replace(/^[a-zA-Z]{3}, /, '');
+    const fullDateStr = `${cleanDateStr} ${currentYear}`;
+    return parse(fullDateStr, 'dd MMM yyyy', new Date());
+  };
+
+  const parsedDate = parseCustomDate(date);
+  const formattedDate = format(parsedDate, 'yyyy-MM-dd');
+
+  const filteredAvailableDates = availableDates.filter(d => d !== formattedDate);
+
   const addEventToDay = (eventData) => {
-    eventData.time = to12HourFormat(eventData.time || "00:00"); 
-    setEvents(prevEvents => sortEventsByTime([...prevEvents, eventData]));
+    eventData.time = to12HourFormat(eventData.time || "00:00");
+    setEvents(prevEvents => {
+      const updatedEvents = sortEventsByTime([...prevEvents, eventData]);
+      // Update Recoil state right after updating local state
+      setTripInfo(prevTripInfo => {
+        const updatedGlobalEvents = { ...prevTripInfo.events };
+        updatedGlobalEvents[formattedDate] = updatedEvents;
+        return {
+          ...prevTripInfo,
+          events: updatedGlobalEvents
+        };
+      });
+      return updatedEvents;
+    });
     setActiveItem(null);
     setTouchedData(null);
   };
@@ -110,6 +140,22 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
     setModalOpen(false);
   };
 
+  const handleSelectNewDay = (newDate, eventIndex) => {
+    if (newDate && events[eventIndex]) {
+      const eventData = events[eventIndex];
+      // Parse the 'date' from the format 'Tue, 23 Apr' assuming it's for the current year
+      const currentDate = parse(date, 'E, dd MMM', new Date(), { awareOfUnicodeTokens: true });
+      const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd'); // Format it to 'YYYY-MM-DD'
+  
+      console.log('eventData', eventData);
+      onMoveEvent(eventData, formattedCurrentDate, newDate);  // Pass the formatted current date
+      setShowMoveDropdown(-1);
+      setSelectedNewDay("");
+    } else {
+      console.error('Error: newDate or event data is missing.');
+    }
+  };
+
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
     setTripInfo((prevTripInfo) => ({
@@ -120,6 +166,10 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
       },
     }));
   }, [events, setTripInfo, date]);
+
+  useEffect(() => {
+    console.log(`Events for ${date}:`, events);
+  }, [events, date]);
 
   return (
     <div className="day">
@@ -194,6 +244,26 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
                   buttonText="Delete"
                   onButtonClick={handleDeleteConfirm}
                   onCloseClick={handleCloseModal}></Modal>
+              )}
+              <img
+                className="day--entry--container__icon"
+                src={moveIcon}
+                alt="Move icon"
+                onClick={() => setShowMoveDropdown(index === showMoveDropdown ? null : index)}
+              />
+              {showMoveDropdown === index && (
+                <select
+                  value={selectedNewDay}
+                  onChange={(e) => handleSelectNewDay(e.target.value, index)}
+                  onBlur={() => setShowMoveDropdown(null)}
+                >
+                  <option value="">Move event to:</option>
+                  {filteredAvailableDates.map(d => (
+                    <option key={d} value={d}>
+                      {format(parseISO(d), 'EEE, dd MMM')}
+                    </option>
+                  ))}
+                </select>
               )}
             </div>
           )}

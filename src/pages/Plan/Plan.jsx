@@ -70,45 +70,28 @@ function Plan() {
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
     const userId = userData ? userData.user_id : null;
+    console.log("Saving with current trip info:", tripInfo);
     const { location, notes, events } = tripInfo;
     const fromDate = parseISO(tripInfo.startDate);
     const toDate = parseISO(tripInfo.endDate);
-    const formattedEvents = [];
 
     if (!userId) {
       console.error("User ID is missing");
+      setIsLoading(false);
       return;
     }
 
     if (!isValid(fromDate) || !isValid(toDate)) {
       console.error("Invalid startDate or endDate");
+      setIsLoading(false);
       return;
     }
-
-    const year = new Date(tripInfo.startDate).getFullYear(); // Extract the year from startDate
     
-    Object.entries(events).forEach(([key, dayEvents]) => {
-      const [, dateStr] = key.split(', ');
-      if (!dateStr) {
-        console.error("dateStr is undefined in handleSaveTrip");
-        return;
-      }
-      const [day, monthName] = dateStr.split(' ');
-
-      // Convert month name to month number
-      const monthNumber = new Date(`${monthName} 1`).getMonth() + 1;
-
-      // Construct the full date string with the correct year
-      const eventDateISO = `${year}-${monthNumber.toString().padStart(2, '0')}-${day.padStart(2, '0')}`;
-
-      dayEvents.forEach((event) => {
-        if (!isValid(new Date(eventDateISO))) {
-          console.error("Invalid event date", eventDateISO);
-          return;
-        }
-    
+    const formattedEvents = [];
+    Object.entries(events).forEach(([date, dayEvents]) => {
+      dayEvents.forEach(event => {
         formattedEvents.push({
-          date: eventDateISO,
+          date: date,
           event_time: event.time,
           event_type: event.type,
           event_description: event.title,
@@ -119,11 +102,11 @@ function Plan() {
     const tripData = {
       user_id: userId,
       destination: location,
-      start_date: format(fromDate, "yyyy-MM-dd"),
-      end_date: format(toDate, "yyyy-MM-dd"),
+      start_date: format(parseISO(tripInfo.startDate), "yyyy-MM-dd"),
+      end_date: format(parseISO(tripInfo.endDate), "yyyy-MM-dd"),
       notes: notes,
       events: formattedEvents,
-    };
+    };  
 
     try {
       await axios.post(`${API_URL}/plan`, tripData, { withCredentials: true });
