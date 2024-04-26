@@ -31,7 +31,6 @@ function Plan() {
 
   const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
   const [viewTripDetails, setViewTripDetails] = useRecoilState(viewTripState);
-
   const [userTripsUpdate, setUserTripsUpdate] = useState(0); // To trigger re-render of UserTrips
   const [viewTripClicked, setViewTripClicked] = useState(false); // Used for scroll behaviour
   const [updateFeedback, setUpdateFeedback] = useState({ message: '', type: '' });
@@ -44,6 +43,7 @@ function Plan() {
     setViewTripDetails(null);
     setTripInfo(prevState => ({
       ...prevState,
+      events: {},
       notes: null
     }));
   };

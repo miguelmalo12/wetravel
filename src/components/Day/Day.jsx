@@ -164,14 +164,14 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
     if (!events.length) {
-      console.log("No events to update, skipping setTripInfo");
+      // No events to update, skipping setTripInfo
       return;
     }
   
     setTripInfo((prevTripInfo) => {
       const currentEvents = prevTripInfo.events[date] || [];
       if (JSON.stringify(currentEvents) === JSON.stringify(events)) {
-        console.log("No changes in events, skipping update");
+        // No changes in events, skipping update
         return prevTripInfo;
       }
   

@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // recoil state
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { userTripsModalState } from "../../state/modalState";
+import { tripInfoState } from '../../state/tripState';
 import { viewTripState } from "../../state/viewTripState";
 
 // components
@@ -24,6 +25,7 @@ function UserTrips({ setViewTripClicked }) {
   const [isModalOpen, setModalOpen] = useRecoilState(userTripsModalState);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const [viewTrip, setViewTrip] = useRecoilState(viewTripState);
+  const setTripInfo = useSetRecoilState(tripInfoState);
 
   // GET All Trips from db
   useEffect(() => {
@@ -84,12 +86,15 @@ function UserTrips({ setViewTripClicked }) {
 
   // GET Specific Trip from db when clicking View Trip
   const handleViewClick = async (tripId) => {
+    setTripInfo({});
+    setViewTrip({});
     try {
       const response = await axios.get(`${API_URL}/plan/${tripId}`, {
         withCredentials: true,
       });
 
       // Sets trip data to recoil state
+      setTripInfo(response.data);
       setViewTrip(response.data);
       setViewTripClicked(false);
       setTimeout(() => setViewTripClicked(true), 10); // Used for the scroll behaviour
