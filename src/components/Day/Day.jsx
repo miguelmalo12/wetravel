@@ -95,21 +95,17 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
 
   const handleEnterEvent = (e, index) => {
     if (e.key === "Enter") {
-      const updatedEvents = [...events];
-      updatedEvents[index].title = inputValue;
-      handleEventChange(updatedEvents);
-      setInputIndex(null);
-      setInputValue("");
-    }
-  };
-
-  const handleEnterTime = (e, index) => {
-    if (e.key === "Enter") {
-      const formattedTime = to12HourFormat(inputTime);
-      const updatedEvents = [...events];
-      updatedEvents[index].time = formattedTime;
-      handleEventChange(updatedEvents);
-      setInputIndex(null);
+        const updatedEvents = [...events];
+        const newEvent = {
+            ...updatedEvents[index],
+            title: inputValue,
+            time: to12HourFormat(inputTime || updatedEvents[index].time)
+        };
+        updatedEvents[index] = newEvent;
+        handleEventChange(updatedEvents);
+        setInputIndex(null);
+        setInputValue("");
+        setInputTime("");
     }
   };
 
@@ -218,7 +214,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMo
                   type="time"
                   value={inputTime}
                   onChange={handleTimeChange}
-                  onKeyDown={(e) => handleEnterTime(e, index)}
+                  onKeyDown={(e) => handleEnterEvent(e, index)}
                 />
                 <img
                   className="day--entry--container__accept"

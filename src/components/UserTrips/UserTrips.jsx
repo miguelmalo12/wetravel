@@ -86,8 +86,8 @@ function UserTrips({ setViewTripClicked }) {
 
   // GET Specific Trip from db when clicking View Trip
   const handleViewClick = async (tripId) => {
-    setTripInfo({});
-    setViewTrip({});
+    // setTripInfo({});
+    // setViewTrip({});
     try {
       const response = await axios.get(`${API_URL}/plan/${tripId}`, {
         withCredentials: true,
