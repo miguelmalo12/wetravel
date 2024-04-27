@@ -1,12 +1,16 @@
 import "./TravelPlanner.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 // components
 import Day from "../Day/Day";
 import EventItem from "../EventItem/EventItem";
 
-import { addDays, format } from "date-fns";
+import { addDays, format, parseISO, isValid } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
+
+// recoil state
+import { useRecoilState } from 'recoil';
+import { tripInfoState } from '../../state/tripState';
 
 //icons
 import transportationIcon from "../../assets/icons/TransportationIcon.png";
@@ -14,12 +18,34 @@ import accommodationIcon from "../../assets/icons/AccommodationIcon.png";
 import activityIcon from "../../assets/icons/ActivityIcon.png";
 import restaurantIcon from "../../assets/icons/RestaurantIcon.png";
 
-function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onNotesChange, onSave, isLoading }) {
+function TravelPlanner({ dayCount, notes: initialNotes, onNotesChange, onSave, isLoading }) {
+  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState); 
   const [notes, setNotes] = useState(initialNotes || 'Enter any trip comments, notes, links, etc.');
 
   // Variables for mobile touch and drop
   const [touchedData, setTouchedData] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
+  const [updateCounter, setUpdateCounter] = useState(0); // Used to trigger render on move event
+
+  const startDate = tripInfo.startDate;
+  const parsedStartDate = useMemo(() => {
+    const parsed = parseISO(startDate);
+    return isValid(parsed) ? parsed : null;
+  }, [startDate]);
+
+  const dates = useMemo(() => {
+    if (!parsedStartDate) return [];
+    return Array.from({ length: dayCount }, (_, i) => {
+      const dateToAdd = addDays(parsedStartDate, i);
+      return format(dateToAdd, 'yyyy-MM-dd');
+    });
+  }, [parsedStartDate, dayCount]);
+
+  useEffect(() => {
+    if (!parsedStartDate) {
+      console.error("Invalid startDate provided:", startDate);
+    }
+  }, [parsedStartDate, startDate]);
 
   // Used for mobile touch and drop
   const handleTouchStart = (data, event) => {
@@ -29,8 +55,19 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
       setActiveItem(data);
       setTouchedData(data);
     }
-    
     event.preventDefault();
+  };
+
+  const onMoveEvent = (eventData, oldDate, newDate) => {
+    setTripInfo(prevTripInfo => {
+      const newEvents = { ...prevTripInfo.events };
+      const eventsForOldDate = newEvents[oldDate] || [];
+      const eventsForNewDate = newEvents[newDate] || [];
+      newEvents[oldDate] = eventsForOldDate.filter(event => event.id !== eventData.id);
+      newEvents[newDate] = [...eventsForNewDate, { ...eventData, date: newDate }];
+      return { ...prevTripInfo, events: newEvents };
+    });
+    setUpdateCounter(prev => prev + 1);
   };
 
   //Functions for notes textarea
@@ -46,22 +83,24 @@ function TravelPlanner({ location, dayCount, startDate, notes: initialNotes, onN
   return (
     <div className="planner">
       <div className="planner--title">
-        <h2>Your Trip to {location}</h2>
+        <h2>Your Trip to {tripInfo.location}</h2>
       </div>
       <div className="planner--plan">
         <div className="planner--plan__days">
-        {Array.from({ length: dayCount }, (_, i) => {
-            const dateUTC = addDays(startDate, i);
-            const zonedDate = utcToZonedTime(dateUTC, Intl.DateTimeFormat().resolvedOptions().timeZone);
-            const formattedDate = format(zonedDate, "E, dd MMM");
-            return <Day 
-                      key={i}
-                      dayNumber={i + 1}
-                      date={formattedDate} 
-                      setActiveItem={setActiveItem}
-                      touchedData={touchedData}
-                      setTouchedData={setTouchedData}
-                    />;
+        {dates.map((formattedDate, i) => {
+          const dateUTC = addDays(parseISO(startDate), i);
+          const zonedDate = utcToZonedTime(dateUTC, Intl.DateTimeFormat().resolvedOptions().timeZone);
+          const displayDate = format(zonedDate, "E, dd MMM");
+          return <Day  
+                    key={`${formattedDate}-${updateCounter}`}
+                    dayNumber={i + 1}
+                    date={displayDate} 
+                    setActiveItem={setActiveItem}
+                    touchedData={touchedData}
+                    setTouchedData={setTouchedData}
+                    onMoveEvent={onMoveEvent}
+                    availableDates={dates}
+                  />;
           })}
         </div>
         <div className="planner--plan__events">

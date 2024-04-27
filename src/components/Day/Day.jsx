@@ -1,5 +1,6 @@
 import "./Day.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { parse, format, parseISO } from 'date-fns';
 
 // utils
 import { to12HourFormat } from '../../utils/convertHourUtils';
@@ -19,22 +20,59 @@ import dayIcon from "../../assets/icons/day-icon.svg";
 import editIcon from "../../assets/icons/edit.svg";
 import deleteIcon from "../../assets/icons/delete.svg";
 import acceptIcon from "../../assets/icons/check.svg";
+import moveIcon from "../../assets/icons/move.svg";
 import finishIcon from "../../assets/icons/finish-icon.svg";
 
-function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
+function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData, onMoveEvent, availableDates }) {
   const isPhablet = window.innerWidth < 810;
 
-  const [events, setEvents] = useState([]);
   const [inputIndex, setInputIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [inputTime, setInputTime] = useState("");
   const [isModalOpen, setModalOpen] = useRecoilState(dayViewModalState);
   const [deleteEventIndex, setDeleteEventIndex] = useState(null);
-  const [, setTripInfo] = useRecoilState(tripInfoState);
+  const [tripInfo, setTripInfo] = useRecoilState(tripInfoState);
+
+  const parseCustomDate = (dateStr) => {
+    const currentYear = new Date().getFullYear();
+    const cleanDateStr = dateStr.replace(/^[a-zA-Z]{3}, /, '');
+    const fullDateStr = `${cleanDateStr} ${currentYear}`;
+    return parse(fullDateStr, 'dd MMM yyyy', new Date());
+  };
+
+  const parsedDate = parseCustomDate(date);
+  const formattedDate = format(parsedDate, 'yyyy-MM-dd');
+  const filteredAvailableDates = availableDates.filter(d => d !== formattedDate);
+
+  const events = useMemo(() => {
+    return tripInfo.events[formattedDate] || [];
+  }, [tripInfo.events, formattedDate]);
+
+  const [showMoveDropdown, setShowMoveDropdown] = useState(null);
+  const [selectedNewDay, setSelectedNewDay] = useState("");
+
+  // To be used everywhere needed to update recoil state
+  const handleEventChange = (updatedEvents) => {
+    setTripInfo(prevTripInfo => ({
+      ...prevTripInfo,
+      events: {
+        ...prevTripInfo.events,
+        [formattedDate]: updatedEvents,
+      }
+    }));
+  };
+
+  const addOrUpdateEvent = (eventData, index = -1) => {
+    const newEvents = index >= 0 ? 
+      [...events.slice(0, index), eventData, ...events.slice(index + 1)] :
+      [...events, eventData];
+    handleEventChange(sortEventsByTime(newEvents));
+  };
 
   const addEventToDay = (eventData) => {
-    eventData.time = to12HourFormat(eventData.time || "00:00"); 
-    setEvents(prevEvents => sortEventsByTime([...prevEvents, eventData]));
+    eventData.time = to12HourFormat(eventData.time || "00:00");
+    const updatedEvents = sortEventsByTime([...events, eventData]);
+    handleEventChange(updatedEvents);
     setActiveItem(null);
     setTouchedData(null);
   };
@@ -44,7 +82,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
     const data = e.dataTransfer.getData("text/plain");
     const [title, type] = data.split(",");
     const newEvent = { title, time: "00:00", type, id: Date.now() };
-    addEventToDay(newEvent);
+    addOrUpdateEvent(newEvent); 
   };
 
   const handleInputChange = (e) => {
@@ -57,21 +95,17 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
 
   const handleEnterEvent = (e, index) => {
     if (e.key === "Enter") {
-      const updatedEvents = [...events];
-      updatedEvents[index].title = inputValue;
-      setEvents(updatedEvents);
-      setInputIndex(null);
-      setInputValue("");
-    }
-  };
-
-  const handleEnterTime = (e, index) => {
-    if (e.key === "Enter") {
-      const formattedTime = to12HourFormat(inputTime);
-      const updatedEvents = [...events];
-      updatedEvents[index].time = formattedTime;
-      setEvents(updatedEvents);
-      setInputIndex(null);
+        const updatedEvents = [...events];
+        const newEvent = {
+            ...updatedEvents[index],
+            title: inputValue,
+            time: to12HourFormat(inputTime || updatedEvents[index].time)
+        };
+        updatedEvents[index] = newEvent;
+        handleEventChange(updatedEvents);
+        setInputIndex(null);
+        setInputValue("");
+        setInputTime("");
     }
   };
 
@@ -89,8 +123,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
       ...events.slice(index + 1),
     ];
 
-    updatedEvents = sortEventsByTime(updatedEvents);
-    setEvents(updatedEvents);
+    handleEventChange(sortEventsByTime(updatedEvents));
     setInputIndex(null);
     setInputValue("");
   };
@@ -102,7 +135,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
 
   const handleDeleteConfirm = () => {
     const updatedEvents = events.filter((_, index) => index !== deleteEventIndex);
-    setEvents(updatedEvents);
+    handleEventChange(updatedEvents);
     setModalOpen(false);
   };
 
@@ -110,16 +143,43 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
     setModalOpen(false);
   };
 
+  const handleSelectNewDay = (newDate, eventIndex) => {
+    if (newDate && events[eventIndex]) {
+      const eventData = events[eventIndex];
+      const currentDate = parse(date, 'E, dd MMM', new Date(), { awareOfUnicodeTokens: true });
+      const formattedCurrentDate = format(currentDate, 'yyyy-MM-dd');
+  
+      onMoveEvent(eventData, formattedCurrentDate, newDate);
+      setShowMoveDropdown(-1);
+      setSelectedNewDay("");
+    } else {
+      console.error('Error: newDate or event data is missing.');
+    }
+  };
+
   // Updates tripInfo everytime a Day state changes
   useEffect(() => {
-    setTripInfo((prevTripInfo) => ({
-      ...prevTripInfo,
-      events: {
-        ...prevTripInfo.events,
-        [date]: events,
-      },
-    }));
-  }, [events, setTripInfo, date]);
+    if (!events.length) {
+      // No events to update, skipping setTripInfo
+      return;
+    }
+  
+    setTripInfo((prevTripInfo) => {
+      const currentEvents = prevTripInfo.events[date] || [];
+      if (JSON.stringify(currentEvents) === JSON.stringify(events)) {
+        // No changes in events, skipping update
+        return prevTripInfo;
+      }
+  
+      return {
+        ...prevTripInfo,
+        events: {
+          ...prevTripInfo.events,
+          [date]: events,
+        },
+      };
+    });
+  }, [events, date, setTripInfo]);
 
   return (
     <div className="day">
@@ -154,7 +214,7 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
                   type="time"
                   value={inputTime}
                   onChange={handleTimeChange}
-                  onKeyDown={(e) => handleEnterTime(e, index)}
+                  onKeyDown={(e) => handleEnterEvent(e, index)}
                 />
                 <img
                   className="day--entry--container__accept"
@@ -194,6 +254,26 @@ function Day({ dayNumber, date, setActiveItem, touchedData, setTouchedData }) {
                   buttonText="Delete"
                   onButtonClick={handleDeleteConfirm}
                   onCloseClick={handleCloseModal}></Modal>
+              )}
+              <img
+                className="day--entry--container__icon"
+                src={moveIcon}
+                alt="Move icon"
+                onClick={() => setShowMoveDropdown(index === showMoveDropdown ? null : index)}
+              />
+              {showMoveDropdown === index && (
+                <select
+                  value={selectedNewDay}
+                  onChange={(e) => handleSelectNewDay(e.target.value, index)}
+                  onBlur={() => setShowMoveDropdown(null)}
+                >
+                  <option value="">Move event to:</option>
+                  {filteredAvailableDates.map(d => (
+                    <option key={d} value={d}>
+                      {format(parseISO(d), 'EEE, dd MMM')}
+                    </option>
+                  ))}
+                </select>
               )}
             </div>
           )}
