@@ -17,10 +17,10 @@
         margin-bottom: 2rem;
 
         @include tablet {
-            padding: 2rem 3rem 2rem;
-            margin-bottom: 4.9rem;
-            width: 350px;
-            height: 100px;
+            padding: 1rem 2.5rem;
+            margin-bottom: 3.5rem;
+            width: 275px;
+            height: 90px;
         }
 
         &__icon {
@@ -62,7 +62,7 @@
         }
 
         @include tablet {
-            margin-left: 10rem;
+            margin-left: 9rem;
             padding-bottom: 32px;
         }
 
@@ -91,6 +91,7 @@
                 @include tablet {
                     margin-left: 0;
                     margin-top: 0;
+                    max-height: 28px;
                 }
             }
 
@@ -122,7 +123,7 @@
                     background-position: center;
 
                     @include tablet {
-                        left: 39px;
+                        left: 36px;
                     }
                 }
 
@@ -208,13 +209,13 @@
 
         @include tablet {
             width: 238px;
-            height: 100px;
-            margin-left: 10rem;
+            height: 90px;
+            margin-left: 9rem;
         }
 
         @media (min-width: 900px) {
-            width: 360px;
-            margin-bottom: 49px;
+            width: 345px;
+            margin-bottom: 35px;
         }
 
     }
@@ -229,8 +230,8 @@
         z-index: -1;
 
         @include tablet {
-            top: 100px;
-            left: 56px;
+            top: 90px;
+            left: 53px;
         }
     }
 
